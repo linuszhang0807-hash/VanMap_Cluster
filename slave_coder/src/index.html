@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VanMap · 大温美食情报中心</title>
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+  <style>
+    /* ── Reset & Base ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; overflow: hidden; background: #fcfbfa; }
+    body {
+      display: flex;
+      font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      color: #1c1917;
+    }
+
+    /* ── Sidebar ── */
+    #sidebar {
+      width: 320px;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      background: #ffffff;
+      border-right: 1px solid #ece9e4;
+      box-shadow: 2px 0 18px rgba(0,0,0,0.05);
+      z-index: 10;
+    }
+
+    /* ── Brand header ── */
+    .brand {
+      padding: 18px 18px 14px;
+      border-bottom: 1px solid #f2f0ec;
+      flex-shrink: 0;
+    }
+    .brand-row { display: flex; align-items: center; gap: 8px; margin-bottom: 3px; }
+    .brand h1 { font-size: 14px; font-weight: 700; letter-spacing: 0.025em; color: #1c1917; }
+    .brand-sub { font-size: 10.5px; color: #b5aea6; letter-spacing: 0.07em; padding-left: 28px; }
+    #shown-count { color: #78716c; font-weight: 600; }
+
+    /* ── Filter sections ── */
+    .filter-section {
+      padding: 9px 14px;
+      border-bottom: 1px solid #f2f0ec;
+      flex-shrink: 0;
+    }
+    .filter-label {
+      font-size: 9.5px;
+      font-weight: 700;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      color: #c2bdb7;
+      margin-bottom: 7px;
+    }
+    .pill-row { display: flex; flex-wrap: wrap; gap: 5px; }
+
+    /* Pill button base */
+    .pill {
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 500;
+      cursor: pointer;
+      border: 1px solid transparent;
+      background: #f5f4f0;
+      color: #a8a29e;
+      transition: all 0.14s ease;
+      white-space: nowrap;
+      line-height: 1.4;
+    }
+    .pill:hover { background: #edeae5; color: #78716c; }
+
+    /* Active states per level */
+    .pill.active-type    { background: #1c1917; color: #fff; border-color: #1c1917; }
+    .pill.active-sub     { background: #f5f4f0; color: #292524; font-weight: 700; border-color: #c9c5bf; }
+    .pill.active-district {
+      background: #f5f4f0;
+      color: #292524;
+      font-weight: 700;
+      border-color: #c9c5bf;
+    }
+
+    /* ── Filter summary bar ── */
+    .filter-summary {
+      padding: 7px 16px;
+      border-bottom: 1px solid #f2f0ec;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+    }
+    .filter-summary-left { font-size: 10.5px; color: #a8a29e; }
+    .filter-summary-left strong { color: #57534e; }
+    .clear-btn {
+      font-size: 10px;
+      color: #c9c5bf;
+      cursor: pointer;
+      border: none;
+      background: none;
+      padding: 2px 6px;
+      border-radius: 4px;
+      transition: all 0.12s;
+    }
+    .clear-btn:hover { color: #78716c; background: #f5f4f0; }
+
+    /* ── Card list ── */
+    #card-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    #card-list::-webkit-scrollbar { width: 3px; }
+    #card-list::-webkit-scrollbar-thumb { background: #e7e5e0; border-radius: 2px; }
+
+    /* ── Restaurant card ── */
+    .rest-card {
+      background: #fff;
+      border-radius: 11px;
+      padding: 11px 13px;
+      border: 1px solid #ede9e4;
+      border-left-width: 3px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+      cursor: pointer;
+      transition: transform 0.14s ease, box-shadow 0.14s ease;
+      position: relative;
+    }
+    .rest-card:hover { transform: translateX(3px); box-shadow: 0 3px 14px rgba(0,0,0,0.09); }
+
+    .card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 5px; }
+    .card-name { font-size: 12.5px; font-weight: 600; color: #1c1917; line-height: 1.35; flex: 1; padding-right: 8px; }
+    .card-score { font-size: 12.5px; font-weight: 700; color: #d97706; flex-shrink: 0; }
+
+    .card-tags { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 6px; }
+    .kw-tag {
+      font-size: 9.5px;
+      padding: 2px 7px;
+      border-radius: 999px;
+      border: 1px solid;
+    }
+
+    .card-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .card-meta { font-size: 10px; color: #b5aea6; }
+
+    /* Price level badge — creamy warm style */
+    .price-badge {
+      font-size: 10px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 999px;
+      letter-spacing: 0.04em;
+      background: #fef9f0;
+      color: #92400e;
+      border: 1px solid #fde68a;
+    }
+
+    /* ── Empty state ── */
+    .empty-state {
+      text-align: center;
+      padding: 48px 20px;
+      color: #a8a29e;
+    }
+    .empty-state .icon { font-size: 28px; margin-bottom: 10px; }
+    .empty-state p { font-size: 12px; line-height: 1.8; }
+
+    /* ── Sidebar footer ── */
+    .sidebar-footer {
+      padding: 8px 16px;
+      border-top: 1px solid #f2f0ec;
+      font-size: 9.5px;
+      color: #d6d3d1;
+      text-align: center;
+      letter-spacing: 0.05em;
+      flex-shrink: 0;
+    }
+
+    /* ── Hover Preview Panel ── */
+    #hover-preview {
+      position: fixed;
+      left: 326px;
+      top: 0;
+      width: 244px;
+      background: #fff;
+      border-radius: 14px;
+      box-shadow: 0 12px 48px rgba(0,0,0,0.14);
+      border: 1px solid rgba(0,0,0,0.06);
+      z-index: 9999;
+      pointer-events: none;
+      opacity: 0;
+      transform: translateX(-6px);
+      transition: opacity 0.18s ease, transform 0.18s ease;
+      overflow: hidden;
+    }
+    #hover-preview.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    .preview-img {
+      width: 100%;
+      height: 110px;
+      object-fit: cover;
+      display: block;
+      background: #f5f4f0;
+    }
+    .preview-img-placeholder {
+      width: 100%;
+      height: 110px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      background: linear-gradient(135deg, #f9f6f2 0%, #f0ece6 100%);
+    }
+    .preview-body { padding: 11px 13px 13px; }
+    .preview-name { font-size: 12.5px; font-weight: 700; color: #1c1917; margin-bottom: 5px; line-height: 1.3; }
+    .preview-meta { display: flex; align-items: center; gap: 6px; margin-bottom: 7px; flex-wrap: wrap; }
+    .preview-desc { font-size: 11px; color: #78716c; line-height: 1.6; }
+    .preview-addr { font-size: 10px; color: #b5aea6; margin-top: 6px; }
+
+    /* ── Leaflet overrides ── */
+    .leaflet-popup-content-wrapper {
+      padding: 0 !important;
+      border-radius: 18px !important;
+      overflow: hidden;
+      box-shadow: 0 16px 56px rgba(0,0,0,0.13) !important;
+      border: 1px solid rgba(0,0,0,0.05) !important;
+    }
+    .leaflet-popup-content { margin: 0 !important; width: 308px !important; }
+    .leaflet-popup-close-button {
+      top: 10px !important; right: 12px !important;
+      color: rgba(255,255,255,0.85) !important;
+      font-size: 20px !important;
+      width: auto !important; height: auto !important;
+      line-height: 1 !important;
+    }
+    .leaflet-popup-close-button:hover { background: none !important; opacity: 0.6; }
+    .leaflet-popup-tip { background: white !important; }
+    .leaflet-control-attribution { font-size: 10px !important; background: rgba(255,255,255,0.75) !important; }
+    .leaflet-control-zoom a {
+      border-radius: 8px !important;
+      border: 1px solid #e7e5e4 !important;
+      color: #78716c !important;
+    }
+    .popup-body-scroll::-webkit-scrollbar { width: 3px; }
+    .popup-body-scroll::-webkit-scrollbar-thumb { background: #e7e5e0; border-radius: 2px; }
+
+    /* ── Link button ── */
+    .link-btn { transition: opacity 0.14s; }
+    .link-btn:hover { opacity: 0.68; }
+  </style>
+</head>
+
+<body>
+
+  <!-- ═══════════════ SIDEBAR ═══════════════ -->
+  <aside id="sidebar">
+
+    <!-- Brand -->
+    <div class="brand">
+      <div class="brand-row">
+        <span style="font-size:20px;">🗺️</span>
+        <h1>VanMap 大温美食情报中心</h1>
+      </div>
+      <p class="brand-sub">Greater Vancouver &nbsp;·&nbsp; <span id="shown-count">—</span> 家显示</p>
+    </div>
+
+    <!-- Level 1: Type -->
+    <div class="filter-section">
+      <div class="filter-label">类别</div>
+      <div class="pill-row" id="type-pills">
+        <button class="pill active-type" data-type="全部">全部</button>
+        <button class="pill" data-type="餐厅">🍽 餐厅</button>
+        <button class="pill" data-type="酒吧">🍺 酒吧</button>
+        <button class="pill" data-type="娱乐">🎭 娱乐</button>
+        <button class="pill" data-type="徒步">🥾 徒步</button>
+        <button class="pill" data-type="景点">📸 景点</button>
+      </div>
+    </div>
+
+    <!-- Level 2: Subtype (hidden unless type = 餐厅) -->
+    <div class="filter-section" id="subtype-section" style="display:none;">
+      <div class="filter-label">菜系</div>
+      <div class="pill-row" id="subtype-pills"></div>
+    </div>
+
+    <!-- Level 3: District (auto-generated) -->
+    <div class="filter-section" id="district-section">
+      <div class="filter-label">地区</div>
+      <div class="pill-row" id="district-pills"></div>
+    </div>
+
+    <!-- Filter summary + clear -->
+    <div class="filter-summary">
+      <span class="filter-summary-left">
+        共 <strong id="total-count">—</strong> 家 &nbsp;·&nbsp; 已筛选 <strong id="shown-count2">—</strong> 家 &nbsp;·&nbsp; ★ 评分降序
+      </span>
+      <button class="clear-btn" id="clear-btn">清除筛选</button>
+    </div>
+
+    <!-- Card list -->
+    <div id="card-list"></div>
+
+    <div class="sidebar-footer">数据 © Vancouver Scraper Agent &nbsp;·&nbsp; 底图 © OpenStreetMap</div>
+  </aside>
+
+  <!-- ═══════════════ HOVER PREVIEW ═══════════════ -->
+  <div id="hover-preview">
+    <div class="preview-img-placeholder" id="preview-img-wrap">🍜</div>
+    <div class="preview-body">
+      <div class="preview-name" id="preview-name"></div>
+      <div class="preview-meta" id="preview-meta"></div>
+      <div class="preview-desc" id="preview-desc"></div>
+      <div class="preview-addr" id="preview-addr"></div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ MAP ═══════════════ -->
+  <div id="map" style="flex:1; z-index:0;"></div>
+
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script>
+  (function () {
+
+    /* ══════════════════════════════════════
+       PALETTE & CONSTANTS
+    ══════════════════════════════════════ */
+    const PAL = {
+      cn:    { main: '#c96b52', light: '#fdf2ef', border: '#c96b5222' },
+      kr:    { main: '#5b87b0', light: '#eff4f9', border: '#5b87b022' },
+      other: { main: '#8b8680', light: '#f5f4f0', border: '#8b868022' },
+    };
+
+    const PRICE_STYLE = {
+      '$':    { color: '#059669', bg: '#d1fae5' },
+      '$$':   { color: '#d97706', bg: '#fef3c7' },
+      '$$$':  { color: '#ea580c', bg: '#ffedd5' },
+      '$$$$': { color: '#dc2626', bg: '#fee2e2' },
+    };
+
+    const TYPE_SUBTYPES = {
+      '餐厅': ['中餐', '韩餐', '日料'],
+    };
+
+    const TYPE_EMOJI = {
+      '餐厅': '🍽',
+      '酒吧': '🍺',
+      '娱乐': '🎭',
+      '徒步': '🥾',
+      '景点': '📸',
+    };
+
+    function catPal(cat) {
+      if (cat === '中餐') return PAL.cn;
+      if (cat === '韩餐') return PAL.kr;
+      return PAL.other;
+    }
+    function catEmoji(cat) {
+      return cat === '中餐' ? '🥢' : cat === '韩餐' ? '🥩' : '🍴';
+    }
+
+    /* ══════════════════════════════════════
+       STATE
+    ══════════════════════════════════════ */
+    let allData  = [];
+    let markerMap = {};   // idx → L.Marker
+
+    const state = { type: '全部', subtype: '全部', district: '全部' };
+
+    /* ══════════════════════════════════════
+       MAP INIT
+    ══════════════════════════════════════ */
+    const map = L.map('map', { center: [49.22, -123.05], zoom: 11, zoomControl: false });
+    L.control.zoom({ position: 'bottomright' }).addTo(map);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      maxZoom: 19, subdomains: ['a','b','c'],
+    }).addTo(map);
+
+    /* ══════════════════════════════════════
+       FILTER LOGIC
+    ══════════════════════════════════════ */
+    function getFiltered() {
+      return allData
+        .filter(r => state.type     === '全部' || r.type     === state.type)
+        .filter(r => state.subtype  === '全部' || r.category === state.subtype)
+        .filter(r => state.district === '全部' || r.district === state.district)
+        .sort((a, b) => (b.ratings?.aggregate_score || 0) - (a.ratings?.aggregate_score || 0));
+    }
+
+    function getAvailableDistricts() {
+      const pool = state.type === '全部' ? allData : allData.filter(r => r.type === state.type);
+      return [...new Set(pool.map(r => r.district))].sort();
+    }
+
+    /* ══════════════════════════════════════
+       MARKER FACTORY
+    ══════════════════════════════════════ */
+    function makeIcon(r) {
+      const p = catPal(r.category);
+      const emoji = catEmoji(r.category);
+      return L.divIcon({
+        className: '',
+        html: `<div style="width:38px;height:38px;background:${p.main};
+          border-radius:50% 50% 50% 0;transform:rotate(-45deg);
+          border:3px solid white;box-shadow:0 4px 16px ${p.main}55;
+          display:flex;align-items:center;justify-content:center;">
+          <span style="transform:rotate(45deg);font-size:15px;line-height:1;">${emoji}</span>
+        </div>`,
+        iconSize: [38,38], iconAnchor: [19,38], popupAnchor: [0,-44],
+      });
+    }
+
+    /* ══════════════════════════════════════
+       POPUP BUILDER
+    ══════════════════════════════════════ */
+    function buildPopup(r) {
+      const p    = catPal(r.category);
+      const ps   = PRICE_STYLE[r.price_level] || PRICE_STYLE['$$'];
+      const star = r.ratings.aggregate_score;
+
+      const tags = r.keywords.map(k =>
+        `<span style="display:inline-block;padding:2px 8px;border-radius:999px;
+        font-size:10px;background:${p.light};color:${p.main};
+        border:1px solid ${p.border};margin:0 3px 3px 0;">${k}</span>`
+      ).join('');
+
+      const reviews = r.reviews.map(rv => {
+        const icon = rv.platform === 'Google Review' ? '🔍' : '📖';
+        return `
+          <div style="margin-bottom:10px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:3px;">
+              <span style="font-size:10px;color:#a8a29e;">${icon} ${rv.platform}</span>
+              <a class="link-btn" href="${rv.source_url}" target="_blank" rel="noopener"
+                style="font-size:10px;color:${p.main};text-decoration:none;padding:2px 8px;
+                border:1px solid ${p.border};border-radius:5px;background:${p.light};">
+                源链接 ↗
+              </a>
+            </div>
+            <p style="margin:0;font-size:11.5px;color:#57534e;line-height:1.65;
+              border-left:2.5px solid ${p.main}50;padding-left:8px;">&ldquo;${rv.text}&rdquo;</p>
+          </div>`;
+      }).join('');
+
+      const videosBtns = [...r.videos]
+        .sort((a, b) => a.platform.localeCompare(b.platform, 'en'))
+        .map(v => {
+          const isYT  = v.platform === 'YouTube';
+          const bClr  = isYT ? '#c4302b' : '#111';
+          const bIcon = isYT ? '▶' : '♪';
+          return `<a class="link-btn" href="${v.url}" target="_blank" rel="noopener" title="${v.summary}"
+            style="display:inline-flex;align-items:center;gap:4px;padding:5px 11px;
+            border-radius:7px;border:1px solid ${bClr}25;color:${bClr};
+            font-size:11px;font-weight:500;text-decoration:none;background:${bClr}07;">
+            ${bIcon} ${v.platform}
+          </a>`;
+        }).join('');
+
+      return `
+        <div style="background:white;font-family:'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif;">
+          <div style="background:${p.main};padding:14px 16px 12px;">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+              <div style="flex:1;padding-right:10px;">
+                <div style="font-size:14px;font-weight:700;color:white;line-height:1.3;margin-bottom:5px;">${r.name}</div>
+                <div style="display:flex;gap:5px;align-items:center;">
+                  <span style="font-size:10px;background:white;color:${p.main};font-weight:700;
+                    padding:2px 9px;border-radius:999px;">${r.category}</span>
+                  <span style="font-size:10px;background:${ps.bg};color:${ps.color};font-weight:700;
+                    padding:2px 7px;border-radius:5px;">${r.price_level}</span>
+                </div>
+              </div>
+              <div style="text-align:right;flex-shrink:0;">
+                <div style="font-size:20px;font-weight:800;color:white;line-height:1;">★ ${star}</div>
+                <div style="font-size:9px;color:rgba(255,255,255,0.7);margin-top:2px;letter-spacing:0.04em;">综合评分</div>
+              </div>
+            </div>
+          </div>
+          <div class="popup-body-scroll" style="padding:13px 15px 14px;max-height:360px;overflow-y:auto;">
+            <div style="margin-bottom:9px;">${tags}</div>
+            <p style="margin:0 0 6px;font-size:11px;color:#a8a29e;">📍 ${r.address}</p>
+            <p style="margin:0 0 13px;font-size:12px;color:#78716c;line-height:1.7;">${r.description}</p>
+            <div style="border-top:1px solid #f5f4f0;margin-bottom:12px;"></div>
+            <div style="margin-bottom:12px;">
+              <div style="font-size:9.5px;font-weight:700;color:#b5aea6;letter-spacing:0.09em;
+                text-transform:uppercase;margin-bottom:9px;">精华评价</div>
+              ${reviews}
+            </div>
+            <div style="border-top:1px solid #f5f4f0;margin-bottom:12px;"></div>
+            <div>
+              <div style="font-size:9.5px;font-weight:700;color:#b5aea6;letter-spacing:0.09em;
+                text-transform:uppercase;margin-bottom:9px;">🎬 视频情报直达</div>
+              <div style="display:flex;flex-wrap:wrap;gap:7px;">${videosBtns}</div>
+            </div>
+          </div>
+        </div>`;
+    }
+
+    /* ══════════════════════════════════════
+       SIDEBAR CARD BUILDER
+    ══════════════════════════════════════ */
+    function buildCard(r, idx) {
+      const p    = catPal(r.category);
+      const ps   = PRICE_STYLE[r.price_level] || PRICE_STYLE['$$'];
+      const emoji = catEmoji(r.category);
+
+      const tags = r.keywords.map(k =>
+        `<span class="kw-tag" style="background:${p.light};color:${p.main};border-color:${p.border};">${k}</span>`
+      ).join('');
+
+      const vLinks = [...r.videos]
+        .sort((a, b) => a.platform.localeCompare(b.platform, 'en'))
+        .map(v => {
+          const isYT = v.platform === 'YouTube';
+          const bClr = isYT ? '#c4302b' : '#111';
+          return `<a class="link-btn" href="${v.url}" target="_blank" rel="noopener"
+            style="display:inline-flex;align-items:center;gap:3px;padding:2px 8px;
+            border-radius:5px;border:1px solid ${bClr}20;color:${bClr};
+            font-size:9.5px;text-decoration:none;background:${bClr}06;"
+            onclick="event.stopPropagation();">
+            ${isYT ? '▶' : '♪'} ${v.platform}
+          </a>`;
+        }).join('');
+
+      return `
+        <div class="rest-card"
+          data-idx="${idx}"
+          data-name="${r.name.replace(/"/g,'&quot;')}"
+          style="border-left-color:${p.main};">
+          <div class="card-top">
+            <div class="card-name">${emoji} ${r.name}</div>
+            <div class="card-score">★ ${r.ratings.aggregate_score}</div>
+          </div>
+          <div class="card-tags">${tags}</div>
+          <div class="card-bottom">
+            <span class="card-meta">${r.category} · ${r.district}</span>
+            <div style="display:flex;align-items:center;gap:5px;">
+              <span class="price-badge">${r.price_level}</span>
+              <div style="display:flex;gap:4px;">${vLinks}</div>
+            </div>
+          </div>
+        </div>`;
+    }
+
+    /* ══════════════════════════════════════
+       HOVER PREVIEW
+    ══════════════════════════════════════ */
+    const hoverPanel = document.getElementById('hover-preview');
+
+    function showPreview(r, mouseEvent) {
+      const p     = catPal(r.category);
+      const emoji = catEmoji(r.category);
+
+      // Image: real URL > styled placeholder with "暂无预览图"
+      const imgWrap = document.getElementById('preview-img-wrap');
+      if (r.image_url) {
+        imgWrap.innerHTML = `<img class="preview-img" src="${r.image_url}" alt="${r.name}"
+          onerror="this.parentNode.innerHTML='<div class=preview-img-placeholder style=background:${p.light};flex-direction:column;gap:6px;><span style=font-size:26px;>${emoji}</span><span style=font-size:10px;color:#b5aea6;>暂无预览图</span></div>'" />`;
+      } else {
+        imgWrap.innerHTML = `
+          <div class="preview-img-placeholder" style="background:${p.light};flex-direction:column;gap:6px;">
+            <span style="font-size:26px;">${emoji}</span>
+            <span style="font-size:10px;color:#b5aea6;letter-spacing:0.04em;">暂无预览图</span>
+          </div>`;
+      }
+
+      document.getElementById('preview-name').textContent = r.name;
+      document.getElementById('preview-meta').innerHTML = `
+        <span style="font-size:10px;font-weight:700;padding:2px 8px;border-radius:999px;
+          background:${p.main};color:white;">${r.category}</span>
+        <span class="price-badge">${r.price_level}</span>
+        <span style="font-size:11px;color:#d97706;font-weight:700;">★ ${r.ratings.aggregate_score}</span>`;
+      document.getElementById('preview-desc').textContent = r.description;
+      document.getElementById('preview-addr').textContent = '📍 ' + r.address;
+
+      // Position based on actual mouse coordinates
+      const panelH  = 290;
+      const panelW  = 244;
+      const margin  = 10;
+      let top  = mouseEvent.clientY - 20;
+      let left = 326; // right edge of sidebar + gap
+      if (top + panelH > window.innerHeight - margin) top = window.innerHeight - panelH - margin;
+      if (top < margin) top = margin;
+      if (left + panelW > window.innerWidth - margin) left = mouseEvent.clientX - panelW - margin;
+      hoverPanel.style.top  = top  + 'px';
+      hoverPanel.style.left = left + 'px';
+
+      hoverPanel.classList.add('visible');
+    }
+
+    function hidePreview() {
+      hoverPanel.classList.remove('visible');
+    }
+
+    /* ══════════════════════════════════════
+       RENDER
+    ══════════════════════════════════════ */
+    function render() {
+      const filtered = getFiltered();
+
+      // Update counts
+      document.getElementById('shown-count').textContent  = filtered.length;
+      document.getElementById('shown-count2').textContent = filtered.length;
+      document.getElementById('total-count').textContent  = allData.length;
+
+      // Render cards
+      const list = document.getElementById('card-list');
+      if (filtered.length === 0) {
+        list.innerHTML = `
+          <div class="empty-state">
+            <div class="icon">🔍</div>
+            <p>当前筛选条件下<br>暂无数据</p>
+          </div>`;
+      } else {
+        list.innerHTML = filtered.map(r => buildCard(r, allData.indexOf(r))).join('');
+        // Card click → fly + popup
+        list.querySelectorAll('.rest-card').forEach(card => {
+          const idx    = parseInt(card.dataset.idx);
+          const marker = markerMap[idx];
+          card.addEventListener('click', () => {
+            if (!marker) return;
+            map.flyTo(marker.getLatLng(), 14, { duration: 0.7 });
+            setTimeout(() => marker.openPopup(), 780);
+          });
+          // Hover preview — pass live mouse event for coordinate-based positioning
+          card.addEventListener('mousemove',  (e) => showPreview(allData[idx], e));
+          card.addEventListener('mouseleave', hidePreview);
+        });
+      }
+
+      // Show / hide markers
+      const visSet = new Set(filtered.map(r => allData.indexOf(r)));
+      allData.forEach((_, idx) => {
+        if (visSet.has(idx)) markerMap[idx]?.addTo(map);
+        else                 markerMap[idx]?.remove();
+      });
+
+      // Sync pill active states
+      syncPills();
+    }
+
+    /* ══════════════════════════════════════
+       FILTER UI BUILDERS
+    ══════════════════════════════════════ */
+    function buildDistrictPills() {
+      const districts = getAvailableDistricts();
+      const container = document.getElementById('district-pills');
+      const all = ['全部', ...districts];
+      container.innerHTML = all.map(d =>
+        `<button class="pill ${d === state.district ? 'active-district' : ''}" data-district="${d}">${d}</button>`
+      ).join('');
+      container.querySelectorAll('[data-district]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          state.district = btn.dataset.district;
+          render();
+        });
+      });
+    }
+
+    function buildSubtypePills() {
+      const section   = document.getElementById('subtype-section');
+      const subtypes  = TYPE_SUBTYPES[state.type];
+      if (!subtypes) { section.style.display = 'none'; return; }
+      section.style.display = 'block';
+      const container = document.getElementById('subtype-pills');
+      const all = ['全部', ...subtypes];
+      container.innerHTML = all.map(s =>
+        `<button class="pill ${s === state.subtype ? 'active-sub' : ''}" data-sub="${s}">${s}</button>`
+      ).join('');
+      container.querySelectorAll('[data-sub]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          state.subtype = btn.dataset.sub;
+          render();
+        });
+      });
+    }
+
+    function syncPills() {
+      // Type pills
+      document.querySelectorAll('#type-pills .pill').forEach(btn => {
+        const active = btn.dataset.type === state.type;
+        btn.className = 'pill' + (active ? ' active-type' : '');
+      });
+      // Subtype pills
+      document.querySelectorAll('#subtype-pills .pill').forEach(btn => {
+        const active = btn.dataset.sub === state.subtype;
+        btn.className = 'pill' + (active ? ' active-sub' : '');
+      });
+      // District pills
+      document.querySelectorAll('#district-pills .pill').forEach(btn => {
+        const active = btn.dataset.district === state.district;
+        btn.className = 'pill' + (active ? ' active-district' : '');
+      });
+    }
+
+    /* Type pill events (static buttons) */
+    document.querySelectorAll('#type-pills .pill').forEach(btn => {
+      btn.addEventListener('click', () => {
+        state.type    = btn.dataset.type;
+        state.subtype = '全部';       // reset sub when type changes
+        state.district = '全部';      // reset district too
+        buildSubtypePills();
+        buildDistrictPills();
+        render();
+      });
+    });
+
+    /* Clear button */
+    document.getElementById('clear-btn').addEventListener('click', () => {
+      state.type     = '全部';
+      state.subtype  = '全部';
+      state.district = '全部';
+      buildSubtypePills();
+      buildDistrictPills();
+      render();
+    });
+
+    /* ══════════════════════════════════════
+       BOOTSTRAP
+    ══════════════════════════════════════ */
+    fetch('./shared_data/restaurants.json')
+      .then(res => { if (!res.ok) throw new Error('HTTP ' + res.status); return res.json(); })
+      .then(data => {
+        allData = data.restaurants;
+
+        // Create all markers up front
+        allData.forEach((r, idx) => {
+          const marker = L.marker([r.lat, r.lng], { icon: makeIcon(r) })
+            .addTo(map)
+            .bindPopup(buildPopup(r), { maxWidth: 320 });
+          markerMap[idx] = marker;
+        });
+
+        // Build dynamic filter pills
+        buildSubtypePills();
+        buildDistrictPills();
+        render();
+      })
+      .catch(err => {
+        console.error('数据加载失败:', err);
+        document.getElementById('card-list').innerHTML = `
+          <div class="empty-state">
+            <div class="icon">⚠️</div>
+            <p>数据加载失败<br>
+            <code style="font-size:10px;background:#f5f4f0;padding:1px 6px;border-radius:4px;">
+              ${err.message}
+            </code></p>
+          </div>`;
+      });
+
+  })();
+  </script>
+</body>
+</html>

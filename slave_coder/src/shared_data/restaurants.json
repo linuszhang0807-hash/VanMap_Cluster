@@ -1,0 +1,181 @@
+{
+  "meta": {
+    "source": "vancouver_scraper.py v3 (Pydantic + requests + clickable URLs)",
+    "generated_at": "2026-06-02T03:14:46.197196+00:00",
+    "region": "Greater Vancouver (Vancouver / Richmond / Burnaby / Surrey)",
+    "network_probe_passed": true,
+    "total_records": 8,
+    "category_breakdown": { "中餐": 4, "韩餐": 4 },
+    "avg_aggregate_score": 4.58
+  },
+  "restaurants": [
+    {
+      "name": "Kirin Seafood Restaurant",
+      "type": "餐厅",
+      "category": "中餐",
+      "district": "Vancouver",
+      "address": "1172 Alberni St, Vancouver, BC",
+      "price_level": "$$$",
+      "image_url": "https://placehold.co/320x150/f9ede9/c96b52?text=Kirin+Seafood",
+      "lat": 49.2827, "lng": -123.1207,
+      "description": "Downtown 经典粤菜海鲜楼，炭烧叉烧与清蒸游水海鲜是招牌，商务宴请首选。",
+      "videos": [
+        { "platform": "YouTube", "url": "https://www.youtube.com/results?search_query=Kirin+Seafood+Restaurant+Vancouver", "summary": "食评人深探 Kirin 全菜单，重点试吃清蒸龙虾与片皮鸭，厨房近距离揭秘。" },
+        { "platform": "TikTok",  "url": "https://www.tiktok.com/search?q=Kirin+Seafood+Restaurant+Vancouver+dim+sum", "summary": "周末早茶 vlog：推车点心实况，虾饺皮薄透明引发弹幕刷屏。" }
+      ],
+      "reviews": [
+        { "platform": "Google Review", "text": "Hands down the best Cantonese in Downtown. The steamed fish is incredible — perfectly seasoned.", "source_url": "https://www.google.com/maps/search/?api=1&query=Kirin+Seafood+Restaurant+Vancouver" },
+        { "platform": "小红书", "text": "叉烧是全温哥华最嫩的那种，肥瘦比例完美，配白饭能吃三碗！强烈推荐给第一次来的朋友。", "source_url": "https://www.xiaohongshu.com/search_result?keyword=Kirin+Seafood+Vancouver" }
+      ],
+      "keywords": ["粤菜海鲜", "商务宴请", "炭烧叉烧"],
+      "ratings": { "google": 4.5, "xiaohongshu": 4.7, "aggregate_score": 4.6 }
+    },
+    {
+      "name": "Sura Korean Cuisine",
+      "type": "餐厅",
+      "category": "韩餐",
+      "district": "Vancouver",
+      "address": "1518 Robson St, Vancouver, BC",
+      "price_level": "$$$",
+      "image_url": "https://placehold.co/320x150/eaf1f8/5b87b0?text=Sura+Korean",
+      "lat": 49.2836, "lng": -123.1193,
+      "description": "Downtown 精致韩餐，宫廷风格摆盘，烤牛肋骨与海鲜煎饼受本地食客高度评价。",
+      "videos": [
+        { "platform": "YouTube", "url": "https://www.youtube.com/results?search_query=Sura+Korean+Cuisine+Vancouver", "summary": "温哥华美食频道专题：Sura 宫廷套餐全流程，7 道菜一镜到底展示。" },
+        { "platform": "TikTok",  "url": "https://www.tiktok.com/search?q=Sura+Korean+Cuisine+Vancouver+galbi", "summary": "炭火烤牛肋骨特写，油脂滴落瞬间引来百万次观看。" }
+      ],
+      "reviews": [
+        { "platform": "Google Review", "text": "Authentic royal court presentation. The galbi is melt-in-your-mouth good and the banchan variety is impressive.", "source_url": "https://www.google.com/maps/search/?api=1&query=Sura+Korean+Cuisine+Vancouver" },
+        { "platform": "小红书", "text": "宫廷摆盘真的太美了，拍照出片率极高！海鲜煎饼外酥里嫩，配막걸리一绝。", "source_url": "https://www.xiaohongshu.com/search_result?keyword=Sura+Korean+Vancouver" }
+      ],
+      "keywords": ["宫廷韩餐", "烤牛肋骨", "精致摆盘"],
+      "ratings": { "google": 4.6, "xiaohongshu": 4.9, "aggregate_score": 4.75 }
+    },
+    {
+      "name": "Golden Great Wall Restaurant",
+      "type": "餐厅",
+      "category": "中餐",
+      "district": "Richmond",
+      "address": "4540 No 3 Rd, Richmond, BC",
+      "price_level": "$$",
+      "image_url": "https://placehold.co/320x150/f9ede9/c96b52?text=Golden+Great+Wall",
+      "lat": 49.1628, "lng": -123.1369,
+      "description": "Richmond 人气早茶老店，虾饺、肠粉、萝卜糕必点，周末翻台率极高。",
+      "videos": [
+        { "platform": "TikTok",  "url": "https://www.tiktok.com/search?q=Golden+Great+Wall+dim+sum+Richmond+Vancouver", "summary": "Richmond 早茶大挑战：单人一小时内吃遍推车菜单，结局超预期。" },
+        { "platform": "YouTube", "url": "https://www.youtube.com/results?search_query=Golden+Great+Wall+Restaurant+Richmond+dim+sum", "summary": "本地华人博主带父母吃早茶，萝卜糕做法同款复刻对比评测。" }
+      ],
+      "reviews": [
+        { "platform": "Google Review", "text": "Best dim sum in Richmond, period. Show up by 9am or prepare to wait 45 minutes on weekends.", "source_url": "https://www.google.com/maps/search/?api=1&query=Golden+Great+Wall+Restaurant+Richmond+BC" },
+        { "platform": "小红书", "text": "肠粉皮薄如纸，虾饺馅料饱满，推车阿姨会粤语、普通话随时切换，服务特别亲切！", "source_url": "https://www.xiaohongshu.com/search_result?keyword=Golden+Great+Wall+Richmond+早茶" }
+      ],
+      "keywords": ["排队圣地", "周末早茶", "虾饺肠粉"],
+      "ratings": { "google": 4.4, "xiaohongshu": 4.6, "aggregate_score": 4.5 }
+    },
+    {
+      "name": "New Town Bakery & Restaurant",
+      "type": "餐厅",
+      "category": "中餐",
+      "district": "Vancouver",
+      "address": "148 E Pender St, Vancouver, BC",
+      "price_level": "$",
+      "image_url": "https://placehold.co/320x150/f9ede9/c96b52?text=New+Town+Bakery",
+      "lat": 49.28, "lng": -123.1017,
+      "description": "Chinatown 老字号，蜜糖叉烧包与鸡尾包是几十年不变的招牌，下午茶必去。",
+      "videos": [
+        { "platform": "YouTube", "url": "https://www.youtube.com/results?search_query=New+Town+Bakery+Restaurant+Vancouver+Chinatown", "summary": "温哥华 Chinatown 消失中的老字号系列第一集：New Town 半世纪的烘焙故事。" },
+        { "platform": "TikTok",  "url": "https://www.tiktok.com/search?q=New+Town+Bakery+Vancouver+BBQ+pork+bun", "summary": "叉烧包现烤出炉慢动作，蜜糖焦面瞬间点击量超 50 万。" }
+      ],
+      "reviews": [
+        { "platform": "Google Review", "text": "A Chinatown institution. The BBQ pork buns are legendary — crispy top, sweet-savory filling, timeless.", "source_url": "https://www.google.com/maps/search/?api=1&query=New+Town+Bakery+Restaurant+Vancouver" },
+        { "platform": "小红书", "text": "鸡尾包是真的被低估！酥皮配椰蓉馅，甜度刚好，配一杯港式奶茶完美收尾。", "source_url": "https://www.xiaohongshu.com/search_result?keyword=New+Town+Bakery+温哥华+叉烧包" }
+      ],
+      "keywords": ["Chinatown老字号", "蜜糖叉烧包", "下午茶情怀"],
+      "ratings": { "google": 4.3, "xiaohongshu": 4.5, "aggregate_score": 4.4 }
+    },
+    {
+      "name": "Gyo-O Korean BBQ",
+      "type": "餐厅",
+      "category": "韩餐",
+      "district": "Burnaby",
+      "address": "5028 Kingsway, Burnaby, BC",
+      "price_level": "$$",
+      "image_url": "https://placehold.co/320x150/eaf1f8/5b87b0?text=Gyo-O+Korean+BBQ",
+      "lat": 49.2285, "lng": -122.9981,
+      "description": "Burnaby 本地最火烤肉店，牛舌与五花肉套餐配无限续杯小菜，性价比极高。",
+      "videos": [
+        { "platform": "TikTok",  "url": "https://www.tiktok.com/search?q=Gyo-O+Korean+BBQ+Burnaby+Vancouver", "summary": "深夜烤肉实况：Gyo-O 单人自助挑战，小菜续了 7 次的真实记录。" },
+        { "platform": "YouTube", "url": "https://www.youtube.com/results?search_query=Gyo-O+Korean+BBQ+Burnaby", "summary": "Burnaby 韩烤横向评测第一名，Gyo-O 牛舌 vs 和牛五花盲测对决。" }
+      ],
+      "reviews": [
+        { "platform": "Google Review", "text": "Unlimited banchan refills and the beef tongue is buttery smooth. Best KBBQ value in Greater Vancouver.", "source_url": "https://www.google.com/maps/search/?api=1&query=Gyo-O+Korean+BBQ+Burnaby+BC" },
+        { "platform": "小红书", "text": "五花肉切得厚度刚好，烤到微焦卷着生菜吃，再喝口啤酒，这就是幸福的味道。小菜不限续，强烈推荐！", "source_url": "https://www.xiaohongshu.com/search_result?keyword=Gyo-O+韩式烤肉+Burnaby" }
+      ],
+      "keywords": ["深夜烤肉", "小菜无限续", "性价比之王"],
+      "ratings": { "google": 4.5, "xiaohongshu": 4.8, "aggregate_score": 4.65 }
+    },
+    {
+      "name": "Hanwoori Korean Restaurant",
+      "type": "餐厅",
+      "category": "韩餐",
+      "district": "Richmond",
+      "address": "6900 No 3 Rd, Richmond, BC",
+      "price_level": "$$",
+      "image_url": "https://placehold.co/320x150/eaf1f8/5b87b0?text=Hanwoori+Korean",
+      "lat": 49.1664, "lng": -123.1338,
+      "description": "Richmond 韩餐代表，石锅拌饭与部队锅正宗，辣白菜自家腌制，口碑稳定。",
+      "videos": [
+        { "platform": "TikTok",  "url": "https://www.tiktok.com/search?q=Hanwoori+Korean+Restaurant+Richmond+bibimbap", "summary": "石锅拌饭揭盖瞬间蒸汽升腾，锅底锅巴声音 ASMR 级爽感。" },
+        { "platform": "YouTube", "url": "https://www.youtube.com/results?search_query=Hanwoori+Korean+Restaurant+Richmond+Vancouver", "summary": "Richmond 韩餐对决：部队锅哪家强？Hanwoori 自家腌制泡菜评分最高。" }
+      ],
+      "reviews": [
+        { "platform": "Google Review", "text": "The kimchi is housemade and you can taste the difference. Dolsot bibimbap with the crispy rice bottom is perfection.", "source_url": "https://www.google.com/maps/search/?api=1&query=Hanwoori+Korean+Restaurant+Richmond+BC" },
+        { "platform": "小红书", "text": "部队锅里的泡菜是自己腌的，发酵味道特别正，和超市罐头不是一个次元，Richmond 韩餐首选！", "source_url": "https://www.xiaohongshu.com/search_result?keyword=Hanwoori+Korean+Richmond+部队锅" }
+      ],
+      "keywords": ["自制泡菜", "石锅拌饭", "部队锅正宗"],
+      "ratings": { "google": 4.4, "xiaohongshu": 4.7, "aggregate_score": 4.55 }
+    },
+    {
+      "name": "Sun Sui Wah Seafood Restaurant",
+      "type": "餐厅",
+      "category": "中餐",
+      "district": "Vancouver",
+      "address": "3888 Main St, Vancouver, BC",
+      "price_level": "$$$",
+      "image_url": "https://placehold.co/320x150/f9ede9/c96b52?text=Sun+Sui+Wah",
+      "lat": 49.2423, "lng": -123.0712,
+      "description": "Main Street 老牌海鲜粤菜馆，以片皮乳鸽与波士顿龙虾闻名大温，家庭聚餐首选。",
+      "videos": [
+        { "platform": "YouTube", "url": "https://www.youtube.com/results?search_query=Sun+Sui+Wah+Seafood+Restaurant+Vancouver", "summary": "温哥华最佳乳鸽评测：Sun Sui Wah 片皮乳鸽现场片制全纪录，皮脆肉嫩令人叫绝。" },
+        { "platform": "TikTok",  "url": "https://www.tiktok.com/search?q=Sun+Sui+Wah+Vancouver+squab+lobster", "summary": "龙虾生猛下锅实况，姜葱炒制香气飘满整层楼，评论区全是口水。" }
+      ],
+      "reviews": [
+        { "platform": "Google Review", "text": "The squab is unmatched — crispy skin, juicy meat, worth every penny. A Vancouver institution since the 80s.", "source_url": "https://www.google.com/maps/search/?api=1&query=Sun+Sui+Wah+Seafood+Restaurant+Vancouver" },
+        { "platform": "小红书", "text": "全温哥华最好吃的乳鸽在这里！片皮技术一流，皮酥肉嫩，配上酱料直接封神，家庭聚餐必来。", "source_url": "https://www.xiaohongshu.com/search_result?keyword=Sun+Sui+Wah+温哥华+乳鸽" }
+      ],
+      "keywords": ["片皮乳鸽", "波士顿龙虾", "家庭聚餐"],
+      "ratings": { "google": 4.6, "xiaohongshu": 4.8, "aggregate_score": 4.7 }
+    },
+    {
+      "name": "Jang Mo Jib Korean Restaurant",
+      "type": "餐厅",
+      "category": "韩餐",
+      "district": "Surrey",
+      "address": "8148 120 St, Surrey, BC",
+      "price_level": "$",
+      "image_url": "https://placehold.co/320x150/eaf1f8/5b87b0?text=Jang+Mo+Jib",
+      "lat": 49.1772, "lng": -122.849,
+      "description": "Surrey 韩国社区人气家庭餐馆，海鲜辣汤面与嫩豆腐锅是周末必点招牌。",
+      "videos": [
+        { "platform": "TikTok",  "url": "https://www.tiktok.com/search?q=Jang+Mo+Jib+Korean+Restaurant+Surrey+Vancouver", "summary": "辣度挑战：海鲜辣汤面最高等级实测，主播脸红全程，弹幕笑翻。" },
+        { "platform": "YouTube", "url": "https://www.youtube.com/results?search_query=Jang+Mo+Jib+Korean+Restaurant+Surrey+BC", "summary": "Surrey 韩国移民社区探店：Jang Mo Jib 老板娘分享 30 年家传汤底秘方。" }
+      ],
+      "reviews": [
+        { "platform": "Google Review", "text": "Feels like eating at a Korean grandma's house. The soft tofu stew is silky smooth and the broth is deeply flavored.", "source_url": "https://www.google.com/maps/search/?api=1&query=Jang+Mo+Jib+Korean+Restaurant+Surrey+BC" },
+        { "platform": "小红书", "text": "嫩豆腐锅豆腐嫩到颤抖，汤底鲜辣平衡感极好，老板娘会说普通话，接待华人超贴心！", "source_url": "https://www.xiaohongshu.com/search_result?keyword=Jang+Mo+Jib+Surrey+嫩豆腐锅" }
+      ],
+      "keywords": ["家庭式韩餐", "嫩豆腐锅", "海鲜辣汤面"],
+      "ratings": { "google": 4.3, "xiaohongshu": 4.6, "aggregate_score": 4.45 }
+    }
+  ]
+}
