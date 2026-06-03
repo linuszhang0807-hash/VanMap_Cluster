@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VanMap · 探索大温哥华</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { width: 100%; height: 100%; overflow: hidden; background: #0d0c0b;
+      font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; }
+
+    #portal { position: relative; width: 100vw; height: 100vh; overflow: hidden; }
+
+    #logo-bar {
+      position: absolute; top: 0; left: 0; right: 0; z-index: 300;
+      padding: 22px 32px; display: flex; align-items: center; gap: 10px;
+      background: linear-gradient(180deg, rgba(0,0,0,0.45) 0%, transparent 100%);
+      pointer-events: none;
+    }
+    .logo-icon { font-size: 22px; }
+    .logo-text { font-size: 15px; font-weight: 700; color: rgba(255,255,255,0.92); letter-spacing: 0.06em; }
+    .logo-sep  { width: 1px; height: 16px; background: rgba(255,255,255,0.25); margin: 0 6px; }
+    .logo-sub  { font-size: 10.5px; color: rgba(255,255,255,0.38); letter-spacing: 0.12em; text-transform: uppercase; }
+
+    #bottom-bar {
+      position: absolute; bottom: 0; left: 0; right: 0; z-index: 300;
+      padding: 14px 32px; text-align: center;
+      background: linear-gradient(0deg, rgba(0,0,0,0.4) 0%, transparent 100%);
+      pointer-events: none;
+    }
+    #bottom-bar span { font-size: 9.5px; color: rgba(255,255,255,0.28); letter-spacing: 0.18em; text-transform: uppercase; }
+
+    .slice {
+      position: absolute; inset: 0; display: block; text-decoration: none;
+      cursor: pointer; isolation: isolate;
+    }
+    .slice-bg {
+      position: absolute; inset: 0; background-size: cover; background-position: center;
+      transition: transform 0.60s cubic-bezier(0.4, 0, 0.2, 1); will-change: transform;
+    }
+    .slice:hover .slice-bg { transform: scale(1.08); }
+    .slice-tint { position: absolute; inset: 0; opacity: 0.56; transition: opacity 0.40s ease; }
+    .slice:hover .slice-tint { opacity: 0.28; }
+    .slice-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,0.06) 0%, rgba(0,0,0,0.28) 45%, rgba(0,0,0,0.60) 100%);
+    }
+    .slice-content {
+      position: absolute; top: 50%; transform: translate(-50%, -50%);
+      text-align: center; color: #fff; z-index: 10;
+      pointer-events: none; white-space: nowrap;
+      transition: transform 0.45s cubic-bezier(0.34, 1.42, 0.64, 1);
+    }
+    .slice:hover .slice-content { transform: translate(-50%, -58%); }
+    .slice-emoji {
+      display: block; font-size: 40px; margin-bottom: 12px;
+      filter: drop-shadow(0 3px 12px rgba(0,0,0,0.45));
+      transition: transform 0.45s cubic-bezier(0.34, 1.42, 0.64, 1);
+    }
+    .slice:hover .slice-emoji { transform: scale(1.15); }
+    .slice-name {
+      font-size: 20px; font-weight: 700; letter-spacing: 0.14em;
+      text-shadow: 0 2px 16px rgba(0,0,0,0.55); margin-bottom: 7px;
+      transition: letter-spacing 0.35s ease;
+    }
+    .slice:hover .slice-name { letter-spacing: 0.22em; }
+    .slice-en {
+      font-size: 10px; color: rgba(255,255,255,0.52);
+      letter-spacing: 0.18em; text-transform: uppercase; transition: color 0.3s ease;
+    }
+    .slice:hover .slice-en { color: rgba(255,255,255,0.88); }
+    .slice-cta {
+      display: block; margin-top: 14px; font-size: 10px;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: rgba(255,255,255,0); transition: color 0.3s ease 0.05s;
+    }
+    .slice:hover .slice-cta { color: rgba(255,255,255,0.65); }
+
+    #divider-svg {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      pointer-events: none; z-index: 200; overflow: visible;
+    }
+  </style>
+</head>
+<body>
+<div id="portal">
+  <div id="logo-bar">
+    <span class="logo-icon">🗺️</span>
+    <span class="logo-text">VanMap</span>
+    <span class="logo-sep"></span>
+    <span class="logo-sub">大温探索指南</span>
+  </div>
+
+  <svg id="divider-svg" viewBox="0 0 100 100" preserveAspectRatio="none"></svg>
+
+  <div id="bottom-bar">
+    <span>Greater Vancouver · 点击任意区域探索 · VanMap 2026</span>
+  </div>
+</div>
+
+<script>
+/* Single geometry constant — change here to adjust diagonal angle everywhere */
+const SKEW_VW = 8;
+document.documentElement.style.setProperty('--skew-offset', `${SKEW_VW}vw`);
+
+const CATEGORIES = [
+  { name:'餐厅', en:'Dining',        emoji:'🍽', imgSeed:'vanfood1',      fallbackBg:'#6b3020', tint:'linear-gradient(145deg,#8b3a20,#c05a30)' },
+  { name:'酒吧', en:'Nightlife',     emoji:'🍺', imgSeed:'vanbar2',       fallbackBg:'#1a3050', tint:'linear-gradient(145deg,#1a3a5c,#2a5580)' },
+  { name:'娱乐', en:'Entertainment', emoji:'🎭', imgSeed:'vanentertain3', fallbackBg:'#4a1850', tint:'linear-gradient(145deg,#6b2060,#9a3088)' },
+  { name:'徒步', en:'Hiking',        emoji:'🥾', imgSeed:'vanhike4',      fallbackBg:'#1a3a28', tint:'linear-gradient(145deg,#1a4a30,#2a6e48)' },
+  { name:'景点', en:'Attractions',   emoji:'📸', imgSeed:'vanscenic5',    fallbackBg:'#5a3a10', tint:'linear-gradient(145deg,#7a5010,#b07820)' },
+  { name:'活动', en:'Events',        emoji:'🎪', imgSeed:'vanevents6',    fallbackBg:'#1a2a50', tint:'linear-gradient(145deg,#1a2a5c,#2a4a88)' },
+];
+
+const N = CATEGORIES.length;
+const W = 100 / N;
+
+function makeClipPath(i) {
+  const tl = i * W, tr = (i + 1) * W;
+  const bl = i === 0       ? 0   : tl + SKEW_VW;
+  const br = i === (N - 1) ? 100 : tr + SKEW_VW;
+  return `polygon(${tl.toFixed(4)}% 0%, ${tr.toFixed(4)}% 0%, ${br.toFixed(4)}% 100%, ${bl.toFixed(4)}% 100%)`;
+}
+
+function makeContentLeft(i) {
+  const leftMid  = (i === 0)       ? i * W           : i * W       + SKEW_VW / 2;
+  const rightMid = (i === (N - 1)) ? (i + 1) * W     : (i + 1) * W + SKEW_VW / 2;
+  return ((leftMid + rightMid) / 2).toFixed(4) + '%';
+}
+
+function buildSlices() {
+  const portal = document.getElementById('portal');
+  const svg    = document.getElementById('divider-svg');
+  CATEGORIES.forEach((cat, i) => {
+    const a = document.createElement('a');
+    a.className      = 'slice';
+    a.href           = 'index.html?type=' + encodeURIComponent(cat.name);
+    a.title          = cat.name;
+    a.style.clipPath = makeClipPath(i);
+    a.style.zIndex   = i + 1;
+    a.innerHTML = `
+      <div class="slice-bg" style="background-image:url('https://picsum.photos/seed/${cat.imgSeed}/1400/900');background-color:${cat.fallbackBg};"></div>
+      <div class="slice-tint" style="background:${cat.tint};"></div>
+      <div class="slice-overlay"></div>
+      <div class="slice-content" style="left:${makeContentLeft(i)};">
+        <span class="slice-emoji">${cat.emoji}</span>
+        <h2 class="slice-name">${cat.name}</h2>
+        <p class="slice-en">${cat.en}</p>
+        <span class="slice-cta">探索 →</span>
+      </div>`;
+    portal.insertBefore(a, svg);
+  });
+}
+
+function buildDividers() {
+  const svg   = document.getElementById('divider-svg');
+  const svgNS = 'http://www.w3.org/2000/svg';
+  const defs  = document.createElementNS(svgNS, 'defs');
+  const grad  = document.createElementNS(svgNS, 'linearGradient');
+  grad.id = 'divFade';
+  grad.setAttribute('x1','0'); grad.setAttribute('y1','0');
+  grad.setAttribute('x2','0'); grad.setAttribute('y2','1');
+  [['0%','0'],['12%','0.28'],['50%','0.35'],['88%','0.28'],['100%','0']].forEach(([offset, op]) => {
+    const s = document.createElementNS(svgNS, 'stop');
+    s.setAttribute('offset', offset);
+    s.setAttribute('stop-color', 'white');
+    s.setAttribute('stop-opacity', op);
+    grad.appendChild(s);
+  });
+  defs.appendChild(grad);
+  svg.appendChild(defs);
+  for (let i = 1; i < N; i++) {
+    const topX = i * W;
+    const botX = Math.min(topX + SKEW_VW, 100);
+    const line = document.createElementNS(svgNS, 'line');
+    line.setAttribute('x1', topX); line.setAttribute('y1', '0');
+    line.setAttribute('x2', botX); line.setAttribute('y2', '100');
+    line.setAttribute('stroke', 'url(#divFade)');
+    line.setAttribute('stroke-width', '1.5');
+    line.setAttribute('vector-effect', 'non-scaling-stroke');
+    svg.appendChild(line);
+  }
+}
+
+buildSlices();
+buildDividers();
+</script>
+</body>
+</html>
