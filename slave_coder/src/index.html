@@ -14,6 +14,8 @@
   </script>
 
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
 
   <style>
     /* ── Root variables ── */
@@ -46,7 +48,7 @@
     .brand { padding: 18px 18px 14px; border-bottom: 1px solid #f2f0ec; flex-shrink: 0; min-width: 320px; }
     .brand-row { display: flex; align-items: center; gap: 8px; margin-bottom: 3px; }
     .brand h1 { font-size: 14px; font-weight: 700; letter-spacing: 0.025em; color: #1c1917; white-space: nowrap; }
-    .brand-sub { font-size: 10.5px; color: #b5aea6; letter-spacing: 0.07em; padding-left: 28px; white-space: nowrap; }
+    .brand-sub { font-size: 10.5px; color: #b5aea6; letter-spacing: 0.07em; white-space: nowrap; }
 
     /* ── Filter sections ── */
     .filter-section { padding: 9px 14px; border-bottom: 1px solid #f2f0ec; flex-shrink: 0; min-width: 320px; }
@@ -123,6 +125,32 @@
     }
     #sidebar-toggle:hover { color: #57534e; }
 
+    #mobile-menu-btn {
+      display: none;
+      position: fixed; top: 12px; left: 12px; z-index: 1002;
+      width: 40px; height: 40px; border-radius: 10px;
+      background: #fff; border: 1px solid #e7e5e0;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+      font-size: 18px; cursor: pointer; color: #57534e;
+    }
+
+    @media (max-width: 768px) {
+      :root { --sidebar-width: 100vw; }
+      #sidebar {
+        position: fixed; left: 0; top: 0; height: 100%;
+        width: 100vw; max-width: 100vw;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+        z-index: 1000;
+      }
+      #sidebar.mobile-open { transform: translateX(0); }
+      #sidebar.collapsed { width: 100vw; }
+      #sidebar-toggle { display: none; }
+      #mobile-menu-btn { display: flex; align-items: center; justify-content: center; }
+      #search-container { left: 56px; right: 12px; width: auto; max-width: none; }
+      #hover-preview { display: none !important; }
+    }
+
     /* ── Hover Preview Panel ── */
     #hover-preview {
       position: fixed; left: 330px; top: 0; width: 244px;
@@ -154,7 +182,7 @@
       transition: left 0.3s cubic-bezier(0.4,0,0.2,1);
     }
     #search-input {
-      width: 100%; padding: 9px 14px 9px 36px;
+      width: 100%; padding: 9px 14px;
       border: 1px solid rgba(255,255,255,0.6); border-radius: 12px;
       background: rgba(255,255,255,0.88);
       backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
@@ -164,7 +192,6 @@
     }
     #search-input:focus { box-shadow: 0 6px 28px rgba(0,0,0,0.18); border-color: rgba(255,255,255,0.9); }
     #search-input::placeholder { color: #a8a29e; }
-    #search-icon { position: absolute; left: 11px; top: 50%; transform: translateY(-50%); font-size: 14px; pointer-events: none; }
     #search-dropdown {
       position: absolute; top: calc(100% + 6px); left: 0; right: 0;
       background: rgba(255,255,255,0.96); backdrop-filter: blur(12px);
@@ -199,6 +226,65 @@
     .popup-body-scroll::-webkit-scrollbar-thumb { background: #e7e5e0; border-radius: 2px; }
     .link-btn { transition: opacity 0.14s; }
     .link-btn:hover { opacity: 0.68; }
+
+    /* ── Lightbox ─────────────────────────────── */
+    #lb-overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.82); z-index: 9999;
+      align-items: center; justify-content: center;
+    }
+    #lb-panel {
+      background: #fff; border-radius: 16px;
+      width: min(92vw, 780px); max-height: 88vh;
+      overflow: hidden; display: flex; flex-direction: column;
+      position: relative; box-shadow: 0 24px 64px rgba(0,0,0,0.45);
+    }
+    #lb-grid {
+      padding: 10px 18px 18px; overflow-y: auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      gap: 7px; flex: 1;
+    }
+    #lb-grid::-webkit-scrollbar { width: 4px; }
+    #lb-grid::-webkit-scrollbar-thumb { background: #e7e5e0; border-radius: 2px; }
+    .lb-thumb {
+      aspect-ratio: 4/3; border-radius: 8px; overflow: hidden;
+      cursor: pointer; background: #f5f4f0; position: relative;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .lb-thumb:hover { transform: scale(1.03); box-shadow: 0 6px 20px rgba(0,0,0,0.18); }
+    .lb-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .lb-thumb-label {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      background: linear-gradient(transparent, rgba(0,0,0,0.52));
+      padding: 14px 7px 5px; font-size: 10px; color: rgba(255,255,255,0.92);
+    }
+    #lb-preview {
+      display: none; position: absolute; inset: 0;
+      background: #111; border-radius: 16px;
+      flex-direction: column;
+    }
+    .lb-nav-btn {
+      background: rgba(255,255,255,0.14); border: none; color: #fff;
+      width: 36px; height: 36px; border-radius: 50%;
+      cursor: pointer; font-size: 20px; line-height: 1;
+      transition: background 0.15s; display: flex; align-items: center; justify-content: center;
+    }
+    .lb-nav-btn:hover { background: rgba(255,255,255,0.28); }
+    /* photo strip in popup */
+    .photo-strip {
+      display: grid; gap: 3px; border-radius: 10px; overflow: hidden;
+      margin-bottom: 11px; cursor: pointer; position: relative;
+      height: 110px; transition: filter 0.18s;
+      grid-template-rows: 1fr 1fr;
+      align-content: stretch;
+    }
+    .photo-strip:hover { filter: brightness(0.92); }
+    .photo-strip-more {
+      position: absolute; bottom: 7px; right: 7px;
+      background: rgba(0,0,0,0.58); color: #fff; font-size: 10px;
+      padding: 2px 9px; border-radius: 999px; pointer-events: none;
+    }
   </style>
 </head>
 
@@ -208,7 +294,6 @@
   <aside id="sidebar">
     <div class="brand">
       <div class="brand-row">
-        <span style="font-size:20px;">🗺️</span>
         <h1>VanMap 大温情报中心</h1>
       </div>
       <p class="brand-sub">Greater Vancouver &nbsp;·&nbsp; <span id="shown-count">—</span> 家显示</p>
@@ -218,18 +303,23 @@
       <div class="filter-label">类别</div>
       <div class="pill-row" id="type-pills">
         <button class="pill active-type" data-type="全部">全部</button>
-        <button class="pill" data-type="餐厅">🍽 餐厅</button>
-        <button class="pill" data-type="酒吧">🍺 酒吧</button>
-        <button class="pill" data-type="娱乐">🎭 娱乐</button>
-        <button class="pill" data-type="徒步">🥾 徒步</button>
-        <button class="pill" data-type="景点">📸 景点</button>
-        <button class="pill" data-type="活动">🎪 活动</button>
+        <button class="pill" data-type="餐厅">餐厅</button>
+        <button class="pill" data-type="酒吧">酒吧</button>
+        <button class="pill" data-type="娱乐">娱乐</button>
+        <button class="pill" data-type="徒步">徒步</button>
+        <button class="pill" data-type="景点">景点</button>
+        <button class="pill" data-type="活动">活动</button>
       </div>
     </div>
 
-    <div class="filter-section" id="subtype-section" style="display:none;">
-      <div class="filter-label">菜系</div>
-      <div class="pill-row" id="subtype-pills"></div>
+    <div class="filter-section" id="cuisine-country-section" style="display:none;">
+      <div class="filter-label">国家菜系</div>
+      <div class="pill-row" id="cuisine-country-pills"></div>
+    </div>
+
+    <div class="filter-section" id="cuisine-style-section" style="display:none;">
+      <div class="filter-label">细分菜系</div>
+      <div class="pill-row" id="cuisine-style-pills"></div>
     </div>
 
     <div class="filter-section" id="district-section">
@@ -249,11 +339,12 @@
   </aside>
 
   <!-- ═══════════════ TOGGLE BUTTON ═══════════════ -->
+  <button id="mobile-menu-btn" title="打开筛选面板" aria-label="菜单">☰</button>
   <button id="sidebar-toggle" title="折叠/展开侧边栏">‹</button>
 
   <!-- ═══════════════ HOVER PREVIEW ═══════════════ -->
   <div id="hover-preview">
-    <div class="preview-img-placeholder" id="preview-img-wrap">🍜</div>
+    <div class="preview-img-placeholder" id="preview-img-wrap"></div>
     <div class="preview-body">
       <div class="preview-name" id="preview-name"></div>
       <div class="preview-meta" id="preview-meta"></div>
@@ -267,12 +358,50 @@
 
   <!-- ═══════════════ SEARCH BAR ═══════════════ -->
   <div id="search-container">
-    <span id="search-icon">🔍</span>
     <input id="search-input" type="text" placeholder="搜索地点名称…" autocomplete="off" />
     <div id="search-dropdown"></div>
   </div>
 
+  <!-- ═══════════════ LIGHTBOX OVERLAY ═══════════════ -->
+  <div id="lb-overlay" onclick="if(event.target===this)__lb.close();">
+    <div id="lb-panel">
+      <!-- Header -->
+      <div style="padding:16px 20px 0;display:flex;justify-content:space-between;align-items:flex-start;flex-shrink:0;">
+        <div>
+          <div id="lb-name" style="font-size:15px;font-weight:700;color:#1c1917;line-height:1.3;"></div>
+          <div id="lb-count" style="font-size:11px;color:#a8a29e;margin-top:3px;"></div>
+        </div>
+        <button onclick="__lb.close()"
+          style="background:#f5f4f0;border:none;width:32px;height:32px;border-radius:50%;cursor:pointer;
+            font-size:16px;color:#57534e;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-left:12px;
+            transition:background .15s;" onmouseenter="this.style.background='#e7e5e0'" onmouseleave="this.style.background='#f5f4f0'">✕</button>
+      </div>
+      <!-- Category tabs -->
+      <div id="lb-tabs" style="padding:10px 20px 6px;display:flex;gap:6px;flex-wrap:wrap;flex-shrink:0;"></div>
+      <!-- Photo grid -->
+      <div id="lb-grid"></div>
+      <!-- Full-size preview -->
+      <div id="lb-preview">
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:14px 18px;flex-shrink:0;">
+          <button class="lb-nav-btn" onclick="__lb.showGrid()" style="width:auto;padding:0 14px;border-radius:20px;font-size:12px;">← 返回</button>
+          <div id="lb-pager" style="color:rgba(255,255,255,0.55);font-size:12px;"></div>
+          <div style="display:flex;gap:8px;">
+            <button class="lb-nav-btn" onclick="__lb.nav(-1)">&#8249;</button>
+            <button class="lb-nav-btn" onclick="__lb.nav(1)">&#8250;</button>
+          </div>
+        </div>
+        <div style="flex:1;display:flex;align-items:center;justify-content:center;padding:0 18px;overflow:hidden;">
+          <img id="lb-main-img" src="" alt=""
+            style="max-width:100%;max-height:100%;object-fit:contain;border-radius:10px;display:block;" />
+        </div>
+        <div id="lb-img-cat"
+          style="text-align:center;color:rgba(255,255,255,0.45);font-size:11px;padding:10px 0 16px;flex-shrink:0;"></div>
+      </div>
+    </div>
+  </div>
+
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
   <script>
   (function () {
   'use strict';
@@ -283,12 +412,74 @@
   const PAL = {
     cn:    { main: '#c96b52', light: '#fdf2ef', border: '#c96b5222' },
     kr:    { main: '#5b87b0', light: '#eff4f9', border: '#5b87b022' },
+    jp:    { main: '#c0392b', light: '#fdf0ef', border: '#c0392b22' },
+    west:  { main: '#6b7280', light: '#f3f4f6', border: '#6b728022' },
     bar:   { main: '#7c52a8', light: '#f5f0fd', border: '#7c52a822' },
     ent:   { main: '#2d7d9a', light: '#edf6fa', border: '#2d7d9a22' },
     hike:  { main: '#2d6a4f', light: '#edf7f2', border: '#2d6a4f22' },
     spot:  { main: '#a07c10', light: '#fdf8ea', border: '#a07c1022' },
+    act:   { main: '#be185d', light: '#fff0f6', border: '#be185d22' },
+    thai:  { main: '#059669', light: '#ecfdf5', border: '#05966922' },
+    viet:  { main: '#0d9488', light: '#f0fdfa', border: '#0d948822' },
+    mex:   { main: '#ca8a04', light: '#fefce8', border: '#ca8a0422' },
+    indian:{ main: '#c2410c', light: '#fff7ed', border: '#c2410c22' },
+    french:{ main: '#6366f1', light: '#eef2ff', border: '#6366f122' },
     other: { main: '#8b8680', light: '#f5f4f0', border: '#8b868022' },
   };
+
+  const validTypes = ['餐厅', '酒吧', '娱乐', '徒步', '景点', '活动'];
+
+  function resolveCuisineFields(source) {
+    let country = source.cuisine_country || null;
+    let style   = source.cuisine_style || null;
+    let cuisine = source.cuisine || null;
+    if (!country && cuisine) {
+      const idx = cuisine.indexOf('-');
+      if (idx > 0) {
+        country = cuisine.slice(0, idx);
+        style = style || cuisine.slice(idx + 1);
+      } else {
+        country = cuisine;
+      }
+    }
+    if (country && style && !cuisine) cuisine = `${country}-${style}`;
+    else if (country && !cuisine) cuisine = country;
+    return { cuisine_country: country, cuisine_style: style, cuisine };
+  }
+
+  function cuisineCountryOf(r) {
+    return r.cuisine_country || (r.cuisine ? r.cuisine.split('-')[0] : '');
+  }
+
+  function cuisineStyleOf(r) {
+    if (r.cuisine_style) return r.cuisine_style;
+    if (r.cuisine && r.cuisine.includes('-')) return r.cuisine.slice(r.cuisine.indexOf('-') + 1);
+    return '';
+  }
+
+  function displayCat(r) {
+    if (r.type === '餐厅') return r.cuisine || r.cuisine_country || '餐厅';
+    return r.type || r.category || '';
+  }
+
+  function catPal(cat) {
+    const country = cat && cat.includes('-') ? cat.split('-')[0] : cat;
+    if (country === '中餐') return PAL.cn;
+    if (country === '韩餐') return PAL.kr;
+    if (country === '日料') return PAL.jp;
+    if (country === '西餐') return PAL.west;
+    if (country === '泰餐') return PAL.thai;
+    if (country === '越餐') return PAL.viet;
+    if (country === '墨西哥餐') return PAL.mex;
+    if (country === '印度餐') return PAL.indian;
+    if (country === '法餐') return PAL.french;
+    if (country === '酒吧') return PAL.bar;
+    if (country === '娱乐') return PAL.ent;
+    if (country === '徒步') return PAL.hike;
+    if (country === '景点') return PAL.spot;
+    if (country === '活动') return PAL.act;
+    return PAL.other;
+  }
 
   const PRICE_STYLE = {
     '$':    { color: '#059669', bg: '#d1fae5' },
@@ -297,23 +488,123 @@
     '$$$$': { color: '#dc2626', bg: '#fee2e2' },
   };
 
-  const TYPE_SUBTYPES = { '餐厅': ['中餐', '韩餐', '日料'] };
-  const validTypes = ['餐厅', '酒吧', '娱乐', '徒步', '景点', '活动'];
-
-  function catPal(cat) {
-    if (cat === '中餐') return PAL.cn;
-    if (cat === '韩餐') return PAL.kr;
-    if (cat === '酒吧') return PAL.bar;
-    if (cat === '娱乐') return PAL.ent;
-    if (cat === '徒步') return PAL.hike;
-    if (cat === '景点') return PAL.spot;
-    return PAL.other;
+  /* ── Map marker icons (inline SVG, no emoji) ── */
+  function _markerSvg(inner) {
+    return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="17" height="17"`
+      + ` fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${inner}</svg>`;
   }
 
-  function catEmoji(cat) {
-    const MAP = { '中餐':'🥢','韩餐':'🥩','酒吧':'🍺','娱乐':'🎭','徒步':'🥾','景点':'📸','活动':'🎪' };
-    return MAP[cat] || '🍴';
+  const TYPE_MARKER_SVG = {
+    '餐厅': _markerSvg(
+      '<path d="M7 2v8a3 3 0 0 0 6 0V2"/>'
+      + '<path d="M10 10v12"/>'
+      + '<path d="M17 2v20"/>'
+      + '<path d="M15 2h4"/>'
+    ),
+    '酒吧': _markerSvg(
+      '<path d="M8 22h8"/>'
+      + '<path d="M12 15v7"/>'
+      + '<path d="M7 5l5 10 5-10"/>'
+      + '<path d="M6 5h12"/>'
+    ),
+    '娱乐': _markerSvg(
+      '<rect x="3" y="5" width="18" height="14" rx="2"/>'
+      + '<path d="M7 5V3"/>'
+      + '<path d="M17 5V3"/>'
+      + '<path d="M8 13l3-3 2 2 3-4"/>'
+    ),
+    '徒步': _markerSvg(
+      '<path d="M3 20h18"/>'
+      + '<path d="M6 20l4-10 3 6 3-4 2 8"/>'
+    ),
+    '景点': _markerSvg(
+      '<path d="M4 8h4l2-2h4l2 2h4v10H4z"/>'
+      + '<circle cx="12" cy="13" r="3"/>'
+    ),
+    '活动': _markerSvg(
+      '<rect x="4" y="6" width="16" height="14" rx="2"/>'
+      + '<path d="M8 4v4"/>'
+      + '<path d="M16 4v4"/>'
+      + '<path d="M4 11h16"/>'
+      + '<path d="M12 14v3"/>'
+      + '<path d="M10.5 15.5h3"/>'
+    ),
+  };
+
+  function catMarkerSvg(type) {
+    return TYPE_MARKER_SVG[type] || TYPE_MARKER_SVG['景点'];
   }
+
+  /* ── Photo helper ──────────────────────────────────────────────────────────
+     Returns r.photos[] if present; otherwise generates inline SVG data-URLs
+     (no network request, works offline / behind any firewall).
+  ──────────────────────────────────────────────────────────────────────── */
+  const _PH_CATS = {
+    '中餐': [['环境','#d4b896','#5c3d11'],['食物','#f4a261','#7c2d00'],['菜单','#f5f0e8','#7c5c33']],
+    '韩餐': [['环境','#eaf1f8','#2c4a6e'],['食物','#e8635a','#ffffff'],['烤肉','#c0392b','#ffffff']],
+    '日料': [['环境','#f8ecec','#5c1a1a'],['食物','#c0392b','#ffffff'],['刺身','#922b21','#ffffff']],
+    '西餐': [['环境','#eceff4','#374151'],['主菜','#6b7280','#ffffff'],['甜品','#d1d5db','#374151']],
+    '餐厅': [['环境','#d4b896','#5c3d11'],['食物','#f4a261','#7c2d00'],['菜单','#f5f0e8','#7c5c33']],
+    '酒吧': [['环境','#7c52a8','#ffffff'],['调酒','#5b2d8a','#ffffff'],['现场','#9b59b6','#ffffff']],
+    '娱乐': [['场馆','#2d7d9a','#ffffff'],['演出','#1a5276','#ffffff'],['设施','#2980b9','#ffffff']],
+    '徒步': [['风景','#2d6a4f','#ffffff'],['路线','#1e8449','#ffffff'],['顶峰','#145a32','#ffffff']],
+    '景点': [['全景','#a07c10','#ffffff'],['细节','#c9a227','#ffffff'],['风景','#d4ac0d','#ffffff']],
+    '活动': [['现场','#be185d','#ffffff'],['演出','#9b1049','#ffffff'],['场馆','#7d1154','#ffffff']],
+  };
+
+  function _makeSvgUrl(label, bg, fg) {
+    const safe = String(label).replace(/[<>&"']/g, '');
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300">`
+      + `<rect width="400" height="300" fill="${bg}"/>`
+      + `<text x="200" y="150" text-anchor="middle" dominant-baseline="middle"`
+      + ` font-size="52" font-family="PingFang SC,Microsoft YaHei,sans-serif" fill="${fg}">${safe}</text>`
+      + `</svg>`;
+    return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
+  }
+
+  /* Scraper emits fake lh5.googleusercontent.com/p/AF1Qip… IDs — they always 400. */
+  function isReliablePhotoUrl(url) {
+    if (!url || typeof url !== 'string') return false;
+    if (url.startsWith('data:')) return true;
+    if (!/^https?:\/\//i.test(url)) return false;
+    if (/googleusercontent\.com\/p\/AF1Qip/i.test(url)) return false;
+    return true;
+  }
+
+  function _photoPalette(r) {
+    const p = catPal(displayCat(r));
+    return { bg: p.light, fg: p.main };
+  }
+
+  function getPhotos(r) {
+    const { bg, fg } = _photoPalette(r);
+
+    if (r.photos && r.photos.length > 0) {
+      return r.photos.map((ph, i) => {
+        const label = ph.category || `照片 ${i + 1}`;
+        const fallback = _makeSvgUrl(label, bg, fg);
+        const url = isReliablePhotoUrl(ph.url) ? ph.url : fallback;
+        return { category: label, bg, url, fallbackUrl: fallback };
+      });
+    }
+
+    const list = _PH_CATS[r.category] || _PH_CATS[r.type]
+      || [['环境','#8b8680','#ffffff'],['详情','#a0998d','#ffffff']];
+    return list.map(([label, cbg, cfg]) => ({
+      category: label,
+      bg: cbg,
+      url: _makeSvgUrl(label, cbg, cfg),
+      fallbackUrl: _makeSvgUrl(label, cbg, cfg),
+    }));
+  }
+
+  function _imgOnError(el) {
+    const fb = el.dataset.fallback;
+    if (fb && el.src !== fb) { el.src = fb; el.onerror = null; }
+  }
+
+  /* Global store for lightbox data — indexed per popup build */
+  window.__lbData = [];
 
   function extractDistrict(addr) {
     if (!addr) return 'Greater Vancouver';
@@ -337,9 +628,10 @@
   const urlType   = urlParams.get('type');
 
   const state = {
-    type:     (urlType && validTypes.includes(urlType)) ? urlType : '全部',
-    subtype:  '全部',
-    district: '全部',
+    type:           (urlType && validTypes.includes(urlType)) ? urlType : '全部',
+    cuisineCountry: '全部',
+    cuisineStyle:   '全部',
+    district:       '全部',
   };
 
   /* ══════════════════════════════════════
@@ -351,6 +643,10 @@
     attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
     maxZoom: 19, subdomains: ['a','b','c'],
   }).addTo(map);
+
+  const markerClusterGroup = L.markerClusterGroup({ maxClusterRadius: 50, spiderfyOnMaxZoom: true });
+  map.addLayer(markerClusterGroup);
+  window.__markerCluster = markerClusterGroup;
 
   window.__vanMap     = map;
   window.__vanMapData = allData;
@@ -380,42 +676,39 @@
       const dc = diffClr[h.difficulty] || '#8b8680';
       const cells = [
         h.difficulty ? `<div style="text-align:center;padding:8px 6px;background:#f4f9f6;border-radius:8px;flex:1;min-width:0;">
-          <div style="font-size:15px;">⚡</div>
           <div style="font-size:9px;color:#a8a29e;margin:2px 0;">难度</div>
           <div style="font-size:11px;font-weight:700;color:${dc};">${h.difficulty}</div></div>` : '',
         h.distance_km ? `<div style="text-align:center;padding:8px 6px;background:#f4f9f6;border-radius:8px;flex:1;min-width:0;">
-          <div style="font-size:15px;">📏</div>
           <div style="font-size:9px;color:#a8a29e;margin:2px 0;">距离</div>
           <div style="font-size:11px;font-weight:700;color:#2d6a4f;">${h.distance_km} km</div></div>` : '',
         h.elevation_gain ? `<div style="text-align:center;padding:8px 6px;background:#f4f9f6;border-radius:8px;flex:1;min-width:0;">
-          <div style="font-size:15px;">⛰</div>
           <div style="font-size:9px;color:#a8a29e;margin:2px 0;">爬升</div>
           <div style="font-size:11px;font-weight:700;color:#2d6a4f;">${h.elevation_gain} m</div></div>` : '',
       ].filter(Boolean).join('');
       if (!cells) return '';
       return `<div style="margin-bottom:11px;">
-        <div style="font-size:9.5px;font-weight:700;color:#b5aea6;letter-spacing:.09em;text-transform:uppercase;margin-bottom:7px;">🥾 线路信息</div>
+        <div style="font-size:9.5px;font-weight:700;color:#b5aea6;letter-spacing:.09em;text-transform:uppercase;margin-bottom:7px;">线路信息</div>
         <div style="display:flex;gap:6px;">${cells}</div>
-        ${h.duration   ? `<p style="margin:6px 0 0;font-size:11px;color:#57534e;">⏱ 预计时长：${h.duration}</p>` : ''}
-        ${h.trailhead  ? `<p style="margin:3px 0 0;font-size:11px;color:#78716c;">🚩 登山口：${h.trailhead}</p>` : ''}
+        ${h.duration   ? `<p style="margin:6px 0 0;font-size:11px;color:#57534e;">预计时长：${h.duration}</p>` : ''}
+        ${h.trailhead  ? `<p style="margin:3px 0 0;font-size:11px;color:#78716c;">登山口：${h.trailhead}</p>` : ''}
       </div>`;
     }
     if (r._bar) {
       const b = r._bar;
       return `<div style="margin-bottom:11px;">
-        <div style="font-size:9.5px;font-weight:700;color:#b5aea6;letter-spacing:.09em;text-transform:uppercase;margin-bottom:7px;">🍸 酒吧情报</div>
-        ${b.vibe            ? `<p style="margin:0 0 4px;font-size:11.5px;color:#57534e;">🎵 氛围：<strong>${b.vibe}</strong></p>` : ''}
-        ${b.signature_drink ? `<p style="margin:0 0 4px;font-size:11px;color:#57534e;">🍹 招牌：${b.signature_drink}</p>` : ''}
-        ${b.happy_hour      ? `<p style="margin:0;font-size:11px;color:#57534e;">🕐 Happy Hour：${b.happy_hour}</p>` : ''}
+        <div style="font-size:9.5px;font-weight:700;color:#b5aea6;letter-spacing:.09em;text-transform:uppercase;margin-bottom:7px;">酒吧情报</div>
+        ${b.vibe            ? `<p style="margin:0 0 4px;font-size:11.5px;color:#57534e;">氛围：<strong>${b.vibe}</strong></p>` : ''}
+        ${b.signature_drink ? `<p style="margin:0 0 4px;font-size:11px;color:#57534e;">招牌：${b.signature_drink}</p>` : ''}
+        ${b.happy_hour      ? `<p style="margin:0;font-size:11px;color:#57534e;">Happy Hour：${b.happy_hour}</p>` : ''}
       </div>`;
     }
     if (r._ent) {
       const e = r._ent;
       return `<div style="margin-bottom:11px;">
-        <div style="font-size:9.5px;font-weight:700;color:#b5aea6;letter-spacing:.09em;text-transform:uppercase;margin-bottom:7px;">🎭 场馆信息</div>
-        ${e.venue_type      ? `<p style="margin:0 0 4px;font-size:11.5px;color:#57534e;">🏟 类型：${e.venue_type}</p>` : ''}
-        ${e.age_restriction ? `<p style="margin:0 0 4px;font-size:11px;color:#57534e;">🔞 年龄：${e.age_restriction}</p>` : ''}
-        ${e.opening_hours   ? `<p style="margin:0;font-size:11px;color:#57534e;">🕐 营业：${e.opening_hours}</p>` : ''}
+        <div style="font-size:9.5px;font-weight:700;color:#b5aea6;letter-spacing:.09em;text-transform:uppercase;margin-bottom:7px;">场馆信息</div>
+        ${e.venue_type      ? `<p style="margin:0 0 4px;font-size:11.5px;color:#57534e;">类型：${e.venue_type}</p>` : ''}
+        ${e.age_restriction ? `<p style="margin:0 0 4px;font-size:11px;color:#57534e;">年龄：${e.age_restriction}</p>` : ''}
+        ${e.opening_hours   ? `<p style="margin:0;font-size:11px;color:#57534e;">营业：${e.opening_hours}</p>` : ''}
       </div>`;
     }
     if (r._spot) {
@@ -425,9 +718,20 @@
           background:${p.light};color:${p.main};border:1px solid ${p.border};margin:0 3px 3px 0;">${h}</span>`
       ).join('');
       return `<div style="margin-bottom:11px;">
-        <div style="font-size:9.5px;font-weight:700;color:#b5aea6;letter-spacing:.09em;text-transform:uppercase;margin-bottom:7px;">📸 景点亮点</div>
+        <div style="font-size:9.5px;font-weight:700;color:#b5aea6;letter-spacing:.09em;text-transform:uppercase;margin-bottom:7px;">景点亮点</div>
         ${hls ? `<div style="margin-bottom:6px;">${hls}</div>` : ''}
-        ${s.admission_fee ? `<p style="margin:0;font-size:11px;color:#57534e;">🎫 门票：${s.admission_fee}</p>` : ''}
+        ${s.admission_fee ? `<p style="margin:0;font-size:11px;color:#57534e;">门票：${s.admission_fee}</p>` : ''}
+      </div>`;
+    }
+    if (r._activity) {
+      const a = r._activity;
+      return `<div style="margin-bottom:11px;">
+        <div style="font-size:9.5px;font-weight:700;color:#b5aea6;letter-spacing:.09em;text-transform:uppercase;margin-bottom:7px;">活动信息</div>
+        ${a.event_date  ? `<p style="margin:0 0 5px;font-size:12px;color:#57534e;font-weight:600;">${a.event_date}</p>` : ''}
+        ${a.venue       ? `<p style="margin:0 0 4px;font-size:11px;color:#57534e;">场地：${a.venue}</p>` : ''}
+        ${a.event_type  ? `<p style="margin:0 0 4px;font-size:11px;color:#57534e;">类型：${a.event_type}</p>` : ''}
+        ${a.admission && a.admission !== r.price_level
+          ? `<p style="margin:0;font-size:11px;color:#57534e;">票价：${a.admission}</p>` : ''}
       </div>`;
     }
     return '';
@@ -436,13 +740,13 @@
   /* ══════════════════════════════════════
      HELPER: Reviews
   ══════════════════════════════════════ */
-  const PLATFORM_ICON = {
-    'Google Review': { icon: '🔍', color: '#4285f4' },
-    'Google':        { icon: '🔍', color: '#4285f4' },
-    '小红书':         { icon: '📖', color: '#ff2442' },
-    'Yelp':          { icon: '⭐', color: '#d32323' },
-    'TripAdvisor':   { icon: '🧳', color: '#00aa6c' },
-    'OpenRice':      { icon: '🍚', color: '#e44d26' },
+  const PLATFORM_COLORS = {
+    'Google Review': '#4285f4',
+    'Google':        '#4285f4',
+    '小红书':         '#ff2442',
+    'Yelp':          '#d32323',
+    'TripAdvisor':   '#00aa6c',
+    'OpenRice':      '#e44d26',
   };
 
   function buildReviews(r, p) {
@@ -452,12 +756,12 @@
     return r.reviews.map(rv => {
       if (!rv) return '';
       const plat    = rv.platform || '评价';
-      const meta    = PLATFORM_ICON[plat] || { icon: '💬', color: p.main };
+      const color   = PLATFORM_COLORS[plat] || p.main;
       const hasLink = rv.source_url && typeof rv.source_url === 'string' && rv.source_url.startsWith('http');
       return `<div style="margin-bottom:10px;">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
-          <span style="display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:600;color:${meta.color};">
-            ${meta.icon} ${plat}
+          <span style="display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:600;color:${color};">
+            ${plat}
           </span>
           ${hasLink ? `<a class="link-btn" href="${rv.source_url}" target="_blank" rel="noopener"
             style="font-size:10px;color:${p.main};text-decoration:none;padding:2px 8px;
@@ -471,39 +775,26 @@
 
   /* ══════════════════════════════════════
      HELPER: Social / media links
-     (includes official_website button)
+     (TikTok / YouTube / social_metrics platforms)
   ══════════════════════════════════════ */
   function buildSocialLinks(r, compact = false) {
     const btnStyle = compact
       ? 'display:inline-flex;align-items:center;gap:3px;padding:2px 8px;border-radius:5px;font-size:9.5px;text-decoration:none;'
       : 'display:inline-flex;align-items:center;gap:4px;padding:5px 11px;border-radius:7px;font-size:11px;font-weight:500;text-decoration:none;';
 
-    function btn(url, icon, label, color, title) {
+    function btn(url, label, color, title) {
       if (!url || typeof url !== 'string' || !url.startsWith('http')) return null;
       return `<a class="link-btn" href="${url}" target="_blank" rel="noopener"
         onclick="event.stopPropagation();"
         ${title ? `title="${title}"` : ''}
         style="${btnStyle}border:1px solid ${color}25;color:${color};background:${color}07;">
-        ${icon} ${label}
+        ${label}
       </a>`;
     }
 
     const parts = [];
 
-    /* ── 0. Official website — shown first, highest authority ── */
-    if (r.official_website) {
-      const isTrail = r.official_website.includes('alltrails');
-      const b = btn(
-        r.official_website,
-        isTrail ? '🥾' : '🌐',
-        isTrail ? 'AllTrails' : '官方网站',
-        isTrail ? '#2d6a4f' : '#6366f1',
-        isTrail ? 'AllTrails 详情页' : '访问官方网站'
-      );
-      if (b) parts.push(b);
-    }
-
-    /* ── 1. Videos (YouTube / TikTok) ── */
+    /* ── Videos (YouTube / TikTok) ── */
     if (r.videos && r.videos.length > 0) {
       const sorted = [...r.videos].sort((a, b) =>
         (a.platform || '').localeCompare(b.platform || '', 'en')
@@ -511,36 +802,20 @@
       for (const v of sorted) {
         if (!v || !v.url) continue;
         const isYT = v.platform === 'YouTube';
-        const b = btn(v.url, isYT ? '▶' : '♪', v.platform || '链接', isYT ? '#c4302b' : '#111', v.summary || '');
+        const b = btn(v.url, v.platform || '链接', isYT ? '#c4302b' : '#111', v.summary || '');
         if (b) parts.push(b);
       }
     }
 
-    /* ── 2. social_metrics object (future-proof) ── */
+    /* ── social_metrics object (future-proof) ── */
     if (r.social_metrics && typeof r.social_metrics === 'object') {
       const sm = r.social_metrics;
-      const b1 = btn(sm.xiaohongshu_url, '📖', '小红书', '#ff2442', '');
-      const b2 = btn(sm.tiktok_url,      '♪',  'TikTok', '#111',    '');
-      const b3 = btn(sm.youtube_url,     '▶',  'YouTube','#c4302b', '');
+      const b1 = btn(sm.xiaohongshu_url, '小红书', '#ff2442', '');
+      const b2 = btn(sm.tiktok_url,      'TikTok', '#111',    '');
+      const b3 = btn(sm.youtube_url,     'YouTube','#c4302b', '');
       if (b1) parts.push(b1);
       if (b2) parts.push(b2);
       if (b3) parts.push(b3);
-    }
-
-    /* ── 3. Primary source URL (Google Maps / AllTrails) — skip if same as official_website ── */
-    if (r._url && r._url !== r.official_website && r._url.startsWith('http')) {
-      const isMaps  = r._url.includes('google.com/maps');
-      const isTrail = r._url.includes('alltrails');
-      if (isMaps || isTrail) {
-        const b = btn(
-          r._url,
-          isTrail ? '🥾' : '🗺',
-          isTrail ? 'AllTrails' : 'Google Maps',
-          isTrail ? '#2d6a4f' : '#4285f4',
-          ''
-        );
-        if (b) parts.push(b);
-      }
     }
 
     return parts.join('');
@@ -567,6 +842,9 @@
     if (e.duration)        extra.push(`时长：${e.duration}`);
     if (e.admission_fee)   extra.push(`门票：${e.admission_fee}`);
     if (e.trailhead)       extra.push(`登山口：${e.trailhead}`);
+    if (e.event_date)      extra.push(`日期：${e.event_date}`);
+    if (e.venue)           extra.push(`场地：${e.venue}`);
+    if (e.event_type)      extra.push(`类型：${e.event_type}`);
 
     const _hike = type === '徒步' ? {
       difficulty:    e.difficulty    || e.alltrails_data?.difficulty_rating || null,
@@ -575,22 +853,21 @@
       duration:      e.duration  || null,
       trailhead:     e.trailhead || null,
     } : null;
-    const _bar  = type === '酒吧' ? { vibe: e.vibe||null, signature_drink: e.signature_drink||null, happy_hour: e.happy_hour||null } : null;
-    const _ent  = type === '娱乐' ? { venue_type: e.venue_type||null, age_restriction: e.age_restriction||null, opening_hours: e.opening_hours||null } : null;
-    const _spot = type === '景点' ? { highlights: e.highlights||[], admission_fee: e.admission_fee||null } : null;
+    const _bar      = type === '酒吧' ? { vibe: e.vibe||null, signature_drink: e.signature_drink||null, happy_hour: e.happy_hour||null } : null;
+    const _ent      = type === '娱乐' ? { venue_type: e.venue_type||null, age_restriction: e.age_restriction||null, opening_hours: e.opening_hours||null } : null;
+    const _spot     = type === '景点' ? { highlights: e.highlights||[], admission_fee: e.admission_fee||null } : null;
+    const _activity = type === '活动' ? {
+      event_date: e.event_date  || null,
+      venue:      e.venue_name  || e.venue || null,
+      event_type: e.event_type  || null,
+      admission:  e.admission   || e.ticket_price || e.price_level || null,
+    } : null;
 
     const sm = e.social_metrics || {};
 
     const rawVideos = (e.videos && e.videos.length > 0) ? e.videos
-      : (sm.videos && sm.videos.length > 0) ? sm.videos : null;
-    let videos = rawVideos;
-    if (!videos) {
-      const q = encodeURIComponent(`${e.name} Vancouver`);
-      videos = [
-        { platform: 'TikTok',  url: `https://www.tiktok.com/search?q=${q}`,                summary: `TikTok 搜索：${e.name}`  },
-        { platform: 'YouTube', url: `https://www.youtube.com/results?search_query=${q}`,   summary: `YouTube 搜索：${e.name}` },
-      ];
-    }
+      : (sm.videos && sm.videos.length > 0) ? sm.videos : [];
+    const videos = rawVideos;
 
     const reviews  = (e.reviews  && e.reviews.length  > 0) ? e.reviews  : (sm.reviews  && sm.reviews.length  > 0) ? sm.reviews  : [];
     const keywords = (e.keywords && e.keywords.length > 0) ? e.keywords : (sm.keywords && sm.keywords.length > 0) ? sm.keywords : extra.slice(0, 3);
@@ -601,11 +878,16 @@
     const googleScore    = rs.google_rating   ?? rb.google          ?? e.rating ?? 0;
     const xhsScore       = rs.xiaohongshu     ?? rb.xiaohongshu     ?? 0;
 
+    const cuisineFields = resolveCuisineFields(e);
+
     return {
       name:            e.name,
       type:            type,
       category:        type,
-      district:        extractDistrict(e.address),
+      cuisine_country: cuisineFields.cuisine_country,
+      cuisine_style:   cuisineFields.cuisine_style,
+      cuisine:         cuisineFields.cuisine,
+      district:        e.district || extractDistrict(e.address),
       address:         e.address  || '',
       lat:             e.lat,
       lng:             e.lng,
@@ -623,7 +905,8 @@
         xiaohongshu:     xhsScore,
         review_count:    rs.review_count || 0,
       },
-      _hike, _bar, _ent, _spot, _extra: extra, _url: e.url || '',
+      photos: e.photos || [],
+      _hike, _bar, _ent, _spot, _activity, _extra: extra, _url: e.url || '',
     };
   }
 
@@ -631,15 +914,16 @@
      MARKER FACTORY
   ══════════════════════════════════════ */
   function makeIcon(r) {
-    const p     = catPal(r.category);
-    const emoji = catEmoji(r.category);
+    const type = r.type || r.category || '景点';
+    const p    = catPal(displayCat(r));
+    const icon = catMarkerSvg(type);
     return L.divIcon({
       className: '',
       html: `<div style="width:38px;height:38px;background:${p.main};
         border-radius:50% 50% 50% 0;transform:rotate(-45deg);
         border:3px solid white;box-shadow:0 4px 16px ${p.main}55;
         display:flex;align-items:center;justify-content:center;">
-        <span style="transform:rotate(45deg);font-size:15px;line-height:1;">${emoji}</span>
+        <span style="transform:rotate(45deg);display:flex;align-items:center;justify-content:center;line-height:0;">${icon}</span>
       </div>`,
       iconSize: [38,38], iconAnchor: [19,38], popupAnchor: [0,-44],
     });
@@ -649,7 +933,8 @@
      POPUP BUILDER
   ══════════════════════════════════════ */
   function buildPopup(r) {
-    const p    = catPal(r.category);
+    const badge = displayCat(r);
+    const p    = catPal(badge);
     const ps   = PRICE_STYLE[r.price_level] || PRICE_STYLE['$$'];
     const star = r.ratings?.aggregate_score ?? 0;
     const pct  = Math.min(100, Math.round((star / 5) * 100));
@@ -675,14 +960,50 @@
       ).join('');
     })();
 
+    const ow = r.official_website ? r.official_website.replace(/'/g, '%27') : '';
+    const headerClick   = ow ? `onclick="window.open('${ow}','_blank');event.stopPropagation();"` : '';
+    const headerCursor  = ow ? 'cursor:pointer;' : '';
+    const headerTitle   = ow ? `title="点击访问官方网站"` : '';
+    const headerHoverJS = ow
+      ? `onmouseenter="this.style.filter='brightness(1.1)';this.style.boxShadow='inset 0 0 0 999px rgba(255,255,255,0.08)';"
+         onmouseleave="this.style.filter='';this.style.boxShadow='';"`
+      : '';
+
+    /* Photo strip ── push to global store, reference by index */
+    const photos = getPhotos(r);
+    const lbIdx  = window.__lbData.push({ photos, name: r.name, pal: p }) - 1;
+    const first3 = photos.slice(0, 3);
+    const photoStripHtml = (() => {
+      const cols = first3.length >= 3 ? '2fr 1fr' : first3.length === 2 ? '1fr 1fr' : '1fr';
+      const imgs = first3.map((ph, i) =>
+        `<div style="overflow:hidden;background:${ph.bg || '#e7e5e0'};${i === 0 && first3.length >= 3 ? 'grid-row:span 2;' : ''}">
+          <img src="${ph.url}" data-fallback="${ph.fallbackUrl || ph.url}"
+            referrerpolicy="no-referrer"
+            onerror="_imgOnError(this)"
+            style="width:100%;height:100%;object-fit:cover;display:block;" />
+        </div>`
+      ).join('');
+      const more = photos.length > 3
+        ? `<div class="photo-strip-more">+${photos.length - 3} 张</div>` : '';
+      return `<div class="photo-strip" style="grid-template-columns:${cols};"
+          onclick="event.stopPropagation();__lb.open(${lbIdx});">
+          ${imgs}${more}
+        </div>`;
+    })();
+
     return `
       <div style="background:white;font-family:'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif;">
-        <div style="background:${p.main};padding:14px 16px 12px;">
+        <div ${headerClick} ${headerTitle} ${headerHoverJS}
+             style="background:${p.main};padding:14px 16px 12px;${headerCursor}user-select:none;transition:filter 0.18s ease,box-shadow 0.18s ease;">
           <div style="display:flex;justify-content:space-between;align-items:flex-start;">
             <div style="flex:1;padding-right:10px;">
-              <div style="font-size:14px;font-weight:700;color:white;line-height:1.3;margin-bottom:6px;">${r.name}</div>
+              <div style="font-size:14px;font-weight:700;color:white;line-height:1.3;margin-bottom:${r._activity?.event_date ? '4px' : '6px'};">
+                ${r.name}
+                ${ow ? '<span style="font-size:11px;opacity:0.75;margin-left:4px;">↗</span>' : ''}
+              </div>
+              ${r._activity?.event_date ? `<div style="font-size:11px;color:rgba(255,255,255,0.9);font-weight:600;margin-bottom:6px;letter-spacing:0.01em;">${r._activity.event_date}</div>` : ''}
               <div style="display:flex;gap:5px;align-items:center;flex-wrap:wrap;">
-                <span style="font-size:10px;background:white;color:${p.main};font-weight:700;padding:2px 9px;border-radius:999px;">${r.category}</span>
+                <span style="font-size:10px;background:white;color:${p.main};font-weight:700;padding:2px 9px;border-radius:999px;">${badge}</span>
                 ${r.price_level ? `<span style="font-size:10px;background:${ps.bg};color:${ps.color};font-weight:700;padding:2px 7px;border-radius:5px;">${r.price_level}</span>` : ''}
               </div>
             </div>
@@ -697,26 +1018,27 @@
         </div>
 
         <div class="popup-body-scroll" style="padding:13px 15px 14px;max-height:390px;overflow-y:auto;">
+          ${photoStripHtml}
           ${tags ? `<div style="margin-bottom:9px;">${tags}</div>` : ''}
-          <p style="margin:0 0 6px;font-size:11px;color:#a8a29e;">📍 ${r.address}</p>
+          <p style="margin:0 0 6px;font-size:11px;color:#a8a29e;">${r.address}</p>
           ${r.description ? `<p style="margin:0 0 11px;font-size:12px;color:#78716c;line-height:1.7;">${r.description}</p>` : ''}
 
           ${catBlock ? `<div style="border-top:1px solid #f5f4f0;padding-top:11px;margin-bottom:1px;">${catBlock}</div>` : ''}
 
           ${ratingRows ? `
           <div style="border-top:1px solid #f5f4f0;padding-top:10px;margin-bottom:11px;">
-            <div style="font-size:9.5px;font-weight:700;color:#b5aea6;letter-spacing:.09em;text-transform:uppercase;margin-bottom:8px;">📊 评分详情</div>
+            <div style="font-size:9.5px;font-weight:700;color:#b5aea6;letter-spacing:.09em;text-transform:uppercase;margin-bottom:8px;">评分详情</div>
             ${ratingRows}
           </div>` : ''}
 
           <div style="border-top:1px solid #f5f4f0;padding-top:10px;margin-bottom:12px;">
-            <div style="font-size:9.5px;font-weight:700;color:#b5aea6;letter-spacing:.09em;text-transform:uppercase;margin-bottom:9px;">💬 精华评价</div>
+            <div style="font-size:9.5px;font-weight:700;color:#b5aea6;letter-spacing:.09em;text-transform:uppercase;margin-bottom:9px;">精华评价</div>
             ${reviewsHtml}
           </div>
 
           ${socialBtns ? `
           <div style="border-top:1px solid #f5f4f0;padding-top:10px;">
-            <div style="font-size:9.5px;font-weight:700;color:#b5aea6;letter-spacing:.09em;text-transform:uppercase;margin-bottom:9px;">🔗 相关链接</div>
+            <div style="font-size:9.5px;font-weight:700;color:#b5aea6;letter-spacing:.09em;text-transform:uppercase;margin-bottom:9px;">相关链接</div>
             <div style="display:flex;flex-wrap:wrap;gap:7px;">${socialBtns}</div>
           </div>` : ''}
         </div>
@@ -727,9 +1049,9 @@
      CARD BUILDER
   ══════════════════════════════════════ */
   function buildCard(r, idx) {
-    const p     = catPal(r.category);
+    const badge = displayCat(r);
+    const p     = catPal(badge);
     const ps    = PRICE_STYLE[r.price_level] || PRICE_STYLE['$$'];
-    const emoji = catEmoji(r.category);
     const score = r.ratings?.aggregate_score ?? 0;
 
     const tags = (r.keywords || []).slice(0, 3).map(k =>
@@ -742,28 +1064,30 @@
     if (r._hike) {
       const h = r._hike;
       const parts = [];
-      if (h.difficulty)     parts.push(`⚡ ${h.difficulty}`);
-      if (h.distance_km)    parts.push(`📏 ${h.distance_km} km`);
-      if (h.elevation_gain) parts.push(`⛰ ${h.elevation_gain} m`);
+      if (h.difficulty)     parts.push(`${h.difficulty}`);
+      if (h.distance_km)    parts.push(`${h.distance_km} km`);
+      if (h.elevation_gain) parts.push(`${h.elevation_gain} m`);
       if (parts.length) quickStat = `<div style="font-size:10px;color:${p.main};margin-bottom:5px;font-weight:600;">${parts.join(' &nbsp;·&nbsp; ')}</div>`;
     } else if (r._bar?.vibe) {
-      quickStat = `<div style="font-size:10px;color:${p.main};margin-bottom:5px;">🎵 ${r._bar.vibe}</div>`;
+      quickStat = `<div style="font-size:10px;color:${p.main};margin-bottom:5px;">${r._bar.vibe}</div>`;
     } else if (r._ent?.venue_type) {
-      quickStat = `<div style="font-size:10px;color:${p.main};margin-bottom:5px;">🏟 ${r._ent.venue_type}</div>`;
+      quickStat = `<div style="font-size:10px;color:${p.main};margin-bottom:5px;">${r._ent.venue_type}</div>`;
     } else if (r._spot?.admission_fee) {
-      quickStat = `<div style="font-size:10px;color:${p.main};margin-bottom:5px;">🎫 ${r._spot.admission_fee}</div>`;
+      quickStat = `<div style="font-size:10px;color:${p.main};margin-bottom:5px;">${r._spot.admission_fee}</div>`;
+    } else if (r._activity?.event_date) {
+      quickStat = `<div style="font-size:10px;color:${p.main};margin-bottom:5px;font-weight:600;">${r._activity.event_date}</div>`;
     }
 
     return `
       <div class="rest-card" data-idx="${idx}" data-name="${r.name.replace(/"/g,'&quot;')}" style="border-left-color:${p.main};">
         <div class="card-top">
-          <div class="card-name">${emoji} ${r.name}</div>
+          <div class="card-name">${r.name}</div>
           <div class="card-score">${buildStarRating(score)}</div>
         </div>
         ${quickStat}
         <div class="card-tags">${tags}</div>
         <div class="card-bottom">
-          <span class="card-meta">${r.category} · ${r.district}</span>
+          <span class="card-meta">${badge} · ${r.district}</span>
           <div style="display:flex;align-items:center;gap:5px;flex-wrap:wrap;">
             ${r.price_level ? `<span class="price-badge" style="color:${ps.color};background:${ps.bg};">${r.price_level}</span>` : ''}
             ${vLinks ? `<div style="display:flex;gap:4px;flex-wrap:wrap;">${vLinks}</div>` : ''}
@@ -778,26 +1102,25 @@
   const hoverPanel = document.getElementById('hover-preview');
 
   function showPreview(r, cardEl) {
-    const p     = catPal(r.category);
+    const badge = displayCat(r);
+    const p     = catPal(badge);
     const ps    = PRICE_STYLE[r.price_level] || PRICE_STYLE['$$'];
-    const emoji = catEmoji(r.category);
     const score = r.ratings?.aggregate_score ?? 0;
 
     const imgWrap = document.getElementById('preview-img-wrap');
     if (r.image_url) {
       imgWrap.innerHTML = `<img class="preview-img" src="${r.image_url}" alt="${r.name}" />`;
     } else {
-      imgWrap.innerHTML = `<div class="preview-img-placeholder" style="background:linear-gradient(135deg,${p.light},${p.light}cc);">
-        <span style="font-size:32px;">${emoji}</span></div>`;
+      imgWrap.innerHTML = `<div class="preview-img-placeholder" style="background:linear-gradient(135deg,${p.light},${p.light}cc);"></div>`;
     }
 
     document.getElementById('preview-name').textContent = r.name;
     document.getElementById('preview-meta').innerHTML = `
-      <span style="font-size:10px;font-weight:700;padding:2px 8px;border-radius:999px;background:${p.main};color:white;">${r.category}</span>
+      <span style="font-size:10px;font-weight:700;padding:2px 8px;border-radius:999px;background:${p.main};color:white;">${badge}</span>
       ${r.price_level ? `<span style="font-size:10px;font-weight:700;padding:2px 7px;border-radius:5px;background:${ps.bg};color:${ps.color};">${r.price_level}</span>` : ''}
       ${buildStarRating(score)}`;
     document.getElementById('preview-desc').textContent = r.description || '';
-    document.getElementById('preview-addr').textContent = r.address ? '📍 ' + r.address : '';
+    document.getElementById('preview-addr').textContent = r.address || '';
 
     const rect   = cardEl.getBoundingClientRect();
     const panelH = 300;
@@ -813,12 +1136,42 @@
   /* ══════════════════════════════════════
      FILTER LOGIC
   ══════════════════════════════════════ */
+  function shouldShowCuisineFilters() {
+    return state.type === '全部' || state.type === '餐厅';
+  }
+
+  function cuisineFilterActive() {
+    return shouldShowCuisineFilters()
+      && (state.cuisineCountry !== '全部' || state.cuisineStyle !== '全部');
+  }
+
+  function restaurantPool() {
+    return allData.filter(r => r.type === '餐厅');
+  }
+
   function getFiltered() {
     return allData
-      .filter(r => state.type     === '全部' || r.type     === state.type)
-      .filter(r => state.subtype  === '全部' || r.category === state.subtype)
+      .filter(r => state.type === '全部' || r.type === state.type)
+      .filter(r => {
+        if (!cuisineFilterActive()) return true;
+        if (r.type !== '餐厅') return false;
+        if (state.cuisineCountry !== '全部' && cuisineCountryOf(r) !== state.cuisineCountry) return false;
+        if (state.cuisineStyle !== '全部' && cuisineStyleOf(r) !== state.cuisineStyle) return false;
+        return true;
+      })
       .filter(r => state.district === '全部' || r.district === state.district)
       .sort((a, b) => (b.ratings?.aggregate_score || 0) - (a.ratings?.aggregate_score || 0));
+  }
+
+  function getAvailableCuisineCountries() {
+    return [...new Set(restaurantPool().map(cuisineCountryOf).filter(Boolean))].sort();
+  }
+
+  function getAvailableCuisineStyles() {
+    const pool = state.cuisineCountry === '全部'
+      ? restaurantPool()
+      : restaurantPool().filter(r => cuisineCountryOf(r) === state.cuisineCountry);
+    return [...new Set(pool.map(cuisineStyleOf).filter(Boolean))].sort();
   }
 
   function getAvailableDistricts() {
@@ -840,7 +1193,7 @@
     if (filtered.length === 0) {
       list.innerHTML = `
         <div class="empty-state">
-          <div class="icon">🔍</div>
+          <div class="icon">—</div>
           <p>当前筛选暂无数据<br><small style="color:#c2bdb7;font-size:10px;">总条目：${allData.length} 条</small></p>
         </div>`;
     } else {
@@ -859,9 +1212,15 @@
     }
 
     const visSet = new Set(filtered.map(r => allData.indexOf(r)));
+    const cluster = window.__markerCluster;
     allData.forEach((_, idx) => {
-      if (visSet.has(idx)) markerMap[idx]?.addTo(map);
-      else                 markerMap[idx]?.remove();
+      const m = markerMap[idx];
+      if (!m || !cluster) return;
+      if (visSet.has(idx)) {
+        if (!cluster.hasLayer(m)) cluster.addLayer(m);
+      } else {
+        if (cluster.hasLayer(m)) cluster.removeLayer(m);
+      }
     });
 
     syncPills();
@@ -879,17 +1238,45 @@
     });
   }
 
-  function buildSubtypePills() {
-    const section  = document.getElementById('subtype-section');
-    const subtypes = TYPE_SUBTYPES[state.type];
-    if (!subtypes) { section.style.display = 'none'; return; }
-    section.style.display = 'block';
-    const container = document.getElementById('subtype-pills');
-    container.innerHTML = ['全部', ...subtypes].map(s =>
-      `<button class="pill ${s === state.subtype ? 'active-sub' : ''}" data-sub="${s}">${s}</button>`
+  function buildCuisineFilterPills() {
+    const countrySection = document.getElementById('cuisine-country-section');
+    const styleSection   = document.getElementById('cuisine-style-section');
+    if (!shouldShowCuisineFilters()) {
+      countrySection.style.display = 'none';
+      styleSection.style.display = 'none';
+      return;
+    }
+
+    const countries = getAvailableCuisineCountries();
+    countrySection.style.display = 'block';
+    const countryContainer = document.getElementById('cuisine-country-pills');
+    countryContainer.innerHTML = ['全部', ...countries].map(c =>
+      `<button class="pill ${c === state.cuisineCountry ? 'active-sub' : ''}" data-cuisine-country="${c}">${c}</button>`
     ).join('');
-    container.querySelectorAll('[data-sub]').forEach(btn => {
-      btn.addEventListener('click', () => { state.subtype = btn.dataset.sub; render(); });
+    countryContainer.querySelectorAll('[data-cuisine-country]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        state.cuisineCountry = btn.dataset.cuisineCountry;
+        state.cuisineStyle = '全部';
+        buildCuisineFilterPills();
+        render();
+      });
+    });
+
+    const styles = state.cuisineCountry === '全部' ? [] : getAvailableCuisineStyles();
+    if (!styles.length) {
+      styleSection.style.display = 'none';
+      return;
+    }
+    styleSection.style.display = 'block';
+    const styleContainer = document.getElementById('cuisine-style-pills');
+    styleContainer.innerHTML = ['全部', ...styles].map(s =>
+      `<button class="pill ${s === state.cuisineStyle ? 'active-sub' : ''}" data-cuisine-style="${s}">${s}</button>`
+    ).join('');
+    styleContainer.querySelectorAll('[data-cuisine-style]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        state.cuisineStyle = btn.dataset.cuisineStyle;
+        render();
+      });
     });
   }
 
@@ -897,8 +1284,11 @@
     document.querySelectorAll('#type-pills .pill').forEach(btn => {
       btn.className = 'pill' + (btn.dataset.type === state.type ? ' active-type' : '');
     });
-    document.querySelectorAll('#subtype-pills .pill').forEach(btn => {
-      btn.className = 'pill' + (btn.dataset.sub === state.subtype ? ' active-sub' : '');
+    document.querySelectorAll('#cuisine-country-pills .pill').forEach(btn => {
+      btn.className = 'pill' + (btn.dataset.cuisineCountry === state.cuisineCountry ? ' active-sub' : '');
+    });
+    document.querySelectorAll('#cuisine-style-pills .pill').forEach(btn => {
+      btn.className = 'pill' + (btn.dataset.cuisineStyle === state.cuisineStyle ? ' active-sub' : '');
     });
     document.querySelectorAll('#district-pills .pill').forEach(btn => {
       btn.className = 'pill' + (btn.dataset.district === state.district ? ' active-district' : '');
@@ -908,14 +1298,17 @@
   /* Type pill events */
   document.querySelectorAll('#type-pills .pill').forEach(btn => {
     btn.addEventListener('click', () => {
-      state.type = btn.dataset.type; state.subtype = '全部'; state.district = '全部';
-      buildSubtypePills(); buildDistrictPills(); render();
+      state.type = btn.dataset.type;
+      state.cuisineCountry = '全部';
+      state.cuisineStyle = '全部';
+      state.district = '全部';
+      buildCuisineFilterPills(); buildDistrictPills(); render();
     });
   });
 
   document.getElementById('clear-btn').addEventListener('click', () => {
-    state.type = '全部'; state.subtype = '全部'; state.district = '全部';
-    buildSubtypePills(); buildDistrictPills(); render();
+    state.type = '全部'; state.cuisineCountry = '全部'; state.cuisineStyle = '全部'; state.district = '全部';
+    buildCuisineFilterPills(); buildDistrictPills(); render();
   });
 
   /* ══════════════════════════════════════
@@ -925,6 +1318,15 @@
   let rafHandle = null;
 
   const toggleBtn = document.getElementById('sidebar-toggle');
+  const mobileBtn = document.getElementById('mobile-menu-btn');
+  const sidebarEl = document.getElementById('sidebar');
+  if (window.matchMedia('(max-width: 768px)').matches) {
+    sidebarEl.classList.add('collapsed');
+  }
+  mobileBtn?.addEventListener('click', () => {
+    sidebarEl.classList.toggle('mobile-open');
+    requestAnimationFrame(() => map.invalidateSize({ pan: false }));
+  });
   const sidebar   = document.getElementById('sidebar');
 
   toggleBtn.addEventListener('click', () => {
@@ -962,12 +1364,12 @@
     if (!matches.length) { searchDropdown.style.display = 'none'; return; }
 
     searchDropdown.innerHTML = matches.map((r, i) => {
-      const p = catPal(r.category);
+      const p = catPal(displayCat(r));
       return `<div class="search-item" data-si="${i}">
-        <span style="font-size:18px;">${catEmoji(r.category)}</span>
+        <span style="width:8px;height:8px;border-radius:50%;background:${p.main};flex-shrink:0;"></span>
         <div>
           <div class="search-item-name">${r.name}</div>
-          <div class="search-item-sub">${r.category} · ${r.district}</div>
+          <div class="search-item-sub">${displayCat(r)} · ${r.district}</div>
         </div>
       </div>`;
     }).join('');
@@ -992,46 +1394,34 @@
   });
 
   /* ══════════════════════════════════════
-     BOOTSTRAP — load both data sources
+     BOOTSTRAP — load master + events
   ══════════════════════════════════════ */
   Promise.all([
-    fetch('./shared_data/restaurants.json').then(r => { if (!r.ok) throw new Error('restaurants.json: HTTP ' + r.status); return r.json(); }),
-    fetch('./shared_data/master_data.json').then(r => { if (!r.ok) throw new Error('master_data.json: HTTP '  + r.status); return r.json(); }),
-  ]).then(([restData, masterData]) => {
+    fetch('./shared_data/master_data.json').then(r => { if (!r.ok) throw new Error('master_data.json: HTTP ' + r.status); return r.json(); }),
+    fetch('./shared_data/events_data.json').then(r => { if (!r.ok) throw new Error('events_data.json: HTTP ' + r.status); return r.json(); }),
+  ]).then(([masterData, eventsData]) => {
 
-    /* Restaurant entries — already in normalized format */
-    const restaurants = (restData.restaurants || []).map(r => ({
-      ...r,
-      type:     r.type     || r.category || '餐厅',
-      district: r.district || extractDistrict(r.address),
-      official_website: r.official_website || null,
-      _hike: null, _bar: null, _ent: null, _spot: null,
-      _extra: [], _url: r.url || '',
-    }));
+    const masterEntries = (masterData.entries || []).map(normalizeMasterEntry);
+    const eventEntries = (eventsData.entries || []).map(normalizeMasterEntry);
 
-    /* Master data entries — normalize schema */
-    const masterEntries = (masterData.entries || [])
-      .filter(e => e.category !== '餐厅')   // avoid double-counting restaurants
-      .map(normalizeMasterEntry);
-
-    allData = [...restaurants, ...masterEntries];
+    allData = [...masterEntries, ...eventEntries];
     window.__vanMapData    = allData;
     window.__vanMapMarkers = markerMap;
 
-    console.log(`[VanMap] Loaded ${restaurants.length} restaurants + ${masterEntries.length} master entries = ${allData.length} total`);
+    console.log(`[VanMap] Loaded ${masterEntries.length} places + ${eventEntries.length} events = ${allData.length} total`);
 
     /* Create markers */
     allData.forEach((r, idx) => {
       if (r.lat == null || r.lng == null) return;
       const marker = L.marker([r.lat, r.lng], { icon: makeIcon(r) })
-        .addTo(map)
         .bindPopup(buildPopup(r), { maxWidth: 320 });
+      markerClusterGroup.addLayer(marker);
       markerMap[idx] = marker;
     });
 
     /* Apply URL type filter */
     if (state.type !== '全部') {
-      buildSubtypePills();
+      buildCuisineFilterPills();
     }
     buildDistrictPills();
     render();
@@ -1044,6 +1434,115 @@
         <p>数据加载失败<br>
         <code style="font-size:10px;background:#f5f4f0;padding:1px 6px;border-radius:4px;">${err.message}</code></p>
       </div>`;
+  });
+
+  /* ══════════════════════════════════════
+     LIGHTBOX
+  ══════════════════════════════════════ */
+  const __lb = {
+    photos: [], filtered: [], current: 0, tab: '全部', pal: PAL.other,
+
+    open(idx) {
+      const d = window.__lbData[idx];
+      if (!d || !d.photos.length) return;
+      this.photos  = d.photos;
+      this.tab     = '全部';
+      this.pal     = d.pal;
+      document.getElementById('lb-name').textContent = d.name;
+      document.getElementById('lb-preview').style.display = 'none';
+      document.getElementById('lb-grid').style.display    = 'grid';
+      this._tabs();
+      this._grid();
+      const ov = document.getElementById('lb-overlay');
+      ov.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    },
+
+    close() {
+      document.getElementById('lb-overlay').style.display = 'none';
+      document.body.style.overflow = '';
+    },
+
+    setTab(cat) {
+      this.tab = cat;
+      this._tabs();
+      this._grid();
+    },
+
+    openPhoto(idx) {
+      this.current = idx;
+      this._preview();
+      document.getElementById('lb-grid').style.display    = 'none';
+      document.getElementById('lb-preview').style.display = 'flex';
+    },
+
+    nav(dir) {
+      this.current = (this.current + dir + this.filtered.length) % this.filtered.length;
+      this._preview();
+    },
+
+    showGrid() {
+      document.getElementById('lb-preview').style.display = 'none';
+      document.getElementById('lb-grid').style.display    = 'grid';
+    },
+
+    _tabs() {
+      const cats = ['全部', ...new Set(this.photos.map(p => p.category).filter(Boolean))];
+      const m = this.pal.main;
+      document.getElementById('lb-tabs').innerHTML = cats.map(c => {
+        const active = c === this.tab;
+        return `<button onclick="__lb.setTab('${c}')"
+          style="padding:5px 15px;border-radius:999px;cursor:pointer;font-size:12px;font-weight:${active?'700':'400'};
+            border:1.5px solid ${active ? m : '#e7e5e4'};background:${active ? m : 'white'};
+            color:${active ? 'white' : '#57534e'};transition:all .15s;">${c}
+        </button>`;
+      }).join('');
+    },
+
+    _grid() {
+      this.filtered = this.tab === '全部'
+        ? this.photos
+        : this.photos.filter(p => p.category === this.tab);
+      document.getElementById('lb-count').textContent = `共 ${this.filtered.length} 张照片`;
+      const g = document.getElementById('lb-grid');
+      if (!this.filtered.length) {
+        g.innerHTML = '<p style="grid-column:1/-1;text-align:center;color:#c2bdb7;padding:24px;font-size:13px;">暂无照片</p>';
+        return;
+      }
+      g.innerHTML = this.filtered.map((ph, i) => `
+        <div class="lb-thumb" onclick="__lb.openPhoto(${i})"
+             style="${ph.bg ? 'background:' + ph.bg + ';' : ''}">
+          <img src="${ph.url}" alt="${ph.category||''}" loading="lazy"
+            data-fallback="${ph.fallbackUrl || ph.url}"
+            referrerpolicy="no-referrer"
+            onerror="_imgOnError(this)" />
+          ${ph.category ? `<div class="lb-thumb-label">${ph.category}</div>` : ''}
+        </div>`).join('');
+    },
+
+    _preview() {
+      const ph = this.filtered[this.current];
+      if (!ph) return;
+      const img = document.getElementById('lb-main-img');
+      img.dataset.fallback = ph.fallbackUrl || ph.url;
+      img.onerror = () => _imgOnError(img);
+      img.src = ph.url;
+      document.getElementById('lb-img-cat').textContent = ph.category || '';
+      document.getElementById('lb-pager').textContent   = `${this.current + 1} / ${this.filtered.length}`;
+    },
+  };
+
+  /* Expose to global scope (called from popup onclick / onerror attributes) */
+  window.__lb = __lb;
+  window._imgOnError = _imgOnError;
+
+  /* Keyboard navigation */
+  document.addEventListener('keydown', e => {
+    const ov = document.getElementById('lb-overlay');
+    if (!ov || ov.style.display === 'none') return;
+    if (e.key === 'Escape')      { __lb.close(); }
+    if (e.key === 'ArrowLeft')   { __lb.nav(-1); }
+    if (e.key === 'ArrowRight')  { __lb.nav(1); }
   });
 
   })(); // end IIFE
