@@ -102,6 +102,7 @@ class BaseEntry(BaseModel):
     name: str
     category: str
     address: str
+    district: str | None = None
     lat: float = Field(ge=49.0, le=49.8)
     lng: float = Field(ge=-123.5, le=-122.3)
     url: str
@@ -135,6 +136,9 @@ class BaseEntry(BaseModel):
 
 class RestaurantEntry(BaseEntry):
     price_level: str    # category-specific (like vibe for bars, admission_fee for attractions)
+    cuisine_country: str | None = None
+    cuisine_style: str | None = None
+    cuisine: str | None = None
 
 
 class BarEntry(BaseEntry):
@@ -411,6 +415,16 @@ class BaseScraper(ABC, Generic[T]):
             row["photos"] = osm_photos if osm_photos else cls.fetch_photos(row["name"], row["category"])
             if row.get("official_website") is None:
                 row["official_website"] = row.get("url")
+            if not row.get("district"):
+                try:
+                    from geocoder import district_from_address, reverse_geocode_district
+                    row["district"] = (
+                        district_from_address(row.get("address", ""))
+                        or reverse_geocode_district(row["lat"], row["lng"])
+                        or "Greater Vancouver"
+                    )
+                except ImportError:
+                    row["district"] = "Greater Vancouver"
             finalized.append(row)
         return finalized
 
@@ -467,6 +481,10 @@ class RestaurantScraper(BaseScraper[RestaurantEntry]):
             {
                 "name": "Kirin Seafood Restaurant",
                 "category": "餐厅",
+                "cuisine_country": "中餐",
+                "cuisine_style": "海鲜",
+                "cuisine": "中餐-海鲜",
+                "district": "Vancouver",
                 "price_level": "$$$",
                 "address": "1166 Alberni St, Vancouver, BC V6E 1A5",
                 "image_url": "https://www.google.com/maps/search/?api=1&query=Kirin+Seafood+Restaurant+Vancouver",
@@ -475,10 +493,7 @@ class RestaurantScraper(BaseScraper[RestaurantEntry]):
                 "official_website": "https://www.kirinrestaurant.com/",
                 "description": "Downtown 经典粤菜海鲜楼，炭烧叉烧与清蒸游水海鲜是招牌，商务宴请首选。",
                 "rating_system": {"google_rating": 4.5, "review_count": 1240},
-                "_videos": [
-                    {"platform": "YouTube", "url": "https://www.youtube.com/results?search_query=Kirin+Seafood+Restaurant+Vancouver", "summary": "食评人深探 Kirin 全菜单，重点试吃清蒸龙虾与片皮鸭，厨房近距离揭秘。"},
-                    {"platform": "TikTok", "url": "https://www.tiktok.com/search?q=Kirin+Seafood+Restaurant+Vancouver+dim+sum", "summary": "周末早茶 vlog：推车点心实况，虾饺皮薄透明引发弹幕刷屏。"},
-                ],
+                "_videos": [],
                 "_reviews": [
                     {"platform": "Google Review", "text": "Hands down the best Cantonese in Downtown. The steamed fish is incredible.", "source_url": "https://www.google.com/maps/search/?api=1&query=Kirin+Seafood+Restaurant+Vancouver"},
                     {"platform": "小红书", "text": "叉烧是全温哥华最嫩的那种，肥瘦比例完美，配白饭能吃三碗！", "source_url": "https://www.xiaohongshu.com/search_result?keyword=Kirin+Seafood+Vancouver"},
@@ -488,6 +503,10 @@ class RestaurantScraper(BaseScraper[RestaurantEntry]):
             {
                 "name": "Sura Korean Cuisine",
                 "category": "餐厅",
+                "cuisine_country": "韩餐",
+                "cuisine_style": None,
+                "cuisine": "韩餐",
+                "district": "Vancouver",
                 "price_level": "$$$",
                 "address": "1262 Robson St, Vancouver, BC V6E 1C1",
                 "image_url": "https://www.google.com/maps/search/?api=1&query=Sura+Korean+Cuisine+Vancouver",
@@ -496,10 +515,7 @@ class RestaurantScraper(BaseScraper[RestaurantEntry]):
                 "official_website": "https://www.sura.ca/",
                 "description": "Downtown 精致韩餐，宫廷风格摆盘，烤牛肋骨与海鲜煎饼受本地食客高度评价。",
                 "rating_system": {"google_rating": 4.6, "review_count": 890},
-                "_videos": [
-                    {"platform": "YouTube", "url": "https://www.youtube.com/results?search_query=Sura+Korean+Cuisine+Vancouver", "summary": "温哥华美食频道专题：Sura 宫廷套餐全流程，7 道菜一镜到底展示。"},
-                    {"platform": "TikTok", "url": "https://www.tiktok.com/search?q=Sura+Korean+Cuisine+Vancouver+galbi", "summary": "炭火烤牛肋骨特写，油脂滴落瞬间引来百万次观看。"},
-                ],
+                "_videos": [],
                 "_reviews": [
                     {"platform": "Google Review", "text": "Authentic royal court presentation. The galbi is melt-in-your-mouth good.", "source_url": "https://www.google.com/maps/search/?api=1&query=Sura+Korean+Cuisine+Vancouver"},
                     {"platform": "小红书", "text": "宫廷摆盘真的太美了，海鲜煎饼外酥里嫩！", "source_url": "https://www.xiaohongshu.com/search_result?keyword=Sura+Korean+Vancouver"},
@@ -509,6 +525,10 @@ class RestaurantScraper(BaseScraper[RestaurantEntry]):
             {
                 "name": "Golden Great Wall Restaurant",
                 "category": "餐厅",
+                "cuisine_country": "中餐",
+                "cuisine_style": "点心",
+                "cuisine": "中餐-点心",
+                "district": "Richmond",
                 "price_level": "$$",
                 "address": "4540 No. 3 Rd, Richmond, BC V6X 2C2",
                 "image_url": "https://www.google.com/maps/search/?api=1&query=Golden+Great+Wall+Restaurant+Richmond",
@@ -517,10 +537,7 @@ class RestaurantScraper(BaseScraper[RestaurantEntry]):
                 "official_website": None,
                 "description": "Richmond 人气早茶老店，虾饺、肠粉、萝卜糕必点，周末翻台率极高。",
                 "rating_system": {"google_rating": 4.4, "review_count": 1560},
-                "_videos": [
-                    {"platform": "TikTok", "url": "https://www.tiktok.com/search?q=Golden+Great+Wall+dim+sum+Richmond+Vancouver", "summary": "Richmond 早茶大挑战：单人一小时内吃遍推车菜单，结局超预期。"},
-                    {"platform": "YouTube", "url": "https://www.youtube.com/results?search_query=Golden+Great+Wall+Restaurant+Richmond+dim+sum", "summary": "本地华人博主带父母吃早茶，萝卜糕同款复刻对比评测。"},
-                ],
+                "_videos": [],
                 "_reviews": [
                     {"platform": "Google Review", "text": "Best dim sum in Richmond. Show up by 9am or wait 45 minutes on weekends.", "source_url": "https://www.google.com/maps/search/?api=1&query=Golden+Great+Wall+Restaurant+Richmond+BC"},
                     {"platform": "小红书", "text": "肠粉皮薄如纸，虾饺馅料饱满，推车阿姨服务特别亲切！", "source_url": "https://www.xiaohongshu.com/search_result?keyword=Golden+Great+Wall+Richmond+早茶"},
@@ -530,6 +547,10 @@ class RestaurantScraper(BaseScraper[RestaurantEntry]):
             {
                 "name": "Sun Sui Wah Seafood Restaurant",
                 "category": "餐厅",
+                "cuisine_country": "中餐",
+                "cuisine_style": "海鲜",
+                "cuisine": "中餐-海鲜",
+                "district": "Vancouver",
                 "price_level": "$$$",
                 "address": "3888 Main St, Vancouver, BC V5V 3P1",
                 "image_url": "https://www.google.com/maps/search/?api=1&query=Sun+Sui+Wah+Seafood+Restaurant+Vancouver",
@@ -538,10 +559,7 @@ class RestaurantScraper(BaseScraper[RestaurantEntry]):
                 "official_website": "https://sunsuiwah.com/",
                 "description": "Main Street 老牌海鲜粤菜馆，以片皮乳鸽与波士顿龙虾闻名大温，家庭聚餐首选。",
                 "rating_system": {"google_rating": 4.6, "review_count": 1820},
-                "_videos": [
-                    {"platform": "YouTube", "url": "https://www.youtube.com/results?search_query=Sun+Sui+Wah+Seafood+Restaurant+Vancouver", "summary": "温哥华最佳乳鸽评测：Sun Sui Wah 片皮乳鸽现场片制全纪录。"},
-                    {"platform": "TikTok", "url": "https://www.tiktok.com/search?q=Sun+Sui+Wah+Vancouver+squab+lobster", "summary": "龙虾生猛下锅实况，姜葱炒制香气飘满整层楼。"},
-                ],
+                "_videos": [],
                 "_reviews": [
                     {"platform": "Google Review", "text": "The squab is unmatched — crispy skin, juicy meat. A Vancouver institution since the 80s.", "source_url": "https://www.google.com/maps/search/?api=1&query=Sun+Sui+Wah+Seafood+Restaurant+Vancouver"},
                     {"platform": "小红书", "text": "全温哥华最好吃的乳鸽在这里！家庭聚餐必来。", "source_url": "https://www.xiaohongshu.com/search_result?keyword=Sun+Sui+Wah+温哥华+乳鸽"},
@@ -551,6 +569,10 @@ class RestaurantScraper(BaseScraper[RestaurantEntry]):
             {
                 "name": "Gyo-O Korean BBQ",
                 "category": "餐厅",
+                "cuisine_country": "韩餐",
+                "cuisine_style": "烧烤",
+                "cuisine": "韩餐-烧烤",
+                "district": "Burnaby",
                 "price_level": "$$",
                 "address": "4501 Kingsway, Burnaby, BC V5H 2A9",
                 "image_url": "https://www.google.com/maps/search/?api=1&query=Gyo-O+Korean+BBQ+Burnaby",
@@ -559,10 +581,7 @@ class RestaurantScraper(BaseScraper[RestaurantEntry]):
                 "official_website": None,
                 "description": "Burnaby 本地最火烤肉店，牛舌与五花肉套餐配无限续杯小菜，性价比极高。",
                 "rating_system": {"google_rating": 4.5, "review_count": 670},
-                "_videos": [
-                    {"platform": "TikTok", "url": "https://www.tiktok.com/search?q=Gyo-O+Korean+BBQ+Burnaby+Vancouver", "summary": "深夜烤肉实况：Gyo-O 单人自助挑战，小菜续了 7 次的真实记录。"},
-                    {"platform": "YouTube", "url": "https://www.youtube.com/results?search_query=Gyo-O+Korean+BBQ+Burnaby", "summary": "Burnaby 韩烤横向评测第一名，Gyo-O 牛舌 vs 和牛五花盲测对决。"},
-                ],
+                "_videos": [],
                 "_reviews": [
                     {"platform": "Google Review", "text": "Unlimited banchan refills and the beef tongue is buttery smooth. Best KBBQ value in GVA.", "source_url": "https://www.google.com/maps/search/?api=1&query=Gyo-O+Korean+BBQ+Burnaby+BC"},
                     {"platform": "小红书", "text": "五花肉切得厚度刚好，烤到微焦卷着生菜吃，小菜不限续！", "source_url": "https://www.xiaohongshu.com/search_result?keyword=Gyo-O+韩式烤肉+Burnaby"},

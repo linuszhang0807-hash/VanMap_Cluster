@@ -17,7 +17,6 @@
       background: linear-gradient(180deg, rgba(0,0,0,0.45) 0%, transparent 100%);
       pointer-events: none;
     }
-    .logo-icon { font-size: 22px; }
     .logo-text { font-size: 15px; font-weight: 700; color: rgba(255,255,255,0.92); letter-spacing: 0.06em; }
     .logo-sep  { width: 1px; height: 16px; background: rgba(255,255,255,0.25); margin: 0 6px; }
     .logo-sub  { font-size: 10.5px; color: rgba(255,255,255,0.38); letter-spacing: 0.12em; text-transform: uppercase; }
@@ -52,12 +51,6 @@
       transition: transform 0.45s cubic-bezier(0.34, 1.42, 0.64, 1);
     }
     .slice:hover .slice-content { transform: translate(-50%, -58%); }
-    .slice-emoji {
-      display: block; font-size: 40px; margin-bottom: 12px;
-      filter: drop-shadow(0 3px 12px rgba(0,0,0,0.45));
-      transition: transform 0.45s cubic-bezier(0.34, 1.42, 0.64, 1);
-    }
-    .slice:hover .slice-emoji { transform: scale(1.15); }
     .slice-name {
       font-size: 20px; font-weight: 700; letter-spacing: 0.14em;
       text-shadow: 0 2px 16px rgba(0,0,0,0.55); margin-bottom: 7px;
@@ -85,7 +78,6 @@
 <body>
 <div id="portal">
   <div id="logo-bar">
-    <span class="logo-icon">🗺️</span>
     <span class="logo-text">VanMap</span>
     <span class="logo-sep"></span>
     <span class="logo-sub">大温探索指南</span>
@@ -99,17 +91,16 @@
 </div>
 
 <script>
-/* Single geometry constant — change here to adjust diagonal angle everywhere */
 const SKEW_VW = 8;
 document.documentElement.style.setProperty('--skew-offset', `${SKEW_VW}vw`);
 
 const CATEGORIES = [
-  { name:'餐厅', en:'Dining',        emoji:'🍽', imgSeed:'vanfood1',      fallbackBg:'#6b3020', tint:'linear-gradient(145deg,#8b3a20,#c05a30)' },
-  { name:'酒吧', en:'Nightlife',     emoji:'🍺', imgSeed:'vanbar2',       fallbackBg:'#1a3050', tint:'linear-gradient(145deg,#1a3a5c,#2a5580)' },
-  { name:'娱乐', en:'Entertainment', emoji:'🎭', imgSeed:'vanentertain3', fallbackBg:'#4a1850', tint:'linear-gradient(145deg,#6b2060,#9a3088)' },
-  { name:'徒步', en:'Hiking',        emoji:'🥾', imgSeed:'vanhike4',      fallbackBg:'#1a3a28', tint:'linear-gradient(145deg,#1a4a30,#2a6e48)' },
-  { name:'景点', en:'Attractions',   emoji:'📸', imgSeed:'vanscenic5',    fallbackBg:'#5a3a10', tint:'linear-gradient(145deg,#7a5010,#b07820)' },
-  { name:'活动', en:'Events',        emoji:'🎪', imgSeed:'vanevents6',    fallbackBg:'#1a2a50', tint:'linear-gradient(145deg,#1a2a5c,#2a4a88)' },
+  { name:'餐厅', en:'Dining',        imgSeed:'vanfood1',      fallbackBg:'#6b3020', tint:'linear-gradient(145deg,#8b3a20,#c05a30)' },
+  { name:'酒吧', en:'Nightlife',     imgSeed:'vanbar2',       fallbackBg:'#1a3050', tint:'linear-gradient(145deg,#1a3a5c,#2a5580)' },
+  { name:'娱乐', en:'Entertainment', imgSeed:'vanentertain3', fallbackBg:'#4a1850', tint:'linear-gradient(145deg,#6b2060,#9a3088)' },
+  { name:'徒步', en:'Hiking',        imgSeed:'vanhike4',      fallbackBg:'#1a3a28', tint:'linear-gradient(145deg,#1a4a30,#2a6e48)' },
+  { name:'景点', en:'Attractions',   imgSeed:'vanscenic5',    fallbackBg:'#5a3a10', tint:'linear-gradient(145deg,#7a5010,#b07820)' },
+  { name:'活动', en:'Events',        imgSeed:'vanevents6',    fallbackBg:'#1a2a50', tint:'linear-gradient(145deg,#1a2a5c,#2a4a88)' },
 ];
 
 const N = CATEGORIES.length;
@@ -143,7 +134,6 @@ function buildSlices() {
       <div class="slice-tint" style="background:${cat.tint};"></div>
       <div class="slice-overlay"></div>
       <div class="slice-content" style="left:${makeContentLeft(i)};">
-        <span class="slice-emoji">${cat.emoji}</span>
         <h2 class="slice-name">${cat.name}</h2>
         <p class="slice-en">${cat.en}</p>
         <span class="slice-cta">探索 →</span>
@@ -153,30 +143,15 @@ function buildSlices() {
 }
 
 function buildDividers() {
-  const svg   = document.getElementById('divider-svg');
-  const svgNS = 'http://www.w3.org/2000/svg';
-  const defs  = document.createElementNS(svgNS, 'defs');
-  const grad  = document.createElementNS(svgNS, 'linearGradient');
-  grad.id = 'divFade';
-  grad.setAttribute('x1','0'); grad.setAttribute('y1','0');
-  grad.setAttribute('x2','0'); grad.setAttribute('y2','1');
-  [['0%','0'],['12%','0.28'],['50%','0.35'],['88%','0.28'],['100%','0']].forEach(([offset, op]) => {
-    const s = document.createElementNS(svgNS, 'stop');
-    s.setAttribute('offset', offset);
-    s.setAttribute('stop-color', 'white');
-    s.setAttribute('stop-opacity', op);
-    grad.appendChild(s);
-  });
-  defs.appendChild(grad);
-  svg.appendChild(defs);
+  const svg = document.getElementById('divider-svg');
   for (let i = 1; i < N; i++) {
-    const topX = i * W;
-    const botX = Math.min(topX + SKEW_VW, 100);
-    const line = document.createElementNS(svgNS, 'line');
-    line.setAttribute('x1', topX); line.setAttribute('y1', '0');
-    line.setAttribute('x2', botX); line.setAttribute('y2', '100');
-    line.setAttribute('stroke', 'url(#divFade)');
-    line.setAttribute('stroke-width', '1.5');
+    const xTop = i * W;
+    const xBot = i * W + SKEW_VW;
+    const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+    line.setAttribute('x1', xTop);  line.setAttribute('y1', '0');
+    line.setAttribute('x2', xBot);  line.setAttribute('y2', '100');
+    line.setAttribute('stroke', 'rgba(255,255,255,0.18)');
+    line.setAttribute('stroke-width', '0.35');
     line.setAttribute('vector-effect', 'non-scaling-stroke');
     svg.appendChild(line);
   }

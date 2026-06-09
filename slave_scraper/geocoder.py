@@ -10,9 +10,22 @@ import requests
 
 from paths import GEOCODE_CACHE_FILE
 
-_NOMINATIM_URL = "https://nominatim.openstreetmap.org/search"
+_NOMINATIM_SEARCH_URL = "https://nominatim.openstreetmap.org/search"
+_NOMINATIM_REVERSE_URL = "https://nominatim.openstreetmap.org/reverse"
 _USER_AGENT = "VanMapCluster/0.1 (local dev; contact: vanmap@example.com)"
 _LAST_REQUEST = 0.0
+
+_GVA_CITIES = (
+    "North Vancouver",
+    "West Vancouver",
+    "New Westminster",
+    "Vancouver",
+    "Richmond",
+    "Burnaby",
+    "Surrey",
+    "Coquitlam",
+    "Langley",
+)
 
 
 def _load_cache() -> dict[str, Any]:
@@ -57,7 +70,7 @@ def geocode(query: str, *, region: str = "Greater Vancouver, BC, Canada") -> tup
     }
     headers = {"User-Agent": _USER_AGENT}
     try:
-        resp = requests.get(_NOMINATIM_URL, params=params, headers=headers, timeout=15)
+        resp = requests.get(_NOMINATIM_SEARCH_URL, params=params, headers=headers, timeout=15)
         resp.raise_for_status()
         results = resp.json()
         if not results:
@@ -69,6 +82,59 @@ def geocode(query: str, *, region: str = "Greater Vancouver, BC, Canada") -> tup
         cache[key] = {"lat": lat, "lng": lng}
         _save_cache(cache)
         return lat, lng
+    except (requests.RequestException, KeyError, ValueError, TypeError):
+        cache[key] = None
+        _save_cache(cache)
+        return None
+
+
+def district_from_address(address: str) -> str:
+    """Extract a known GVA city name from a free-text address."""
+    if not address:
+        return ""
+    lower = address.lower()
+    for city in _GVA_CITIES:
+        if city.lower() in lower:
+            return city
+    return ""
+
+
+def reverse_geocode_district(lat: float, lng: float) -> str | None:
+    """Reverse-geocode coordinates to a GVA district name (cached)."""
+    key = f"rev:{round(lat, 4)},{round(lng, 4)}"
+    cache = _load_cache()
+    if key in cache:
+        hit = cache[key]
+        return None if hit is None else str(hit.get("district") or "")
+
+    _rate_limit()
+    params = {
+        "lat": lat,
+        "lon": lng,
+        "format": "json",
+        "zoom": 14,
+        "addressdetails": 1,
+    }
+    headers = {"User-Agent": _USER_AGENT}
+    try:
+        resp = requests.get(_NOMINATIM_REVERSE_URL, params=params, headers=headers, timeout=15)
+        resp.raise_for_status()
+        payload = resp.json()
+        addr = payload.get("address") or {}
+        for field in ("city", "town", "municipality", "suburb", "county"):
+            value = addr.get(field)
+            if not value:
+                continue
+            matched = district_from_address(str(value))
+            if matched:
+                cache[key] = {"district": matched}
+                _save_cache(cache)
+                return matched
+        display = payload.get("display_name", "")
+        matched = district_from_address(display)
+        cache[key] = {"district": matched} if matched else None
+        _save_cache(cache)
+        return matched or None
     except (requests.RequestException, KeyError, ValueError, TypeError):
         cache[key] = None
         _save_cache(cache)

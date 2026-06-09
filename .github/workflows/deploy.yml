@@ -1,0 +1,75 @@
+name: Deploy GitHub Pages
+
+on:
+  push:
+    branches: [main, master]
+    paths:
+      - 'slave_coder/**'
+      - 'data/**'
+      - '.github/workflows/deploy.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate VERSION exists
+        run: test -f VERSION
+      - name: Validate video URLs (no search pages)
+        run: |
+          python3 << 'PY'
+          import json, sys, glob
+          bad = []
+          for path in glob.glob("data/*.json"):
+              if "cache" in path or "override" in path:
+                  continue
+              try:
+                  with open(path, encoding="utf-8") as f:
+                      data = json.load(f)
+              except (json.JSONDecodeError, OSError):
+                  continue
+              for entry in data.get("entries", []):
+                  sm = entry.get("social_metrics") or {}
+                  vids = entry.get("videos") or sm.get("videos") or []
+                  for v in vids:
+                      url = (v.get("url") or "").lower()
+                      if "search" in url or "search_query" in url:
+                          bad.append(f"{path}: {entry.get('name')} -> {url}")
+          if bad:
+              print("Search-page video URLs found:")
+              print("\n".join(bad))
+              sys.exit(1)
+          print("Video URL check passed")
+          PY
+
+  deploy:
+    needs: validate
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Sync data to frontend
+        run: |
+          mkdir -p slave_coder/src/shared_data
+          cp data/master_data.json data/events_data.json slave_coder/src/shared_data/
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: slave_coder/src
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

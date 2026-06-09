@@ -73,6 +73,8 @@ class ManualOverrideProvider(VideoProviderPort):
         url = yt.get("url", "")
         if not url or not self.is_direct_url(url, "YouTube"):
             return None
+        if not self.validate_playable_url(url, "YouTube"):
+            return None
         return ResolvedVideo(
             platform="YouTube",
             url=url,

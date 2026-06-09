@@ -93,6 +93,7 @@ Scraper 运行后**必须**同步到 `slave_coder/src/shared_data/`。
 - 最小 diff：聚焦根因，不加无关抽象/错误处理/测试（除非用户要求）。
 - 匹配现有命名、缩进、注释风格。
 - 注释只解释非显而易见的业务逻辑。
+- **禁止在代码、UI 文案、日志输出中使用任何表情符号（emoji）**；用纯文字或字母缩写代替。
 - Windows 路径示例用 PowerShell `Copy-Item`；bash 用 `cp`。
 
 ---

@@ -31,6 +31,17 @@ def _cache_key(platform: str, name: str) -> str:
     return f"{platform}:{name.strip().lower()}"
 
 
+def _video_from_cache_hit(platform: str, hit: dict) -> ResolvedVideo:
+    return ResolvedVideo(
+        platform=platform,  # type: ignore[arg-type]
+        url=hit["url"],
+        summary=hit.get("summary", ""),
+        video_id=hit.get("video_id"),
+        resolved_at=hit.get("resolved_at", ""),
+        source=hit.get("source", "cache"),
+    )
+
+
 def _resolve_platform(name: str, category: str, platform: str) -> ResolvedVideo | None:
     cache = _load_cache()
     key = _cache_key(platform, name)
@@ -38,14 +49,11 @@ def _resolve_platform(name: str, category: str, platform: str) -> ResolvedVideo 
         hit = cache[key]
         if hit is None:
             return None
-        return ResolvedVideo(
-            platform=platform,  # type: ignore[arg-type]
-            url=hit["url"],
-            summary=hit.get("summary", ""),
-            video_id=hit.get("video_id"),
-            resolved_at=hit.get("resolved_at", ""),
-            source=hit.get("source", "cache"),
-        )
+        if not VideoProviderPort.validate_playable_url(hit.get("url", ""), platform):
+            cache.pop(key, None)
+            _save_cache(cache)
+        else:
+            return _video_from_cache_hit(platform, hit)
 
     for provider_id in chain_for_platform(platform):
         provider = get_provider(provider_id)
@@ -57,6 +65,8 @@ def _resolve_platform(name: str, category: str, platform: str) -> ResolvedVideo 
             continue
         result = provider.resolve(name, category)
         if result and VideoProviderPort.is_direct_url(result.url, platform):
+            if not VideoProviderPort.validate_playable_url(result.url, platform):
+                continue
             cache[key] = result.to_dict()
             _save_cache(cache)
             return result
@@ -77,11 +87,11 @@ def resolve_videos(name: str, category: str) -> list[dict]:
 
 
 def reject_search_urls(videos: list[dict]) -> list[dict]:
-    """Filter out any search-page URLs (CI guard)."""
+    """Filter out search-page URLs and unplayable direct links."""
     clean: list[dict] = []
     for v in videos:
         platform = v.get("platform", "")
         url = v.get("url", "")
-        if VideoProviderPort.is_direct_url(url, platform):
+        if VideoProviderPort.is_direct_url(url, platform) and VideoProviderPort.validate_playable_url(url, platform):
             clean.append(v)
     return clean

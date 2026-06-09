@@ -7,6 +7,8 @@ from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from typing import Literal
 
+import requests
+
 
 @dataclass
 class ResolvedVideo:
@@ -54,3 +56,21 @@ class VideoProviderPort(ABC):
         if platform == "TikTok":
             return "/video/" in u or "vm.tiktok.com" in u
         return False
+
+    @staticmethod
+    def validate_playable_url(url: str, platform: str) -> bool:
+        """Return True only when the URL resolves to playable content."""
+        if not url or not VideoProviderPort.is_direct_url(url, platform):
+            return False
+        if platform == "YouTube":
+            try:
+                resp = requests.get(
+                    "https://www.youtube.com/oembed",
+                    params={"url": url, "format": "json"},
+                    timeout=10,
+                    headers={"User-Agent": "VanMapCluster/0.1"},
+                )
+                return resp.status_code == 200
+            except requests.RequestException:
+                return False
+        return True

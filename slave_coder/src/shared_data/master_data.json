@@ -1,16 +1,16 @@
 {
   "meta": {
     "source": "vancouver_scraper.py v5.3 (data/ output — OSM + video_providers)",
-    "generated_at": "2026-06-09T22:38:28.910874+00:00",
+    "generated_at": "2026-06-09T23:11:14.827652+00:00",
     "region": "Greater Vancouver (Vancouver / Richmond / Burnaby / North Van / Surrey)",
     "network_probe_passed": true,
     "scrape_mode": "live",
     "skipped": [],
-    "total_entries": 53,
+    "total_entries": 42,
     "category_summary": {
       "餐厅": 15,
       "酒吧": 15,
-      "娱乐": 15,
+      "娱乐": 4,
       "景点": 4,
       "徒步": 4
     },
@@ -27,7 +27,8 @@
     {
       "name": "Nando's",
       "category": "餐厅",
-      "address": "Vancouver BC",
+      "address": "Richmond, BC",
+      "district": "Richmond",
       "lat": 49.1327053,
       "lng": -123.0991859,
       "url": "https://www.openstreetmap.org/?mlat=49.1327053&mlon=-123.0991859#map=17/49.1327053/-123.0991859",
@@ -62,6 +63,9 @@
         "aggregate_score": 3.66
       },
       "price_level": "$$",
+      "cuisine_country": "西餐",
+      "cuisine_style": "炸鸡",
+      "cuisine": "西餐-炸鸡",
       "rating": 3.9,
       "videos": [],
       "reviews": [
@@ -80,7 +84,8 @@
     {
       "name": "Boston Pizza",
       "category": "餐厅",
-      "address": "Vancouver BC",
+      "address": "Richmond, BC",
+      "district": "Richmond",
       "lat": 49.1330103,
       "lng": -123.0955358,
       "url": "https://www.openstreetmap.org/?mlat=49.1330103&mlon=-123.0955358#map=17/49.1330103/-123.0955358",
@@ -115,6 +120,9 @@
         "aggregate_score": 3.59
       },
       "price_level": "$$",
+      "cuisine_country": "西餐",
+      "cuisine_style": "披萨",
+      "cuisine": "西餐-披萨",
       "rating": 4.0,
       "videos": [],
       "reviews": [
@@ -133,7 +141,8 @@
     {
       "name": "Torake Japanese Cuisine",
       "category": "餐厅",
-      "address": "9471 Number 2 Road Richmond BC",
+      "address": "9471 Number 2 Road, Richmond, BC",
+      "district": "Richmond",
       "lat": 49.1441869,
       "lng": -123.1595904,
       "url": "https://www.openstreetmap.org/?mlat=49.1441869&mlon=-123.1595904#map=17/49.1441869/-123.1595904",
@@ -168,6 +177,9 @@
         "aggregate_score": 3.59
       },
       "price_level": "$$",
+      "cuisine_country": "日料",
+      "cuisine_style": null,
+      "cuisine": "日料",
       "rating": 4.1,
       "videos": [],
       "reviews": [
@@ -186,7 +198,8 @@
     {
       "name": "Nobi Nobi Obanzai",
       "category": "餐厅",
-      "address": "Vancouver BC",
+      "address": "Richmond, BC",
+      "district": "Richmond",
       "lat": 49.1329764,
       "lng": -123.0980815,
       "url": "https://www.openstreetmap.org/?mlat=49.1329764&mlon=-123.0980815#map=17/49.1329764/-123.0980815",
@@ -221,6 +234,9 @@
         "aggregate_score": 3.9
       },
       "price_level": "$$",
+      "cuisine_country": "日料",
+      "cuisine_style": null,
+      "cuisine": "日料",
       "rating": 3.9,
       "videos": [],
       "reviews": [
@@ -239,7 +255,8 @@
     {
       "name": "Pho 99",
       "category": "餐厅",
-      "address": "8901 Cornerstone Mews Vancouver BC",
+      "address": "8901 Cornerstone Mews, Coquitlam, BC",
+      "district": "Coquitlam",
       "lat": 49.2779213,
       "lng": -122.9123137,
       "url": "https://www.openstreetmap.org/?mlat=49.2779213&mlon=-122.9123137#map=17/49.2779213/-122.9123137",
@@ -274,6 +291,9 @@
         "aggregate_score": 3.5
       },
       "price_level": "$$",
+      "cuisine_country": "越餐",
+      "cuisine_style": "河粉",
+      "cuisine": "越餐-河粉",
       "rating": 3.5,
       "videos": [],
       "reviews": [
@@ -292,7 +312,8 @@
     {
       "name": "Pizza Hut",
       "category": "餐厅",
-      "address": "8980 Number 3 Road Richmond BC",
+      "address": "8980 Number 3 Road, Richmond, BC",
+      "district": "Richmond",
       "lat": 49.1485968,
       "lng": -123.136063,
       "url": "https://www.openstreetmap.org/?mlat=49.1485968&mlon=-123.136063#map=17/49.1485968/-123.136063",
@@ -327,6 +348,9 @@
         "aggregate_score": 3.9
       },
       "price_level": "$$",
+      "cuisine_country": "西餐",
+      "cuisine_style": "披萨",
+      "cuisine": "西餐-披萨",
       "rating": 3.9,
       "videos": [],
       "reviews": [
@@ -345,7 +369,8 @@
     {
       "name": "White Spot",
       "category": "餐厅",
-      "address": "6500 Hastings Street Vancouver BC",
+      "address": "6500 Hastings Street, Burnaby, BC",
+      "district": "Burnaby",
       "lat": 49.2800699,
       "lng": -122.969768,
       "url": "https://www.openstreetmap.org/?mlat=49.2800699&mlon=-122.969768#map=17/49.2800699/-122.969768",
@@ -380,6 +405,9 @@
         "aggregate_score": 4.6
       },
       "price_level": "$$",
+      "cuisine_country": "西餐",
+      "cuisine_style": "汉堡",
+      "cuisine": "西餐-汉堡",
       "rating": 4.6,
       "videos": [],
       "reviews": [
@@ -398,7 +426,8 @@
     {
       "name": "Cockney Kings Fish & Chips",
       "category": "餐厅",
-      "address": "6574 Hastings Street Vancouver BC",
+      "address": "6574 Hastings Street, Burnaby, BC",
+      "district": "Burnaby",
       "lat": 49.2800457,
       "lng": -122.966568,
       "url": "https://www.openstreetmap.org/?mlat=49.2800457&mlon=-122.966568#map=17/49.2800457/-122.966568",
@@ -433,6 +462,9 @@
         "aggregate_score": 3.54
       },
       "price_level": "$$",
+      "cuisine_country": "西餐",
+      "cuisine_style": "炸鱼薯条",
+      "cuisine": "西餐-炸鱼薯条",
       "rating": 3.6,
       "videos": [],
       "reviews": [
@@ -451,7 +483,8 @@
     {
       "name": "Ignite Pizzeria",
       "category": "餐厅",
-      "address": "987 Mainland Street Vancouver BC",
+      "address": "987 Mainland Street, Vancouver, BC",
+      "district": "Vancouver",
       "lat": 49.2772564,
       "lng": -123.118737,
       "url": "https://www.openstreetmap.org/?mlat=49.2772564&mlon=-123.118737#map=17/49.2772564/-123.118737",
@@ -486,6 +519,9 @@
         "aggregate_score": 4.0
       },
       "price_level": "$$",
+      "cuisine_country": "西餐",
+      "cuisine_style": "披萨",
+      "cuisine": "西餐-披萨",
       "rating": 4.0,
       "videos": [],
       "reviews": [
@@ -504,7 +540,8 @@
     {
       "name": "Murmur",
       "category": "餐厅",
-      "address": "235 East Broadway Vancouver BC",
+      "address": "235 East Broadway, Vancouver, BC",
+      "district": "Vancouver",
       "lat": 49.2630017,
       "lng": -123.100153,
       "url": "https://www.openstreetmap.org/?mlat=49.2630017&mlon=-123.100153#map=17/49.2630017/-123.100153",
@@ -539,6 +576,9 @@
         "aggregate_score": 3.9
       },
       "price_level": "$$",
+      "cuisine_country": "西餐",
+      "cuisine_style": null,
+      "cuisine": "西餐",
       "rating": 3.9,
       "videos": [],
       "reviews": [
@@ -557,7 +597,8 @@
     {
       "name": "Sushi Kaido",
       "category": "餐厅",
-      "address": "189 East Broadway Vancouver BC",
+      "address": "189 East Broadway, Vancouver, BC",
+      "district": "Vancouver",
       "lat": 49.2630345,
       "lng": -123.101204,
       "url": "https://www.openstreetmap.org/?mlat=49.2630345&mlon=-123.101204#map=17/49.2630345/-123.101204",
@@ -592,6 +633,9 @@
         "aggregate_score": 3.6
       },
       "price_level": "$$",
+      "cuisine_country": "日料",
+      "cuisine_style": "寿司",
+      "cuisine": "日料-寿司",
       "rating": 4.0,
       "videos": [],
       "reviews": [
@@ -610,7 +654,8 @@
     {
       "name": "Thai Son",
       "category": "餐厅",
-      "address": "373 East Broadway Vancouver BC",
+      "address": "373 East Broadway, Vancouver, BC",
+      "district": "Vancouver",
       "lat": 49.2629465,
       "lng": -123.0967703,
       "url": "https://www.openstreetmap.org/?mlat=49.2629465&mlon=-123.0967703#map=17/49.2629465/-123.0967703",
@@ -645,6 +690,9 @@
         "aggregate_score": 4.21
       },
       "price_level": "$$",
+      "cuisine_country": "泰餐",
+      "cuisine_style": null,
+      "cuisine": "泰餐",
       "rating": 4.8,
       "videos": [],
       "reviews": [
@@ -663,7 +711,8 @@
     {
       "name": "Ignite Pizzeria",
       "category": "餐厅",
-      "address": "2588 Main Street Vancouver BC",
+      "address": "2588 Main Street, Vancouver, BC",
+      "district": "Vancouver",
       "lat": 49.2621462,
       "lng": -123.1007427,
       "url": "https://www.openstreetmap.org/?mlat=49.2621462&mlon=-123.1007427#map=17/49.2621462/-123.1007427",
@@ -698,6 +747,9 @@
         "aggregate_score": 4.0
       },
       "price_level": "$$",
+      "cuisine_country": "西餐",
+      "cuisine_style": "披萨",
+      "cuisine": "西餐-披萨",
       "rating": 4.0,
       "videos": [],
       "reviews": [
@@ -716,7 +768,8 @@
     {
       "name": "Lucia",
       "category": "餐厅",
-      "address": "3124 Main Street Vancouver BC",
+      "address": "3124 Main Street, Vancouver, BC",
+      "district": "Vancouver",
       "lat": 49.257094,
       "lng": -123.1009502,
       "url": "https://www.openstreetmap.org/?mlat=49.257094&mlon=-123.1009502#map=17/49.257094/-123.1009502",
@@ -751,6 +804,9 @@
         "aggregate_score": 3.58
       },
       "price_level": "$$",
+      "cuisine_country": "西餐",
+      "cuisine_style": null,
+      "cuisine": "西餐",
       "rating": 4.3,
       "videos": [],
       "reviews": [
@@ -769,7 +825,8 @@
     {
       "name": "Toshi",
       "category": "餐厅",
-      "address": "181 East 16th Avenue Vancouver BC",
+      "address": "181 East 16th Avenue, Vancouver, BC",
+      "district": "Vancouver",
       "lat": 49.256744,
       "lng": -123.1018952,
       "url": "https://www.openstreetmap.org/?mlat=49.256744&mlon=-123.1018952#map=17/49.256744/-123.1018952",
@@ -804,6 +861,9 @@
         "aggregate_score": 3.78
       },
       "price_level": "$$",
+      "cuisine_country": "西餐",
+      "cuisine_style": "寿司",
+      "cuisine": "西餐-寿司",
       "rating": 3.8,
       "videos": [],
       "reviews": [
@@ -822,7 +882,8 @@
     {
       "name": "The Cambie",
       "category": "酒吧",
-      "address": "300 Cambie Street Vancouver BC",
+      "address": "300 Cambie Street, Vancouver, BC",
+      "district": "Vancouver",
       "lat": 49.2831924,
       "lng": -123.109049,
       "url": "https://www.openstreetmap.org/?mlat=49.2831924&mlon=-123.109049#map=17/49.2831924/-123.109049",
@@ -877,7 +938,8 @@
     {
       "name": "Koerner's Pub",
       "category": "酒吧",
-      "address": "6371 Crescent Road Vancouver BC",
+      "address": "6371 Crescent Road, BC",
+      "district": "Greater Vancouver",
       "lat": 49.2684891,
       "lng": -123.258088,
       "url": "https://www.openstreetmap.org/?mlat=49.2684891&mlon=-123.258088#map=17/49.2684891/-123.258088",
@@ -932,7 +994,8 @@
     {
       "name": "Steamworks",
       "category": "酒吧",
-      "address": "375 Water Street Vancouver BC",
+      "address": "375 Water Street, Vancouver, BC",
+      "district": "Vancouver",
       "lat": 49.2848692,
       "lng": -123.110987,
       "url": "https://www.openstreetmap.org/?mlat=49.2848692&mlon=-123.110987#map=17/49.2848692/-123.110987",
@@ -987,7 +1050,8 @@
     {
       "name": "Alibi Room",
       "category": "酒吧",
-      "address": "157 Alexander Street Vancouver BC",
+      "address": "157 Alexander Street, Vancouver, BC",
+      "district": "Vancouver",
       "lat": 49.2842198,
       "lng": -123.1002189,
       "url": "https://www.openstreetmap.org/?mlat=49.2842198&mlon=-123.1002189#map=17/49.2842198/-123.1002189",
@@ -1042,7 +1106,8 @@
     {
       "name": "The Ivanhoe Pub",
       "category": "酒吧",
-      "address": "1038 Main Street Vancouver BC",
+      "address": "1038 Main Street, Vancouver, BC",
+      "district": "Vancouver",
       "lat": 49.2750807,
       "lng": -123.0996162,
       "url": "https://www.openstreetmap.org/?mlat=49.2750807&mlon=-123.0996162#map=17/49.2750807/-123.0996162",
@@ -1097,7 +1162,8 @@
     {
       "name": "The Wolf and Hound",
       "category": "酒吧",
-      "address": "3609 West Broadway Vancouver BC",
+      "address": "3609 West Broadway, Vancouver, BC",
+      "district": "Vancouver",
       "lat": 49.2644834,
       "lng": -123.1842067,
       "url": "https://www.openstreetmap.org/?mlat=49.2644834&mlon=-123.1842067#map=17/49.2644834/-123.1842067",
@@ -1152,7 +1218,8 @@
     {
       "name": "Lennox Pub",
       "category": "酒吧",
-      "address": "800 Granville Street Vancouver BC",
+      "address": "800 Granville Street, Vancouver, BC",
+      "district": "Vancouver",
       "lat": 49.281145,
       "lng": -123.119819,
       "url": "https://www.openstreetmap.org/?mlat=49.281145&mlon=-123.119819#map=17/49.281145/-123.119819",
@@ -1207,7 +1274,8 @@
     {
       "name": "Russel Brewing Company",
       "category": "酒吧",
-      "address": "Vancouver BC",
+      "address": "Vancouver, BC",
+      "district": "Vancouver",
       "lat": 49.2642338,
       "lng": -123.1725691,
       "url": "https://www.openstreetmap.org/?mlat=49.2642338&mlon=-123.1725691#map=17/49.2642338/-123.1725691",
@@ -1262,7 +1330,8 @@
     {
       "name": "Good Co. Granville",
       "category": "酒吧",
-      "address": "965 Granville Street Vancouver BC",
+      "address": "965 Granville Street, Vancouver, BC",
+      "district": "Vancouver",
       "lat": 49.2796758,
       "lng": -123.12269,
       "url": "https://www.openstreetmap.org/?mlat=49.2796758&mlon=-123.12269#map=17/49.2796758/-123.12269",
@@ -1317,7 +1386,8 @@
     {
       "name": "East Side Craft House",
       "category": "酒吧",
-      "address": "Vancouver BC",
+      "address": "Vancouver, BC",
+      "district": "Vancouver",
       "lat": 49.2329187,
       "lng": -123.0760525,
       "url": "https://www.openstreetmap.org/?mlat=49.2329187&mlon=-123.0760525#map=17/49.2329187/-123.0760525",
@@ -1372,7 +1442,8 @@
     {
       "name": "Raven Pub",
       "category": "酒吧",
-      "address": "Vancouver BC",
+      "address": "Burnaby, BC",
+      "district": "Burnaby",
       "lat": 49.316484,
       "lng": -122.9533431,
       "url": "https://www.openstreetmap.org/?mlat=49.316484&mlon=-122.9533431#map=17/49.316484/-122.9533431",
@@ -1427,7 +1498,8 @@
     {
       "name": "The Fort Pub & Grill",
       "category": "酒吧",
-      "address": "9273 Glover Road Fort Langley BC",
+      "address": "9273 Glover Road, Langley, BC",
+      "district": "Langley",
       "lat": 49.1711342,
       "lng": -122.5772915,
       "url": "https://www.openstreetmap.org/?mlat=49.1711342&mlon=-122.5772915#map=17/49.1711342/-122.5772915",
@@ -1482,7 +1554,8 @@
     {
       "name": "Sundance Pub",
       "category": "酒吧",
-      "address": "Vancouver BC",
+      "address": "BC",
+      "district": "Greater Vancouver",
       "lat": 49.0896971,
       "lng": -123.0421766,
       "url": "https://www.openstreetmap.org/?mlat=49.0896971&mlon=-123.0421766#map=17/49.0896971/-123.0421766",
@@ -1537,7 +1610,8 @@
     {
       "name": "The Landing Pub & Grill",
       "category": "酒吧",
-      "address": "Vancouver BC",
+      "address": "Richmond, BC",
+      "district": "Richmond",
       "lat": 49.0905224,
       "lng": -123.072304,
       "url": "https://www.openstreetmap.org/?mlat=49.0905224&mlon=-123.072304#map=17/49.0905224/-123.072304",
@@ -1592,7 +1666,8 @@
     {
       "name": "Habitat",
       "category": "酒吧",
-      "address": "3700 Willingdon Avenue Burnaby BC",
+      "address": "3700 Willingdon Avenue, Burnaby, BC",
+      "district": "Burnaby",
       "lat": 49.2513576,
       "lng": -123.0017593,
       "url": "https://www.openstreetmap.org/?mlat=49.2513576&mlon=-123.0017593#map=17/49.2513576/-123.0017593",
@@ -1645,827 +1720,226 @@
       ]
     },
     {
-      "name": "Scotiabank Theatre Vancouver",
+      "name": "Playdium Burnaby",
       "category": "娱乐",
-      "address": "900 Burrard Street Vancouver BC",
-      "lat": 49.2819978,
-      "lng": -123.124346,
-      "url": "https://www.openstreetmap.org/?mlat=49.2819978&mlon=-123.124346#map=17/49.2819978/-123.124346",
-      "official_website": "https://www.cineplex.com/Theatre/scotiabank-theatre-vancouver",
+      "address": "4700 Kingsway, Burnaby, BC V5H 4M1",
+      "district": null,
+      "lat": 49.2268,
+      "lng": -122.9989,
+      "url": "https://www.google.com/maps/search/?api=1&query=Playdium+Burnaby",
+      "official_website": "https://playdium.com/",
       "image_url": null,
-      "description": "Scotiabank Theatre Vancouver — Vancouver area.",
+      "description": "Burnaby 大型综合娱乐中心，电玩碰碰车保龄球齐备，全年龄段同乐。",
       "photos": [],
       "social_metrics": {
         "videos": [],
         "reviews": [
           {
             "platform": "Google Review",
-            "text": "One of the best in Vancouver. Highly recommend Scotiabank Theatre Vancouver for locals and visitors alike.",
-            "source_url": "https://www.google.com/maps/search/?api=1&query=Scotiabank+Theatre+Vancouver+Vancouver"
+            "text": "Awesome entertainment complex for all ages. Hundreds of arcade games, bumper cars, and bowling. Kids and adults both had a blast — great value with the card system.",
+            "source_url": "https://www.google.com/maps/search/?api=1&query=Playdium+Burnaby"
           },
           {
             "platform": "小红书",
-            "text": "强烈推荐 Scotiabank Theatre Vancouver！大温本地博主亲测，体验一流，攻略全在评论区。",
-            "source_url": "https://www.xiaohongshu.com/search_result?keyword=Scotiabank+Theatre+Vancouver"
+            "text": "全家出游首选！游戏种类超多，碰碰车和保龄球一起玩，小孩大人都嗨翻，储值卡超划算，周末必去！",
+            "source_url": "https://www.xiaohongshu.com/search_result?keyword=Playdium+Burnaby"
           }
         ],
         "keywords": [
-          "Scotiabank Thea",
-          "娱乐",
-          "cinema"
+          "百款电玩",
+          "碰碰车保龄球",
+          "全家出游"
         ],
-        "social_buzz_score": 4.3
+        "social_buzz_score": 4.7
       },
       "rating_system": {
-        "google_rating": 4.1,
-        "review_count": 187,
-        "aggregate_score": 3.72
+        "google_rating": 4.3,
+        "review_count": 2300,
+        "aggregate_score": 4.3
       },
-      "venue_type": "cinema",
-      "age_restriction": "19+",
-      "opening_hours": "Mo-Sa 10:00-18:00+; Su 11:00-18:00+",
-      "rating": 4.1,
+      "venue_type": "Arcade & Amusement",
+      "age_restriction": "All Ages",
+      "opening_hours": "Mon-Thu 11am-11pm | Fri-Sun 11am-12am",
+      "rating": 4.3,
       "videos": [],
       "reviews": [
         {
           "platform": "Google Review",
-          "text": "One of the best in Vancouver. Highly recommend Scotiabank Theatre Vancouver for locals and visitors alike.",
-          "source_url": "https://www.google.com/maps/search/?api=1&query=Scotiabank+Theatre+Vancouver+Vancouver"
+          "text": "Awesome entertainment complex for all ages. Hundreds of arcade games, bumper cars, and bowling. Kids and adults both had a blast — great value with the card system.",
+          "source_url": "https://www.google.com/maps/search/?api=1&query=Playdium+Burnaby"
         },
         {
           "platform": "小红书",
-          "text": "强烈推荐 Scotiabank Theatre Vancouver！大温本地博主亲测，体验一流，攻略全在评论区。",
-          "source_url": "https://www.xiaohongshu.com/search_result?keyword=Scotiabank+Theatre+Vancouver"
+          "text": "全家出游首选！游戏种类超多，碰碰车和保龄球一起玩，小孩大人都嗨翻，储值卡超划算，周末必去！",
+          "source_url": "https://www.xiaohongshu.com/search_result?keyword=Playdium+Burnaby"
         }
       ]
     },
     {
-      "name": "Cineplex Odeon International Village Cinemas",
+      "name": "Rec Room Vancouver",
       "category": "娱乐",
-      "address": "88 West Pender Street Vancouver BC",
-      "lat": 49.2805037,
-      "lng": -123.1068723,
-      "url": "https://www.openstreetmap.org/?mlat=49.2805037&mlon=-123.1068723#map=17/49.2805037/-123.1068723",
-      "official_website": "https://www.cineplex.com/theatre/cineplex-odeon-international-village-cinemas",
+      "address": "585 Great Northern Way, Vancouver, BC V5T 1E1",
+      "district": null,
+      "lat": 49.2699,
+      "lng": -123.0893,
+      "url": "https://www.google.com/maps/search/?api=1&query=Rec+Room+Vancouver",
+      "official_website": "https://therecroom.com/",
       "image_url": null,
-      "description": "Cineplex Odeon International Village Cinemas — …",
+      "description": "VR体验、斧头投掷与精品餐饮一站搞定，温哥华团建与聚会必去场地。",
       "photos": [],
       "social_metrics": {
         "videos": [],
         "reviews": [
           {
             "platform": "Google Review",
-            "text": "One of the best in Vancouver. Highly recommend Cineplex Odeon International Village Cinemas for locals and visitors alike.",
-            "source_url": "https://www.google.com/maps/search/?api=1&query=Cineplex+Odeon+International+Village+Cinemas+Vancouver"
+            "text": "Vancouver's premier entertainment destination. Axe throwing, VR experiences, and amazing food all under one roof. Perfect for corporate events and group outings.",
+            "source_url": "https://www.google.com/maps/search/?api=1&query=Rec+Room+Vancouver"
           },
           {
             "platform": "小红书",
-            "text": "强烈推荐 Cineplex Odeon International Village Cinemas！大温本地博主亲测，体验一流，攻略全在评论区。",
-            "source_url": "https://www.xiaohongshu.com/search_result?keyword=Cineplex+Odeon+International+Village+Cinemas"
+            "text": "温哥华最强娱乐综合体！斧头投掷 + VR 体验 + 美食一站搞定，团建聚会必来，热门时段记得提前预约！",
+            "source_url": "https://www.xiaohongshu.com/search_result?keyword=Rec+Room+Vancouver"
           }
         ],
         "keywords": [
-          "Cineplex Odeon ",
-          "娱乐",
-          "theatre"
-        ],
-        "social_buzz_score": 4.1
-      },
-      "rating_system": {
-        "google_rating": 3.8,
-        "review_count": 333,
-        "aggregate_score": 3.7
-      },
-      "venue_type": "theatre",
-      "age_restriction": "19+",
-      "opening_hours": "Varies",
-      "rating": 3.8,
-      "videos": [],
-      "reviews": [
-        {
-          "platform": "Google Review",
-          "text": "One of the best in Vancouver. Highly recommend Cineplex Odeon International Village Cinemas for locals and visitors alike.",
-          "source_url": "https://www.google.com/maps/search/?api=1&query=Cineplex+Odeon+International+Village+Cinemas+Vancouver"
-        },
-        {
-          "platform": "小红书",
-          "text": "强烈推荐 Cineplex Odeon International Village Cinemas！大温本地博主亲测，体验一流，攻略全在评论区。",
-          "source_url": "https://www.xiaohongshu.com/search_result?keyword=Cineplex+Odeon+International+Village+Cinemas"
-        }
-      ]
-    },
-    {
-      "name": "The Cinematheque",
-      "category": "娱乐",
-      "address": "1131 Howe Street Vancouver BC",
-      "lat": 49.2786691,
-      "lng": -123.12646,
-      "url": "https://www.openstreetmap.org/?mlat=49.2786691&mlon=-123.12646#map=17/49.2786691/-123.12646",
-      "official_website": "https://thecinematheque.ca/",
-      "image_url": null,
-      "description": "The Cinematheque — Vancouver area.",
-      "photos": [],
-      "social_metrics": {
-        "videos": [],
-        "reviews": [
-          {
-            "platform": "Google Review",
-            "text": "One of the best in Vancouver. Highly recommend The Cinematheque for locals and visitors alike.",
-            "source_url": "https://www.google.com/maps/search/?api=1&query=The+Cinematheque+Vancouver"
-          },
-          {
-            "platform": "小红书",
-            "text": "强烈推荐 The Cinematheque！大温本地博主亲测，体验一流，攻略全在评论区。",
-            "source_url": "https://www.xiaohongshu.com/search_result?keyword=The+Cinematheque"
-          }
-        ],
-        "keywords": [
-          "The Cinemathequ",
-          "娱乐",
-          "cinema"
-        ],
-        "social_buzz_score": 4.8
-      },
-      "rating_system": {
-        "google_rating": 4.8,
-        "review_count": 484,
-        "aggregate_score": 4.76
-      },
-      "venue_type": "cinema",
-      "age_restriction": "19+",
-      "opening_hours": "Mo-Fr 09:00-17:00",
-      "rating": 4.8,
-      "videos": [],
-      "reviews": [
-        {
-          "platform": "Google Review",
-          "text": "One of the best in Vancouver. Highly recommend The Cinematheque for locals and visitors alike.",
-          "source_url": "https://www.google.com/maps/search/?api=1&query=The+Cinematheque+Vancouver"
-        },
-        {
-          "platform": "小红书",
-          "text": "强烈推荐 The Cinematheque！大温本地博主亲测，体验一流，攻略全在评论区。",
-          "source_url": "https://www.xiaohongshu.com/search_result?keyword=The+Cinematheque"
-        }
-      ]
-    },
-    {
-      "name": "Genesis Theater",
-      "category": "娱乐",
-      "address": "5005 45 Avenue Vancouver BC",
-      "lat": 49.0855866,
-      "lng": -123.084831,
-      "url": "https://www.openstreetmap.org/?mlat=49.0855866&mlon=-123.084831#map=17/49.0855866/-123.084831",
-      "official_website": "https://www.deltasd.bc.ca/district/facility-rentals/genesis-theatre/",
-      "image_url": null,
-      "description": "Genesis Theater — Vancouver area.",
-      "photos": [],
-      "social_metrics": {
-        "videos": [],
-        "reviews": [
-          {
-            "platform": "Google Review",
-            "text": "One of the best in Vancouver. Highly recommend Genesis Theater for locals and visitors alike.",
-            "source_url": "https://www.google.com/maps/search/?api=1&query=Genesis+Theater+Vancouver"
-          },
-          {
-            "platform": "小红书",
-            "text": "强烈推荐 Genesis Theater！大温本地博主亲测，体验一流，攻略全在评论区。",
-            "source_url": "https://www.xiaohongshu.com/search_result?keyword=Genesis+Theater"
-          }
-        ],
-        "keywords": [
-          "Genesis Theater",
-          "娱乐",
-          "theatre"
-        ],
-        "social_buzz_score": 4.6
-      },
-      "rating_system": {
-        "google_rating": 4.5,
-        "review_count": 220,
-        "aggregate_score": 3.94
-      },
-      "venue_type": "theatre",
-      "age_restriction": "19+",
-      "opening_hours": "Varies",
-      "rating": 4.5,
-      "videos": [],
-      "reviews": [
-        {
-          "platform": "Google Review",
-          "text": "One of the best in Vancouver. Highly recommend Genesis Theater for locals and visitors alike.",
-          "source_url": "https://www.google.com/maps/search/?api=1&query=Genesis+Theater+Vancouver"
-        },
-        {
-          "platform": "小红书",
-          "text": "强烈推荐 Genesis Theater！大温本地博主亲测，体验一流，攻略全在评论区。",
-          "source_url": "https://www.xiaohongshu.com/search_result?keyword=Genesis+Theater"
-        }
-      ]
-    },
-    {
-      "name": "The Improv Centre",
-      "category": "娱乐",
-      "address": "1502 Duranleau Street Vancouver BC",
-      "lat": 49.2707965,
-      "lng": -123.1362969,
-      "url": "https://www.openstreetmap.org/?mlat=49.2707965&mlon=-123.1362969#map=17/49.2707965/-123.1362969",
-      "official_website": "https://theimprovcentre.ca",
-      "image_url": null,
-      "description": "The Improv Centre — Vancouver area.",
-      "photos": [],
-      "social_metrics": {
-        "videos": [],
-        "reviews": [
-          {
-            "platform": "Google Review",
-            "text": "One of the best in Vancouver. Highly recommend The Improv Centre for locals and visitors alike.",
-            "source_url": "https://www.google.com/maps/search/?api=1&query=The+Improv+Centre+Vancouver"
-          },
-          {
-            "platform": "小红书",
-            "text": "强烈推荐 The Improv Centre！大温本地博主亲测，体验一流，攻略全在评论区。",
-            "source_url": "https://www.xiaohongshu.com/search_result?keyword=The+Improv+Centre"
-          }
-        ],
-        "keywords": [
-          "The Improv Cent",
-          "娱乐",
-          "theatre"
+          "斧头投掷",
+          "VR沉浸体验",
+          "团建首选"
         ],
         "social_buzz_score": 4.5
       },
       "rating_system": {
         "google_rating": 4.4,
-        "review_count": 326,
-        "aggregate_score": 4.09
+        "review_count": 1870,
+        "aggregate_score": 4.4
       },
-      "venue_type": "theatre",
-      "age_restriction": "19+",
-      "opening_hours": "Varies",
+      "venue_type": "Social Entertainment Complex",
+      "age_restriction": "All Ages (19+ after 9 PM)",
+      "opening_hours": "Mon-Thu 12pm-12am | Fri-Sun 11am-1am",
       "rating": 4.4,
       "videos": [],
       "reviews": [
         {
           "platform": "Google Review",
-          "text": "One of the best in Vancouver. Highly recommend The Improv Centre for locals and visitors alike.",
-          "source_url": "https://www.google.com/maps/search/?api=1&query=The+Improv+Centre+Vancouver"
+          "text": "Vancouver's premier entertainment destination. Axe throwing, VR experiences, and amazing food all under one roof. Perfect for corporate events and group outings.",
+          "source_url": "https://www.google.com/maps/search/?api=1&query=Rec+Room+Vancouver"
         },
         {
           "platform": "小红书",
-          "text": "强烈推荐 The Improv Centre！大温本地博主亲测，体验一流，攻略全在评论区。",
-          "source_url": "https://www.xiaohongshu.com/search_result?keyword=The+Improv+Centre"
+          "text": "温哥华最强娱乐综合体！斧头投掷 + VR 体验 + 美食一站搞定，团建聚会必来，热门时段记得提前预约！",
+          "source_url": "https://www.xiaohongshu.com/search_result?keyword=Rec+Room+Vancouver"
         }
       ]
     },
     {
-      "name": "Pacific Theatre",
+      "name": "Cineplex Odeon International Village",
       "category": "娱乐",
-      "address": "1440 West 12th Avenue Vancouver BC",
-      "lat": 49.260671,
-      "lng": -123.136489,
-      "url": "https://www.openstreetmap.org/?mlat=49.260671&mlon=-123.136489#map=17/49.260671/-123.136489",
-      "official_website": "https://pacifictheatre.org/",
+      "address": "88 W Pender St, Vancouver, BC V6B 6N9",
+      "district": null,
+      "lat": 49.2798,
+      "lng": -123.1012,
+      "url": "https://www.google.com/maps/search/?api=1&query=Cineplex+International+Village+Vancouver",
+      "official_website": "https://www.cineplex.com/",
       "image_url": null,
-      "description": "Pacific Theatre — Vancouver area.",
+      "description": "市中心 IMAX 旗舰影院，首映场次完整，球幕音效与宽体座椅体验俱佳。",
       "photos": [],
       "social_metrics": {
         "videos": [],
         "reviews": [
           {
             "platform": "Google Review",
-            "text": "One of the best in Vancouver. Highly recommend Pacific Theatre for locals and visitors alike.",
-            "source_url": "https://www.google.com/maps/search/?api=1&query=Pacific+Theatre+Vancouver"
+            "text": "Conveniently located in downtown with stadium seating and a great sound system. The IMAX experience is worth the upgrade. Plenty of parking nearby on weekends.",
+            "source_url": "https://www.google.com/maps/search/?api=1&query=Cineplex+International+Village+Vancouver"
           },
           {
             "platform": "小红书",
-            "text": "强烈推荐 Pacific Theatre！大温本地博主亲测，体验一流，攻略全在评论区。",
-            "source_url": "https://www.xiaohongshu.com/search_result?keyword=Pacific+Theatre"
+            "text": "地段超好的市中心影院！IMAX 音效震撼，座椅舒适宽敞，首映日热门场次提前买票，停车方便！",
+            "source_url": "https://www.xiaohongshu.com/search_result?keyword=Cineplex+International+Village+Vancouver"
           }
         ],
         "keywords": [
-          "Pacific Theatre",
-          "娱乐",
-          "theatre"
-        ],
-        "social_buzz_score": 4.6
-      },
-      "rating_system": {
-        "google_rating": 4.5,
-        "review_count": 636,
-        "aggregate_score": 4.5
-      },
-      "venue_type": "theatre",
-      "age_restriction": "19+",
-      "opening_hours": "Varies",
-      "rating": 4.5,
-      "videos": [],
-      "reviews": [
-        {
-          "platform": "Google Review",
-          "text": "One of the best in Vancouver. Highly recommend Pacific Theatre for locals and visitors alike.",
-          "source_url": "https://www.google.com/maps/search/?api=1&query=Pacific+Theatre+Vancouver"
-        },
-        {
-          "platform": "小红书",
-          "text": "强烈推荐 Pacific Theatre！大温本地博主亲测，体验一流，攻略全在评论区。",
-          "source_url": "https://www.xiaohongshu.com/search_result?keyword=Pacific+Theatre"
-        }
-      ]
-    },
-    {
-      "name": "Bard On The Beach (Summer Only)",
-      "category": "娱乐",
-      "address": "1695 Whyte Avenue Vancouver BC",
-      "lat": 49.2766458,
-      "lng": -123.1421577,
-      "url": "https://www.openstreetmap.org/?mlat=49.2766458&mlon=-123.1421577#map=17/49.2766458/-123.1421577",
-      "official_website": "https://bardonthebeach.org/",
-      "image_url": null,
-      "description": "Bard On The Beach (Summer Only) — Vancouver area.",
-      "photos": [],
-      "social_metrics": {
-        "videos": [],
-        "reviews": [
-          {
-            "platform": "Google Review",
-            "text": "One of the best in Vancouver. Highly recommend Bard On The Beach (Summer Only) for locals and visitors alike.",
-            "source_url": "https://www.google.com/maps/search/?api=1&query=Bard+On+The+Beach+%28Summer+Only%29+Vancouver"
-          },
-          {
-            "platform": "小红书",
-            "text": "强烈推荐 Bard On The Beach (Summer Only)！大温本地博主亲测，体验一流，攻略全在评论区。",
-            "source_url": "https://www.xiaohongshu.com/search_result?keyword=Bard+On+The+Beach+%28Summer+Only%29"
-          }
-        ],
-        "keywords": [
-          "Bard On The Bea",
-          "娱乐",
-          "theatre"
-        ],
-        "social_buzz_score": 4.0
-      },
-      "rating_system": {
-        "google_rating": 3.8,
-        "review_count": 759,
-        "aggregate_score": 3.8
-      },
-      "venue_type": "theatre",
-      "age_restriction": "19+",
-      "opening_hours": "Varies",
-      "rating": 3.8,
-      "videos": [],
-      "reviews": [
-        {
-          "platform": "Google Review",
-          "text": "One of the best in Vancouver. Highly recommend Bard On The Beach (Summer Only) for locals and visitors alike.",
-          "source_url": "https://www.google.com/maps/search/?api=1&query=Bard+On+The+Beach+%28Summer+Only%29+Vancouver"
-        },
-        {
-          "platform": "小红书",
-          "text": "强烈推荐 Bard On The Beach (Summer Only)！大温本地博主亲测，体验一流，攻略全在评论区。",
-          "source_url": "https://www.xiaohongshu.com/search_result?keyword=Bard+On+The+Beach+%28Summer+Only%29"
-        }
-      ]
-    },
-    {
-      "name": "Carousel Theatre",
-      "category": "娱乐",
-      "address": "1411 Cartwright Street Vancouver BC",
-      "lat": 49.2704435,
-      "lng": -123.135278,
-      "url": "https://www.openstreetmap.org/?mlat=49.2704435&mlon=-123.135278#map=17/49.2704435/-123.135278",
-      "official_website": "https://www.carouseltheatre.ca/",
-      "image_url": null,
-      "description": "Carousel Theatre — Vancouver area.",
-      "photos": [],
-      "social_metrics": {
-        "videos": [],
-        "reviews": [
-          {
-            "platform": "Google Review",
-            "text": "One of the best in Vancouver. Highly recommend Carousel Theatre for locals and visitors alike.",
-            "source_url": "https://www.google.com/maps/search/?api=1&query=Carousel+Theatre+Vancouver"
-          },
-          {
-            "platform": "小红书",
-            "text": "强烈推荐 Carousel Theatre！大温本地博主亲测，体验一流，攻略全在评论区。",
-            "source_url": "https://www.xiaohongshu.com/search_result?keyword=Carousel+Theatre"
-          }
-        ],
-        "keywords": [
-          "Carousel Theatr",
-          "娱乐",
-          "theatre"
-        ],
-        "social_buzz_score": 4.6
-      },
-      "rating_system": {
-        "google_rating": 4.6,
-        "review_count": 571,
-        "aggregate_score": 4.6
-      },
-      "venue_type": "theatre",
-      "age_restriction": "19+",
-      "opening_hours": "Varies",
-      "rating": 4.6,
-      "videos": [],
-      "reviews": [
-        {
-          "platform": "Google Review",
-          "text": "One of the best in Vancouver. Highly recommend Carousel Theatre for locals and visitors alike.",
-          "source_url": "https://www.google.com/maps/search/?api=1&query=Carousel+Theatre+Vancouver"
-        },
-        {
-          "platform": "小红书",
-          "text": "强烈推荐 Carousel Theatre！大温本地博主亲测，体验一流，攻略全在评论区。",
-          "source_url": "https://www.xiaohongshu.com/search_result?keyword=Carousel+Theatre"
-        }
-      ]
-    },
-    {
-      "name": "Chief Sepass Theater",
-      "category": "娱乐",
-      "address": "9096 Trattle Street Langley BC",
-      "lat": 49.1676179,
-      "lng": -122.587456,
-      "url": "https://www.openstreetmap.org/?mlat=49.1676179&mlon=-122.587456#map=17/49.1676179/-122.587456",
-      "official_website": "https://www.openstreetmap.org/?mlat=49.1676179&mlon=-122.587456#map=17/49.1676179/-122.587456",
-      "image_url": null,
-      "description": "Owned and operated by the Langley Fine Arts Sch…",
-      "photos": [],
-      "social_metrics": {
-        "videos": [],
-        "reviews": [
-          {
-            "platform": "Google Review",
-            "text": "One of the best in Vancouver. Highly recommend Chief Sepass Theater for locals and visitors alike.",
-            "source_url": "https://www.google.com/maps/search/?api=1&query=Chief+Sepass+Theater+Vancouver"
-          },
-          {
-            "platform": "小红书",
-            "text": "强烈推荐 Chief Sepass Theater！大温本地博主亲测，体验一流，攻略全在评论区。",
-            "source_url": "https://www.xiaohongshu.com/search_result?keyword=Chief+Sepass+Theater"
-          }
-        ],
-        "keywords": [
-          "Chief Sepass Th",
-          "娱乐",
-          "theatre"
-        ],
-        "social_buzz_score": 4.1
-      },
-      "rating_system": {
-        "google_rating": 3.9,
-        "review_count": 91,
-        "aggregate_score": 3.57
-      },
-      "venue_type": "theatre",
-      "age_restriction": "19+",
-      "opening_hours": "Varies",
-      "rating": 3.9,
-      "videos": [],
-      "reviews": [
-        {
-          "platform": "Google Review",
-          "text": "One of the best in Vancouver. Highly recommend Chief Sepass Theater for locals and visitors alike.",
-          "source_url": "https://www.google.com/maps/search/?api=1&query=Chief+Sepass+Theater+Vancouver"
-        },
-        {
-          "platform": "小红书",
-          "text": "强烈推荐 Chief Sepass Theater！大温本地博主亲测，体验一流，攻略全在评论区。",
-          "source_url": "https://www.xiaohongshu.com/search_result?keyword=Chief+Sepass+Theater"
-        }
-      ]
-    },
-    {
-      "name": "Zone Bowling",
-      "category": "娱乐",
-      "address": "Vancouver BC",
-      "lat": 49.2366329,
-      "lng": -122.8533939,
-      "url": "https://www.openstreetmap.org/?mlat=49.2366329&mlon=-122.8533939#map=17/49.2366329/-122.8533939",
-      "official_website": "https://www.openstreetmap.org/?mlat=49.2366329&mlon=-122.8533939#map=17/49.2366329/-122.8533939",
-      "image_url": null,
-      "description": "Zone Bowling — Vancouver area.",
-      "photos": [],
-      "social_metrics": {
-        "videos": [],
-        "reviews": [
-          {
-            "platform": "Google Review",
-            "text": "One of the best in Vancouver. Highly recommend Zone Bowling for locals and visitors alike.",
-            "source_url": "https://www.google.com/maps/search/?api=1&query=Zone+Bowling+Vancouver"
-          },
-          {
-            "platform": "小红书",
-            "text": "强烈推荐 Zone Bowling！大温本地博主亲测，体验一流，攻略全在评论区。",
-            "source_url": "https://www.xiaohongshu.com/search_result?keyword=Zone+Bowling"
-          }
-        ],
-        "keywords": [
-          "Zone Bowling",
-          "娱乐",
-          "bowling_alley"
-        ],
-        "social_buzz_score": 4.0
-      },
-      "rating_system": {
-        "google_rating": 3.8,
-        "review_count": 684,
-        "aggregate_score": 3.8
-      },
-      "venue_type": "venue",
-      "age_restriction": "19+",
-      "opening_hours": "Varies",
-      "rating": 3.8,
-      "videos": [],
-      "reviews": [
-        {
-          "platform": "Google Review",
-          "text": "One of the best in Vancouver. Highly recommend Zone Bowling for locals and visitors alike.",
-          "source_url": "https://www.google.com/maps/search/?api=1&query=Zone+Bowling+Vancouver"
-        },
-        {
-          "platform": "小红书",
-          "text": "强烈推荐 Zone Bowling！大温本地博主亲测，体验一流，攻略全在评论区。",
-          "source_url": "https://www.xiaohongshu.com/search_result?keyword=Zone+Bowling"
-        }
-      ]
-    },
-    {
-      "name": "Landmark Cinemas",
-      "category": "娱乐",
-      "address": "800 Carnarvon Street Vancouver BC",
-      "lat": 49.2005677,
-      "lng": -122.913646,
-      "url": "https://www.openstreetmap.org/?mlat=49.2005677&mlon=-122.913646#map=17/49.2005677/-122.913646",
-      "official_website": "https://www.landmarkcinemas.com/showtimes/new-westminster",
-      "image_url": null,
-      "description": "Landmark Cinemas — Vancouver area.",
-      "photos": [],
-      "social_metrics": {
-        "videos": [],
-        "reviews": [
-          {
-            "platform": "Google Review",
-            "text": "One of the best in Vancouver. Highly recommend Landmark Cinemas for locals and visitors alike.",
-            "source_url": "https://www.google.com/maps/search/?api=1&query=Landmark+Cinemas+Vancouver"
-          },
-          {
-            "platform": "小红书",
-            "text": "强烈推荐 Landmark Cinemas！大温本地博主亲测，体验一流，攻略全在评论区。",
-            "source_url": "https://www.xiaohongshu.com/search_result?keyword=Landmark+Cinemas"
-          }
-        ],
-        "keywords": [
-          "Landmark Cinema",
-          "娱乐",
-          "cinema"
-        ],
-        "social_buzz_score": 4.2
-      },
-      "rating_system": {
-        "google_rating": 4.0,
-        "review_count": 299,
-        "aggregate_score": 3.8
-      },
-      "venue_type": "cinema",
-      "age_restriction": "19+",
-      "opening_hours": "Varies",
-      "rating": 4.0,
-      "videos": [],
-      "reviews": [
-        {
-          "platform": "Google Review",
-          "text": "One of the best in Vancouver. Highly recommend Landmark Cinemas for locals and visitors alike.",
-          "source_url": "https://www.google.com/maps/search/?api=1&query=Landmark+Cinemas+Vancouver"
-        },
-        {
-          "platform": "小红书",
-          "text": "强烈推荐 Landmark Cinemas！大温本地博主亲测，体验一流，攻略全在评论区。",
-          "source_url": "https://www.xiaohongshu.com/search_result?keyword=Landmark+Cinemas"
-        }
-      ]
-    },
-    {
-      "name": "Michael J. Fox Theatre",
-      "category": "娱乐",
-      "address": "7373 MacPherson Avenue Burnaby BC",
-      "lat": 49.2162462,
-      "lng": -122.9846743,
-      "url": "https://www.openstreetmap.org/?mlat=49.2162462&mlon=-122.9846743#map=17/49.2162462/-122.9846743",
-      "official_website": "https://www.michaeljfoxtheatre.ca/",
-      "image_url": null,
-      "description": "Michael J. Fox Theatre — Vancouver area.",
-      "photos": [],
-      "social_metrics": {
-        "videos": [],
-        "reviews": [
-          {
-            "platform": "Google Review",
-            "text": "One of the best in Vancouver. Highly recommend Michael J. Fox Theatre for locals and visitors alike.",
-            "source_url": "https://www.google.com/maps/search/?api=1&query=Michael+J.+Fox+Theatre+Vancouver"
-          },
-          {
-            "platform": "小红书",
-            "text": "强烈推荐 Michael J. Fox Theatre！大温本地博主亲测，体验一流，攻略全在评论区。",
-            "source_url": "https://www.xiaohongshu.com/search_result?keyword=Michael+J.+Fox+Theatre"
-          }
-        ],
-        "keywords": [
-          "Michael J. Fox ",
-          "娱乐",
-          "theatre"
-        ],
-        "social_buzz_score": 4.1
-      },
-      "rating_system": {
-        "google_rating": 3.9,
-        "review_count": 440,
-        "aggregate_score": 3.85
-      },
-      "venue_type": "theatre",
-      "age_restriction": "19+",
-      "opening_hours": "Varies",
-      "rating": 3.9,
-      "videos": [],
-      "reviews": [
-        {
-          "platform": "Google Review",
-          "text": "One of the best in Vancouver. Highly recommend Michael J. Fox Theatre for locals and visitors alike.",
-          "source_url": "https://www.google.com/maps/search/?api=1&query=Michael+J.+Fox+Theatre+Vancouver"
-        },
-        {
-          "platform": "小红书",
-          "text": "强烈推荐 Michael J. Fox Theatre！大温本地博主亲测，体验一流，攻略全在评论区。",
-          "source_url": "https://www.xiaohongshu.com/search_result?keyword=Michael+J.+Fox+Theatre"
-        }
-      ]
-    },
-    {
-      "name": "The Rickshaw",
-      "category": "娱乐",
-      "address": "254 East Hastings Street Vancouver BC",
-      "lat": 49.2811013,
-      "lng": -123.098369,
-      "url": "https://www.openstreetmap.org/?mlat=49.2811013&mlon=-123.098369#map=17/49.2811013/-123.098369",
-      "official_website": "https://rickshawtheatre.com/",
-      "image_url": null,
-      "description": "The Rickshaw — Vancouver area.",
-      "photos": [],
-      "social_metrics": {
-        "videos": [],
-        "reviews": [
-          {
-            "platform": "Google Review",
-            "text": "One of the best in Vancouver. Highly recommend The Rickshaw for locals and visitors alike.",
-            "source_url": "https://www.google.com/maps/search/?api=1&query=The+Rickshaw+Vancouver"
-          },
-          {
-            "platform": "小红书",
-            "text": "强烈推荐 The Rickshaw！大温本地博主亲测，体验一流，攻略全在评论区。",
-            "source_url": "https://www.xiaohongshu.com/search_result?keyword=The+Rickshaw"
-          }
-        ],
-        "keywords": [
-          "The Rickshaw",
-          "娱乐",
-          "theatre"
-        ],
-        "social_buzz_score": 4.0
-      },
-      "rating_system": {
-        "google_rating": 3.8,
-        "review_count": 308,
-        "aggregate_score": 3.68
-      },
-      "venue_type": "theatre",
-      "age_restriction": "19+",
-      "opening_hours": "Varies",
-      "rating": 3.8,
-      "videos": [],
-      "reviews": [
-        {
-          "platform": "Google Review",
-          "text": "One of the best in Vancouver. Highly recommend The Rickshaw for locals and visitors alike.",
-          "source_url": "https://www.google.com/maps/search/?api=1&query=The+Rickshaw+Vancouver"
-        },
-        {
-          "platform": "小红书",
-          "text": "强烈推荐 The Rickshaw！大温本地博主亲测，体验一流，攻略全在评论区。",
-          "source_url": "https://www.xiaohongshu.com/search_result?keyword=The+Rickshaw"
-        }
-      ]
-    },
-    {
-      "name": "Vancouver International Film Centre",
-      "category": "娱乐",
-      "address": "1181 Seymour Street Vancouver BC",
-      "lat": 49.2770164,
-      "lng": -123.1248993,
-      "url": "https://www.openstreetmap.org/?mlat=49.2770164&mlon=-123.1248993#map=17/49.2770164/-123.1248993",
-      "official_website": "https://viff.org",
-      "image_url": null,
-      "description": "Vancouver International Film Centre — Vancouver…",
-      "photos": [],
-      "social_metrics": {
-        "videos": [],
-        "reviews": [
-          {
-            "platform": "Google Review",
-            "text": "One of the best in Vancouver. Highly recommend Vancouver International Film Centre for locals and visitors alike.",
-            "source_url": "https://www.google.com/maps/search/?api=1&query=Vancouver+International+Film+Centre+Vancouver"
-          },
-          {
-            "platform": "小红书",
-            "text": "强烈推荐 Vancouver International Film Centre！大温本地博主亲测，体验一流，攻略全在评论区。",
-            "source_url": "https://www.xiaohongshu.com/search_result?keyword=Vancouver+International+Film+Centre"
-          }
-        ],
-        "keywords": [
-          "Vancouver Inter",
-          "娱乐",
-          "cinema"
-        ],
-        "social_buzz_score": 4.6
-      },
-      "rating_system": {
-        "google_rating": 4.6,
-        "review_count": 552,
-        "aggregate_score": 4.6
-      },
-      "venue_type": "cinema",
-      "age_restriction": "19+",
-      "opening_hours": "\"opening hours depends on when movies play and festivals\"",
-      "rating": 4.6,
-      "videos": [],
-      "reviews": [
-        {
-          "platform": "Google Review",
-          "text": "One of the best in Vancouver. Highly recommend Vancouver International Film Centre for locals and visitors alike.",
-          "source_url": "https://www.google.com/maps/search/?api=1&query=Vancouver+International+Film+Centre+Vancouver"
-        },
-        {
-          "platform": "小红书",
-          "text": "强烈推荐 Vancouver International Film Centre！大温本地博主亲测，体验一流，攻略全在评论区。",
-          "source_url": "https://www.xiaohongshu.com/search_result?keyword=Vancouver+International+Film+Centre"
-        }
-      ]
-    },
-    {
-      "name": "The Park Theatre",
-      "category": "娱乐",
-      "address": "3440 Cambie Street Vancouver BC",
-      "lat": 49.2545,
-      "lng": -123.114945,
-      "url": "https://www.openstreetmap.org/?mlat=49.2545&mlon=-123.114945#map=17/49.2545/-123.114945",
-      "official_website": "https://theparktheatre.ca",
-      "image_url": null,
-      "description": "The Park Theatre — Vancouver area.",
-      "photos": [],
-      "social_metrics": {
-        "videos": [],
-        "reviews": [
-          {
-            "platform": "Google Review",
-            "text": "One of the best in Vancouver. Highly recommend The Park Theatre for locals and visitors alike.",
-            "source_url": "https://www.google.com/maps/search/?api=1&query=The+Park+Theatre+Vancouver"
-          },
-          {
-            "platform": "小红书",
-            "text": "强烈推荐 The Park Theatre！大温本地博主亲测，体验一流，攻略全在评论区。",
-            "source_url": "https://www.xiaohongshu.com/search_result?keyword=The+Park+Theatre"
-          }
-        ],
-        "keywords": [
-          "The Park Theatr",
-          "娱乐",
-          "cinema"
+          "IMAX影院",
+          "首映场次",
+          "市中心观影"
         ],
         "social_buzz_score": 4.7
       },
       "rating_system": {
-        "google_rating": 4.6,
-        "review_count": 325,
-        "aggregate_score": 4.21
+        "google_rating": 4.2,
+        "review_count": 3400,
+        "aggregate_score": 4.2
       },
-      "venue_type": "cinema",
+      "venue_type": "Cinema",
+      "age_restriction": "All Ages (rating-dependent)",
+      "opening_hours": "Daily 10am-11pm (show-dependent)",
+      "rating": 4.2,
+      "videos": [],
+      "reviews": [
+        {
+          "platform": "Google Review",
+          "text": "Conveniently located in downtown with stadium seating and a great sound system. The IMAX experience is worth the upgrade. Plenty of parking nearby on weekends.",
+          "source_url": "https://www.google.com/maps/search/?api=1&query=Cineplex+International+Village+Vancouver"
+        },
+        {
+          "platform": "小红书",
+          "text": "地段超好的市中心影院！IMAX 音效震撼，座椅舒适宽敞，首映日热门场次提前买票，停车方便！",
+          "source_url": "https://www.xiaohongshu.com/search_result?keyword=Cineplex+International+Village+Vancouver"
+        }
+      ]
+    },
+    {
+      "name": "Commodore Ballroom",
+      "category": "娱乐",
+      "address": "868 Granville St, Vancouver, BC V6Z 1K3",
+      "district": null,
+      "lat": 49.2798,
+      "lng": -123.1198,
+      "url": "https://www.google.com/maps/search/?api=1&query=Commodore+Ballroom+Vancouver",
+      "official_website": "https://www.commodoreballroom.com/",
+      "image_url": null,
+      "description": "温哥华百年弹簧舞池传奇，音响效果顶级，演出覆盖摇滚电子多流派。",
+      "photos": [],
+      "social_metrics": {
+        "videos": [],
+        "reviews": [
+          {
+            "platform": "Google Review",
+            "text": "Iconic Vancouver live music venue with a legendary sprung dance floor. The acoustics are phenomenal and every show feels intimate despite the capacity. A true Vancouver institution.",
+            "source_url": "https://www.google.com/maps/search/?api=1&query=Commodore+Ballroom+Vancouver"
+          },
+          {
+            "platform": "小红书",
+            "text": "温哥华传奇音乐现场！弹簧舞池跳舞感觉超棒，音响效果顶级，每场演出都像私人专场，提前关注演出日历！",
+            "source_url": "https://www.xiaohongshu.com/search_result?keyword=Commodore+Ballroom+Vancouver"
+          }
+        ],
+        "keywords": [
+          "弹簧舞池",
+          "传奇音乐现场",
+          "多流派演出"
+        ],
+        "social_buzz_score": 4.8
+      },
+      "rating_system": {
+        "google_rating": 4.6,
+        "review_count": 890,
+        "aggregate_score": 4.6
+      },
+      "venue_type": "Live Music Venue",
       "age_restriction": "19+",
-      "opening_hours": "Varies",
+      "opening_hours": "Event nights only — check schedule",
       "rating": 4.6,
       "videos": [],
       "reviews": [
         {
           "platform": "Google Review",
-          "text": "One of the best in Vancouver. Highly recommend The Park Theatre for locals and visitors alike.",
-          "source_url": "https://www.google.com/maps/search/?api=1&query=The+Park+Theatre+Vancouver"
+          "text": "Iconic Vancouver live music venue with a legendary sprung dance floor. The acoustics are phenomenal and every show feels intimate despite the capacity. A true Vancouver institution.",
+          "source_url": "https://www.google.com/maps/search/?api=1&query=Commodore+Ballroom+Vancouver"
         },
         {
           "platform": "小红书",
-          "text": "强烈推荐 The Park Theatre！大温本地博主亲测，体验一流，攻略全在评论区。",
-          "source_url": "https://www.xiaohongshu.com/search_result?keyword=The+Park+Theatre"
+          "text": "温哥华传奇音乐现场！弹簧舞池跳舞感觉超棒，音响效果顶级，每场演出都像私人专场，提前关注演出日历！",
+          "source_url": "https://www.xiaohongshu.com/search_result?keyword=Commodore+Ballroom+Vancouver"
         }
       ]
     },
@@ -2473,6 +1947,7 @@
       "name": "Stanley Park",
       "category": "景点",
       "address": "Stanley Park, Vancouver, BC V6G 1Z4",
+      "district": null,
       "lat": 49.3017,
       "lng": -123.1417,
       "url": "https://www.google.com/maps/search/?api=1&query=Stanley+Park+Vancouver",
@@ -2481,13 +1956,7 @@
       "description": "温哥华最大城市公园，海堤骑行与图腾柱地标。",
       "photos": [],
       "social_metrics": {
-        "videos": [
-          {
-            "platform": "YouTube",
-            "url": "https://www.youtube.com/watch?v=6v2L716LIbw",
-            "summary": "Stanley Park Vancouver tour"
-          }
-        ],
+        "videos": [],
         "reviews": [
           {
             "platform": "Google Review",
@@ -2520,13 +1989,7 @@
         "Lost Lagoon"
       ],
       "rating": 4.9,
-      "videos": [
-        {
-          "platform": "YouTube",
-          "url": "https://www.youtube.com/watch?v=6v2L716LIbw",
-          "summary": "Stanley Park Vancouver tour"
-        }
-      ],
+      "videos": [],
       "reviews": [
         {
           "platform": "Google Review",
@@ -2544,6 +2007,7 @@
       "name": "Granville Island Public Market",
       "category": "景点",
       "address": "1669 Johnston St, Vancouver, BC V6H 3R9",
+      "district": null,
       "lat": 49.271,
       "lng": -123.134,
       "url": "https://www.google.com/maps/search/?api=1&query=Granville+Island+Public+Market+Vancouver",
@@ -2603,6 +2067,7 @@
       "name": "Capilano Suspension Bridge Park",
       "category": "景点",
       "address": "3735 Capilano Rd, North Vancouver, BC V7R 4J1",
+      "district": null,
       "lat": 49.3432,
       "lng": -123.1148,
       "url": "https://www.google.com/maps/search/?api=1&query=Capilano+Suspension+Bridge+North+Vancouver",
@@ -2662,6 +2127,7 @@
       "name": "Museum of Anthropology (MOA)",
       "category": "景点",
       "address": "6393 NW Marine Dr, Vancouver, BC V6T 1Z2",
+      "district": null,
       "lat": 49.2692,
       "lng": -123.259,
       "url": "https://www.google.com/maps/search/?api=1&query=Museum+of+Anthropology+UBC+Vancouver",
@@ -2721,6 +2187,7 @@
       "name": "Grouse Grind",
       "category": "徒步",
       "address": "6400 Nancy Greene Way, North Vancouver, BC V7R 4K9",
+      "district": null,
       "lat": 49.379,
       "lng": -123.082,
       "url": "https://www.alltrails.com/trail/canada/british-columbia/grouse-grind",
@@ -2729,13 +2196,7 @@
       "description": "北温最陡硬核山径，853m 爬升仅 2.9km，缆车下山俯瞰温市全景。",
       "photos": [],
       "social_metrics": {
-        "videos": [
-          {
-            "platform": "YouTube",
-            "url": "https://www.youtube.com/watch?v=0p9XVL9JLLg",
-            "summary": "Grouse Grind hike Vancouver"
-          }
-        ],
+        "videos": [],
         "reviews": [
           {
             "platform": "Google Review",
@@ -2771,13 +2232,7 @@
         "alltrails_review_count": 1644
       },
       "rating": 4.7,
-      "videos": [
-        {
-          "platform": "YouTube",
-          "url": "https://www.youtube.com/watch?v=0p9XVL9JLLg",
-          "summary": "Grouse Grind hike Vancouver"
-        }
-      ],
+      "videos": [],
       "reviews": [
         {
           "platform": "Google Review",
@@ -2795,6 +2250,7 @@
       "name": "Lynn Peak Trail",
       "category": "徒步",
       "address": "3403 Boundary Rd, North Vancouver, BC V7H 2V7",
+      "district": null,
       "lat": 49.3509,
       "lng": -122.9875,
       "url": "https://www.alltrails.com/trail/canada/british-columbia/lynn-peak",
@@ -2857,6 +2313,7 @@
       "name": "Dog Mountain via Dinkey Peak",
       "category": "徒步",
       "address": "1700 Mt Seymour Rd, North Vancouver, BC V7G 1L3",
+      "district": null,
       "lat": 49.3672,
       "lng": -122.9496,
       "url": "https://www.alltrails.com/trail/canada/british-columbia/dog-mountain",
@@ -2919,6 +2376,7 @@
       "name": "Quarry Rock (Deep Cove)",
       "category": "徒步",
       "address": "Panorama Dr, North Vancouver, BC V7G 1V8",
+      "district": null,
       "lat": 49.324,
       "lng": -122.95,
       "url": "https://www.alltrails.com/trail/canada/british-columbia/quarry-rock",

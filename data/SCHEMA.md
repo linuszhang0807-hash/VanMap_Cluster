@@ -9,6 +9,7 @@
 | name | string | yes | Display name |
 | category | string | yes | 餐厅/酒吧/娱乐/景点/徒步/活动 |
 | address | string | yes | Full address |
+| district | string \| null | no | GVA city (Richmond, Vancouver, …) |
 | lat | float | yes | 49.0–49.8 (GVA + surroundings) |
 | lng | float | yes | -123.5–-122.3 |
 | url | string | yes | Maps navigation link |
@@ -48,7 +49,7 @@ Each video entry **must** be a playable direct URL:
 
 ## Category Extensions
 
-- **餐厅:** price_level
+- **餐厅:** price_level, cuisine_country, cuisine_style, cuisine (display: `国家` or `国家-菜系`)
 - **酒吧:** vibe, signature_drink, happy_hour
 - **娱乐:** venue_type, age_restriction, opening_hours
 - **景点:** admission_fee, highlights[]

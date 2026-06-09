@@ -72,15 +72,225 @@ def _element_coords(el: dict[str, Any]) -> tuple[float, float] | None:
     return None
 
 
-def _build_address(tags: dict[str, str], name: str) -> str:
-    parts = [
-        tags.get("addr:housenumber", ""),
-        tags.get("addr:street", ""),
-        tags.get("addr:city", "Vancouver"),
-        tags.get("addr:province", "BC"),
+def _build_address(tags: dict[str, str], name: str, district: str = "") -> str:
+    street = " ".join(
+        p for p in (tags.get("addr:housenumber", ""), tags.get("addr:street", "")) if p
+    ).strip()
+    city = district or _district_from_tags(tags) or tags.get("addr:city", "")
+    prov = tags.get("addr:province", "BC")
+    parts = [p for p in (street, city, prov) if p]
+    if parts:
+        return ", ".join(parts)
+    return f"{name}, {city or 'Greater Vancouver'}, BC"
+
+
+_GVA_CITY_ALIASES: dict[str, str] = {
+    "vancouver": "Vancouver",
+    "richmond": "Richmond",
+    "burnaby": "Burnaby",
+    "surrey": "Surrey",
+    "coquitlam": "Coquitlam",
+    "north vancouver": "North Vancouver",
+    "west vancouver": "West Vancouver",
+    "new westminster": "New Westminster",
+    "langley": "Langley",
+}
+
+
+def _normalize_city_label(value: str) -> str:
+    lower = value.lower().strip()
+    for needle, city in _GVA_CITY_ALIASES.items():
+        if needle in lower:
+            return city
+    return value.strip()
+
+
+def _district_from_tags(tags: dict[str, str]) -> str:
+    for key in ("addr:city", "addr:suburb", "addr:municipality", "is_in:city", "addr:place"):
+        value = tags.get(key, "")
+        if value:
+            return _normalize_city_label(str(value))
+    return ""
+
+
+def _district_from_coords(lat: float, lng: float) -> str:
+    boxes: list[tuple[str, float, float, float, float]] = [
+        ("Richmond", 49.08, 49.20, -123.28, -123.05),
+        ("Burnaby", 49.18, 49.32, -123.05, -122.92),
+        ("Vancouver", 49.20, 49.32, -123.25, -123.00),
+        ("North Vancouver", 49.30, 49.45, -123.15, -122.95),
+        ("West Vancouver", 49.30, 49.38, -123.30, -123.15),
+        ("Surrey", 49.04, 49.25, -122.90, -122.65),
+        ("Coquitlam", 49.22, 49.35, -122.92, -122.72),
+        ("New Westminster", 49.18, 49.25, -122.98, -122.88),
     ]
-    addr = " ".join(p for p in parts if p).strip()
-    return addr or f"{name}, Vancouver, BC"
+    for city, south, north, west, east in boxes:
+        if south <= lat <= north and west <= lng <= east:
+            return city
+    return ""
+
+
+_COUNTRY_MAP: dict[str, str] = {
+    "chinese": "中餐",
+    "hong_kong": "中餐",
+    "taiwanese": "中餐",
+    "shanghai": "中餐",
+    "beijing": "中餐",
+    "korean": "韩餐",
+    "japanese": "日料",
+    "italian": "西餐",
+    "american": "西餐",
+    "burger": "西餐",
+    "pizza": "西餐",
+    "mexican": "墨西哥餐",
+    "indian": "印度餐",
+    "thai": "泰餐",
+    "vietnamese": "越餐",
+    "french": "法餐",
+    "greek": "希腊餐",
+    "mediterranean": "地中海餐",
+    "spanish": "西班牙餐",
+    "german": "德餐",
+    "british": "英餐",
+    "lebanese": "黎巴嫩餐",
+    "middle_eastern": "中东餐",
+    "persian": "波斯餐",
+    "filipino": "菲律宾餐",
+    "malaysian": "马来西亚餐",
+    "indonesian": "印尼餐",
+    "seafood": "西餐",
+    "steak_house": "西餐",
+    "fine_dining": "西餐",
+}
+
+_STYLE_MAP: dict[str, str] = {
+    "hot_pot": "火锅",
+    "hotpot": "火锅",
+    "bbq": "烧烤",
+    "barbecue": "烧烤",
+    "grill": "烧烤",
+    "korean_bbq": "烧烤",
+    "dim_sum": "点心",
+    "sushi": "寿司",
+    "ramen": "拉面",
+    "udon": "乌冬",
+    "tempura": "天妇罗",
+    "pizza": "披萨",
+    "burger": "汉堡",
+    "steak": "牛排",
+    "seafood": "海鲜",
+    "noodle": "面食",
+    "cantonese": "粤菜",
+    "sichuan": "川菜",
+    "hunan": "湘菜",
+    "shanghainese": "本帮菜",
+    "pho": "河粉",
+    "curry": "咖喱",
+    "tapas": "Tapas",
+    "pasta": "意面",
+    "sandwich": "三明治",
+    "chicken": "炸鸡",
+    "fish_and_chips": "炸鱼薯条",
+}
+
+_REGIONAL_STYLE: dict[str, str] = {
+    "cantonese": "粤菜",
+    "sichuan": "川菜",
+    "hunan": "湘菜",
+    "shanghainese": "本帮菜",
+}
+
+
+def _tokenize_cuisine(cuisine_tag: str) -> list[str]:
+    if not cuisine_tag:
+        return []
+    return [
+        t.strip()
+        for t in cuisine_tag.lower().replace(";", " ").replace(",", " ").split()
+        if t.strip()
+    ]
+
+
+def _match_map(token: str, mapping: dict[str, str]) -> str | None:
+    for key, label in mapping.items():
+        if key == token or key in token or token in key:
+            return label
+    return None
+
+
+def _infer_country_from_name(name: str) -> str:
+    name_l = name.lower()
+    rules: list[tuple[tuple[str, ...], str]] = [
+        (("korean", "bbq", "galbi", "kimchi", "bibimbap"), "韩餐"),
+        (("sushi", "ramen", "japanese", "izakaya", "torake", "kaido"), "日料"),
+        (("pho", "vietnamese", "viet "), "越餐"),
+        (("thai", "pad thai"), "泰餐"),
+        (("indian", "curry house", "tandoor"), "印度餐"),
+        (("mexican", "taco", "burrito"), "墨西哥餐"),
+        (("italian", "pizza", "pizzeria", "trattoria"), "西餐"),
+        (("french", "bistro"), "法餐"),
+        (("greek", "souvlaki"), "希腊餐"),
+        (("chinese", "wonton", "dim sum", "seafood", "canton", "sui wah", "great wall"), "中餐"),
+    ]
+    for needles, country in rules:
+        if any(x in name_l for x in needles):
+            return country
+    return "西餐"
+
+
+def _infer_style_from_name(name: str, country: str) -> str | None:
+    name_l = name.lower()
+    rules: list[tuple[tuple[str, ...], str]] = [
+        (("hot pot", "hotpot"), "火锅"),
+        (("bbq", "barbecue", "grill", "korean bbq"), "烧烤"),
+        (("sushi",), "寿司"),
+        (("ramen",), "拉面"),
+        (("pizza", "pizzeria"), "披萨"),
+        (("burger",), "汉堡"),
+        (("seafood", "fish & chips", "fish and chips"), "海鲜"),
+        (("pho",), "河粉"),
+        (("dim sum",), "点心"),
+        (("noodle", "pho 99"), "面食"),
+    ]
+    for needles, style in rules:
+        if any(x in name_l for x in needles):
+            return style
+    if country == "韩餐" and "bbq" in name_l:
+        return "烧烤"
+    return None
+
+
+def _format_cuisine(country: str, style: str | None) -> str:
+    return f"{country}-{style}" if style else country
+
+
+def _map_cuisine_detail(cuisine_tag: str, name: str) -> dict[str, str | None]:
+    """Map OSM cuisine tag to country, optional style, and display label."""
+    tokens = _tokenize_cuisine(cuisine_tag)
+    country: str | None = None
+    style: str | None = None
+
+    for token in tokens:
+        matched_country = _match_map(token, _COUNTRY_MAP)
+        if matched_country:
+            country = matched_country
+        matched_style = _match_map(token, _STYLE_MAP)
+        if matched_style:
+            style = matched_style
+        if token in _REGIONAL_STYLE:
+            country = country or "中餐"
+            style = style or _REGIONAL_STYLE[token]
+
+    if not country:
+        country = _infer_country_from_name(name)
+    if not style:
+        style = _infer_style_from_name(name, country)
+
+    return {
+        "cuisine_country": country,
+        "cuisine_style": style,
+        "cuisine": _format_cuisine(country, style),
+    }
 
 
 def _deterministic_rating(name: str) -> tuple[float, int]:
@@ -131,6 +341,7 @@ def fetch_osm_places(category: str, *, limit: int = 15) -> list[dict[str, Any]]:
         if not coords:
             continue
         lat, lng = coords
+        district = _district_from_tags(tags) or _district_from_coords(lat, lng)
         maps_q = quote_plus(f"{name} Vancouver BC")
         website = tags.get("website") or tags.get("contact:website")
         rating, review_count = _deterministic_rating(name)
@@ -141,7 +352,8 @@ def fetch_osm_places(category: str, *, limit: int = 15) -> list[dict[str, Any]]:
         raw: dict[str, Any] = {
             "name": name,
             "category": category,
-            "address": _build_address(tags, name),
+            "district": district,
+            "address": _build_address(tags, name, district),
             "lat": lat,
             "lng": lng,
             "url": f"https://www.openstreetmap.org/?mlat={lat}&mlon={lng}#map=17/{lat}/{lng}",
@@ -155,6 +367,7 @@ def fetch_osm_places(category: str, *, limit: int = 15) -> list[dict[str, Any]]:
 
         if category == "餐厅":
             raw["price_level"] = "$$"
+            raw.update(_map_cuisine_detail(tags.get("cuisine", ""), name))
         elif category == "酒吧":
             raw.update({"vibe": "Local spot", "signature_drink": "Craft beer", "happy_hour": "Check venue"})
         elif category == "娱乐":
@@ -164,7 +377,7 @@ def fetch_osm_places(category: str, *, limit: int = 15) -> list[dict[str, Any]]:
         elif category == "徒步":
             raw.update({
                 "duration": "2–4 hrs",
-                "trailhead": _build_address(tags, name),
+                "trailhead": _build_address(tags, name, district),
                 "alltrails_data": {
                     "trail_distance": round(2 + (int(hashlib.md5(name.encode()).hexdigest()[:4], 16) % 80) / 10, 1),
                     "elevation_gain": 100 + int(hashlib.md5(name.encode()).hexdigest()[4:8], 16) % 600,

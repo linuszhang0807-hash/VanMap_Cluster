@@ -7,6 +7,8 @@ Track active, planned, and deprecated features. Update before adding or removing
 | Category | Scraper | Data File | Status | Since |
 |----------|---------|-----------|--------|-------|
 | 餐厅 | RestaurantScraper | master_data.json | active | 0.1.0 |
+| 餐厅菜系分级 | index.html + osm_provider | master_data.json | active | 0.3.0 |
+| 餐厅地区筛选 | index.html + geocoder | master_data.json | active | 0.3.0 |
 | 酒吧 | BarScraper | master_data.json | active | 0.1.0 |
 | 娱乐 | EntertainmentScraper | master_data.json | active | 0.1.0 |
 | 景点 | AttractionScraper | master_data.json | active | 0.1.0 |
@@ -22,8 +24,12 @@ Track active, planned, and deprecated features. Update before adding or removing
 | Map + sidebar | index.html | active | 0.1.0 |
 | Lightbox | index.html | active | 0.1.0 |
 | Events filter | index.html | active | 0.1.0 |
-| Marker cluster | index.html | active | 0.3.1 |
-| Mobile overlay sidebar | index.html | active | 0.3.1 |
+| Marker cluster | index.html | active | 0.3.0 |
+| Mobile overlay sidebar | index.html | active | 0.3.0 |
+| Cuisine two-tier filter | index.html | active | 0.3.0 |
+| Category marker icons | index.html | active | 0.3.0 |
+| GitHub Pages CI | .github/workflows/deploy.yml | active | 0.3.0 |
+| Weekly events cron | .github/workflows/refresh-events.yml | active | 0.3.0 |
 
 ## External Dependencies
 
