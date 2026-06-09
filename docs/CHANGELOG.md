@@ -5,27 +5,24 @@ Format based on [Keep a Changelog](https://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-06-09
+
 ### Added
-- Canonical `data/` directory as single source of truth
-- `scripts/sync_data` for one-way sync to frontend
-- Version management: `VERSION`, `docs/FEATURES.md`, `data/SCHEMA.md`
-- Events data loaded in map UI (`events_data.json`)
-- OSM Overpass live place scraping
-- Nominatim geocoding cache for events
-- `video_providers` port architecture for YouTube/TikTok direct links
-- GitHub Pages deploy workflow + weekly events refresh cron
-- Mobile responsive sidebar + Leaflet marker clustering
-- Google Places provider stub (Phase 3)
-- Master Hermes `task_runner` + Discord bot skeleton (Phase 4)
+- OSM Overpass live place scraping (`osm_provider.py`) with User-Agent and mirror fallback
+- Nominatim geocoding cache for events (`geocoder.py`)
+- `video_providers` port: YouTube API, TikTok override, TikTok API stub
+- `video_resolver.py` — direct video links only (no search pages)
+- `requirements.txt`, `.env.example`
+- Google Places provider stub (`places_providers/`)
 
 ### Changed
-- Scraper output path: `data/` instead of `slave_scraper/shared_data/`
-- Frontend loads `master_data.json` + `events_data.json` only (removed `restaurants.json`)
-- Video URLs must be direct watch links, not search pages
+- `vancouver_scraper.py`: OSM-first pipeline, empty photos (no fake Google CDN), relaxed video validation
+- `events_scraper.py`: geocoding on build, video resolver integration
+- `data/master_data.json`: 53+ live OSM entries; `scrape_mode: live`
 
-### Removed
-- Redundant `slave_coder/shared_data/` business data copies
-- Archived `restaurants.json` to `data/_archive/`
+### Fixed
+- Overpass API requires User-Agent (was returning 0 results)
+- Validator no longer requires videos; forbids search-page video URLs
 
 ## [0.1.0] - 2026-06-09
 

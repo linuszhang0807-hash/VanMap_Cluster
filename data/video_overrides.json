@@ -6,11 +6,6 @@
         "summary": "Vancouver Chinese restaurant feature",
         "video_id": "J---aiyznGQ",
         "source": "manual_override"
-      },
-      "TikTok": {
-        "url": "https://www.tiktok.com/@foodievancouver/video/7234567890123456789",
-        "summary": "Kirin Vancouver dim sum",
-        "source": "manual_override"
       }
     },
     "Stanley Park": {
@@ -26,6 +21,22 @@
         "url": "https://www.youtube.com/watch?v=0p9XVL9JLLg",
         "summary": "Grouse Grind hike Vancouver",
         "video_id": "0p9XVL9JLLg",
+        "source": "manual_override"
+      }
+    },
+    "Granville Island Public Market": {
+      "YouTube": {
+        "url": "https://www.youtube.com/watch?v=0Z1L6Z-kk8E",
+        "summary": "Granville Island Vancouver",
+        "video_id": "0Z1L6Z-kk8E",
+        "source": "manual_override"
+      }
+    },
+    "Vancouver International Jazz Festival": {
+      "YouTube": {
+        "url": "https://www.youtube.com/watch?v=Hho_g9wtA8M",
+        "summary": "Vancouver Jazz Festival highlights",
+        "video_id": "Hho_g9wtA8M",
         "source": "manual_override"
       }
     }

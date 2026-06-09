@@ -1,7 +1,7 @@
 {
   "meta": {
     "source": "events_scraper.py v1.0 (multi-source + fingerprint dedup)",
-    "generated_at": "2026-06-05T02:13:45.338385+00:00",
+    "generated_at": "2026-06-09T22:37:25.271553+00:00",
     "region": "Greater Vancouver",
     "network_probe_passed": true,
     "total_entries": 8,
@@ -9,8 +9,9 @@
       "destinationvancouver.com": 5,
       "dailyhive.com": 5
     },
-    "bs4_available": false,
-    "scrape_mode": "mock-only",
+    "bs4_available": true,
+    "scrape_mode": "live",
+    "schema_version": "1.1",
     "dedup_algorithm": "MD5(normalised_name + date + location)[:16]",
     "schema_note": "Entry schema mirrors master_data.json BaseEntry. Event extras: event_date, event_time, venue_name, ticket_price, long_description, source, fingerprint."
   },
@@ -29,13 +30,8 @@
         "videos": [
           {
             "platform": "YouTube",
-            "url": "https://www.youtube.com/results?search_query=Vancouver+International+Jazz+Festival+Vancouver+2026",
-            "summary": "YouTube: Vancouver International Jazz Festival 现场精彩实录与活动回顾合集。"
-          },
-          {
-            "platform": "TikTok",
-            "url": "https://www.tiktok.com/search?q=Vancouver+International+Jazz+Festival+Vancouver+2026",
-            "summary": "TikTok: Vancouver International Jazz Festival 打卡 vlog 与现场氛围短片。"
+            "url": "https://www.youtube.com/watch?v=Hho_g9wtA8M",
+            "summary": "Vancouver Jazz Festival highlights"
           }
         ],
         "reviews": [
@@ -76,13 +72,8 @@
       "videos": [
         {
           "platform": "YouTube",
-          "url": "https://www.youtube.com/results?search_query=Vancouver+International+Jazz+Festival+Vancouver+2026",
-          "summary": "YouTube: Vancouver International Jazz Festival 现场精彩实录与活动回顾合集。"
-        },
-        {
-          "platform": "TikTok",
-          "url": "https://www.tiktok.com/search?q=Vancouver+International+Jazz+Festival+Vancouver+2026",
-          "summary": "TikTok: Vancouver International Jazz Festival 打卡 vlog 与现场氛围短片。"
+          "url": "https://www.youtube.com/watch?v=Hho_g9wtA8M",
+          "summary": "Vancouver Jazz Festival highlights"
         }
       ],
       "reviews": [
@@ -109,18 +100,7 @@
       "image_url": "https://hondacelebrationoflight.com/wp-content/uploads/2026/01/col2026-banner.jpg",
       "description": "英吉利湾年度国际烟花大赛，三国轮番绽放夏夜。",
       "social_metrics": {
-        "videos": [
-          {
-            "platform": "YouTube",
-            "url": "https://www.youtube.com/results?search_query=Celebration+of+Light+Vancouver+2026",
-            "summary": "YouTube: Celebration of Light 现场精彩实录与活动回顾合集。"
-          },
-          {
-            "platform": "TikTok",
-            "url": "https://www.tiktok.com/search?q=Celebration+of+Light+Vancouver+2026",
-            "summary": "TikTok: Celebration of Light 打卡 vlog 与现场氛围短片。"
-          }
-        ],
+        "videos": [],
         "reviews": [
           {
             "platform": "Google Review",
@@ -156,18 +136,7 @@
       ],
       "fingerprint": "cd3987fb9383fb4d",
       "rating": 4.9,
-      "videos": [
-        {
-          "platform": "YouTube",
-          "url": "https://www.youtube.com/results?search_query=Celebration+of+Light+Vancouver+2026",
-          "summary": "YouTube: Celebration of Light 现场精彩实录与活动回顾合集。"
-        },
-        {
-          "platform": "TikTok",
-          "url": "https://www.tiktok.com/search?q=Celebration+of+Light+Vancouver+2026",
-          "summary": "TikTok: Celebration of Light 打卡 vlog 与现场氛围短片。"
-        }
-      ],
+      "videos": [],
       "reviews": [
         {
           "platform": "Google Review",
@@ -192,18 +161,7 @@
       "image_url": "https://thefestival.bc.ca/wp-content/uploads/2026/04/vfmf2026-hero.jpg",
       "description": "Jericho 海滩三日民谣盛宴，山海背景下的世界音乐节。",
       "social_metrics": {
-        "videos": [
-          {
-            "platform": "YouTube",
-            "url": "https://www.youtube.com/results?search_query=Vancouver+Folk+Music+Festival+Vancouver+2026",
-            "summary": "YouTube: Vancouver Folk Music Festival 现场精彩实录与活动回顾合集。"
-          },
-          {
-            "platform": "TikTok",
-            "url": "https://www.tiktok.com/search?q=Vancouver+Folk+Music+Festival+Vancouver+2026",
-            "summary": "TikTok: Vancouver Folk Music Festival 打卡 vlog 与现场氛围短片。"
-          }
-        ],
+        "videos": [],
         "reviews": [
           {
             "platform": "Google Review",
@@ -238,18 +196,7 @@
       ],
       "fingerprint": "a8d82d47425952f1",
       "rating": 4.7,
-      "videos": [
-        {
-          "platform": "YouTube",
-          "url": "https://www.youtube.com/results?search_query=Vancouver+Folk+Music+Festival+Vancouver+2026",
-          "summary": "YouTube: Vancouver Folk Music Festival 现场精彩实录与活动回顾合集。"
-        },
-        {
-          "platform": "TikTok",
-          "url": "https://www.tiktok.com/search?q=Vancouver+Folk+Music+Festival+Vancouver+2026",
-          "summary": "TikTok: Vancouver Folk Music Festival 打卡 vlog 与现场氛围短片。"
-        }
-      ],
+      "videos": [],
       "reviews": [
         {
           "platform": "Google Review",
@@ -274,18 +221,7 @@
       "image_url": "https://vancouverpride.ca/wp-content/uploads/2026/02/pride2026-hero.jpg",
       "description": "温哥华年度骄傲周，游行与百场活动席卷 West End。",
       "social_metrics": {
-        "videos": [
-          {
-            "platform": "YouTube",
-            "url": "https://www.youtube.com/results?search_query=Vancouver+Pride+Week+2026+Vancouver+2026",
-            "summary": "YouTube: Vancouver Pride Week 2026 现场精彩实录与活动回顾合集。"
-          },
-          {
-            "platform": "TikTok",
-            "url": "https://www.tiktok.com/search?q=Vancouver+Pride+Week+2026+Vancouver+2026",
-            "summary": "TikTok: Vancouver Pride Week 2026 打卡 vlog 与现场氛围短片。"
-          }
-        ],
+        "videos": [],
         "reviews": [
           {
             "platform": "Google Review",
@@ -320,18 +256,7 @@
       ],
       "fingerprint": "904d7467c5dfa21e",
       "rating": 4.8,
-      "videos": [
-        {
-          "platform": "YouTube",
-          "url": "https://www.youtube.com/results?search_query=Vancouver+Pride+Week+2026+Vancouver+2026",
-          "summary": "YouTube: Vancouver Pride Week 2026 现场精彩实录与活动回顾合集。"
-        },
-        {
-          "platform": "TikTok",
-          "url": "https://www.tiktok.com/search?q=Vancouver+Pride+Week+2026+Vancouver+2026",
-          "summary": "TikTok: Vancouver Pride Week 2026 打卡 vlog 与现场氛围短片。"
-        }
-      ],
+      "videos": [],
       "reviews": [
         {
           "platform": "Google Review",
@@ -356,18 +281,7 @@
       "image_url": "https://khatsahlano.com/wp-content/uploads/2026/03/kits2026-hero.jpg",
       "description": "Kitsilano 最大免费街头音乐节，20 个舞台全日无休。",
       "social_metrics": {
-        "videos": [
-          {
-            "platform": "YouTube",
-            "url": "https://www.youtube.com/results?search_query=Khatsahlano+Street+Party+2026+Vancouver+2026",
-            "summary": "YouTube: Khatsahlano Street Party 2026 现场精彩实录与活动回顾合集。"
-          },
-          {
-            "platform": "TikTok",
-            "url": "https://www.tiktok.com/search?q=Khatsahlano+Street+Party+2026+Vancouver+2026",
-            "summary": "TikTok: Khatsahlano Street Party 2026 打卡 vlog 与现场氛围短片。"
-          }
-        ],
+        "videos": [],
         "reviews": [
           {
             "platform": "Google Review",
@@ -402,18 +316,7 @@
       ],
       "fingerprint": "b33c11118f982b9c",
       "rating": 4.6,
-      "videos": [
-        {
-          "platform": "YouTube",
-          "url": "https://www.youtube.com/results?search_query=Khatsahlano+Street+Party+2026+Vancouver+2026",
-          "summary": "YouTube: Khatsahlano Street Party 2026 现场精彩实录与活动回顾合集。"
-        },
-        {
-          "platform": "TikTok",
-          "url": "https://www.tiktok.com/search?q=Khatsahlano+Street+Party+2026+Vancouver+2026",
-          "summary": "TikTok: Khatsahlano Street Party 2026 打卡 vlog 与现场氛围短片。"
-        }
-      ],
+      "videos": [],
       "reviews": [
         {
           "platform": "Google Review",
@@ -438,18 +341,7 @@
       "image_url": "https://richmondnightmarket.com/wp-content/uploads/2026/02/rnm2026-hero.jpg",
       "description": "北美最大亚洲夜市，500+ 摊位周末营业至深夜。",
       "social_metrics": {
-        "videos": [
-          {
-            "platform": "YouTube",
-            "url": "https://www.youtube.com/results?search_query=Richmond+Night+Market+2026+Vancouver+2026",
-            "summary": "YouTube: Richmond Night Market 2026 现场精彩实录与活动回顾合集。"
-          },
-          {
-            "platform": "TikTok",
-            "url": "https://www.tiktok.com/search?q=Richmond+Night+Market+2026+Vancouver+2026",
-            "summary": "TikTok: Richmond Night Market 2026 打卡 vlog 与现场氛围短片。"
-          }
-        ],
+        "videos": [],
         "reviews": [
           {
             "platform": "Google Review",
@@ -484,18 +376,7 @@
       ],
       "fingerprint": "125a29c30f419fb5",
       "rating": 4.3,
-      "videos": [
-        {
-          "platform": "YouTube",
-          "url": "https://www.youtube.com/results?search_query=Richmond+Night+Market+2026+Vancouver+2026",
-          "summary": "YouTube: Richmond Night Market 2026 现场精彩实录与活动回顾合集。"
-        },
-        {
-          "platform": "TikTok",
-          "url": "https://www.tiktok.com/search?q=Richmond+Night+Market+2026+Vancouver+2026",
-          "summary": "TikTok: Richmond Night Market 2026 打卡 vlog 与现场氛围短片。"
-        }
-      ],
+      "videos": [],
       "reviews": [
         {
           "platform": "Google Review",
@@ -520,18 +401,7 @@
       "image_url": "https://carfreevancouver.org/wp-content/uploads/2026/01/carfree2026-main.jpg",
       "description": "Main Street 封路派对，本地乐队摊贩与街头艺术全天呈现。",
       "social_metrics": {
-        "videos": [
-          {
-            "platform": "YouTube",
-            "url": "https://www.youtube.com/results?search_query=Car+Free+Day+Vancouver+%E2%80%94+Main+Street+Vancouver+2026",
-            "summary": "YouTube: Car Free Day Vancouver — Main Street 现场精彩实录与活动回顾合集。"
-          },
-          {
-            "platform": "TikTok",
-            "url": "https://www.tiktok.com/search?q=Car+Free+Day+Vancouver+%E2%80%94+Main+Street+Vancouver+2026",
-            "summary": "TikTok: Car Free Day Vancouver — Main Street 打卡 vlog 与现场氛围短片。"
-          }
-        ],
+        "videos": [],
         "reviews": [
           {
             "platform": "Google Review",
@@ -566,18 +436,7 @@
       ],
       "fingerprint": "1ee5c9489e2b84b3",
       "rating": 4.5,
-      "videos": [
-        {
-          "platform": "YouTube",
-          "url": "https://www.youtube.com/results?search_query=Car+Free+Day+Vancouver+%E2%80%94+Main+Street+Vancouver+2026",
-          "summary": "YouTube: Car Free Day Vancouver — Main Street 现场精彩实录与活动回顾合集。"
-        },
-        {
-          "platform": "TikTok",
-          "url": "https://www.tiktok.com/search?q=Car+Free+Day+Vancouver+%E2%80%94+Main+Street+Vancouver+2026",
-          "summary": "TikTok: Car Free Day Vancouver — Main Street 打卡 vlog 与现场氛围短片。"
-        }
-      ],
+      "videos": [],
       "reviews": [
         {
           "platform": "Google Review",
@@ -602,18 +461,7 @@
       "image_url": "https://www.pne.ca/wp-content/uploads/2026/04/pne2026-hero.jpg",
       "description": "PNE 百年嘉年华，游乐设施演唱会与农业展览三合一。",
       "social_metrics": {
-        "videos": [
-          {
-            "platform": "YouTube",
-            "url": "https://www.youtube.com/results?search_query=Pacific+National+Exhibition+%28PNE%29+2026+Vancouver+2026",
-            "summary": "YouTube: Pacific National Exhibition (PNE) 2026 现场精彩实录与活动回顾合集。"
-          },
-          {
-            "platform": "TikTok",
-            "url": "https://www.tiktok.com/search?q=Pacific+National+Exhibition+%28PNE%29+2026+Vancouver+2026",
-            "summary": "TikTok: Pacific National Exhibition (PNE) 2026 打卡 vlog 与现场氛围短片。"
-          }
-        ],
+        "videos": [],
         "reviews": [
           {
             "platform": "Google Review",
@@ -648,18 +496,7 @@
       ],
       "fingerprint": "5fa3f4e6b0fcd05b",
       "rating": 4.4,
-      "videos": [
-        {
-          "platform": "YouTube",
-          "url": "https://www.youtube.com/results?search_query=Pacific+National+Exhibition+%28PNE%29+2026+Vancouver+2026",
-          "summary": "YouTube: Pacific National Exhibition (PNE) 2026 现场精彩实录与活动回顾合集。"
-        },
-        {
-          "platform": "TikTok",
-          "url": "https://www.tiktok.com/search?q=Pacific+National+Exhibition+%28PNE%29+2026+Vancouver+2026",
-          "summary": "TikTok: Pacific National Exhibition (PNE) 2026 打卡 vlog 与现场氛围短片。"
-        }
-      ],
+      "videos": [],
       "reviews": [
         {
           "platform": "Google Review",

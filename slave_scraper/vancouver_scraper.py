@@ -302,9 +302,15 @@ class BaseScraper(ABC, Generic[T]):
             else _CATEGORY_KEYWORDS.get(category, ["温哥华推荐", "本地热门", "值得一去"])
         )
 
-        # Videos: resolver port (direct links only) or explicit override
+        # Videos: resolver port — direct links only
         if override_videos is not None:
-            videos = override_videos
+            try:
+                from video_resolver import reject_search_urls, resolve_videos
+                videos = reject_search_urls(override_videos)
+                if not videos:
+                    videos = resolve_videos(name, category)
+            except ImportError:
+                videos = []
         else:
             try:
                 from video_resolver import resolve_videos
@@ -386,6 +392,8 @@ class BaseScraper(ABC, Generic[T]):
             videos = row.pop("_videos", None)
             reviews = row.pop("_reviews", None)
             keywords = row.pop("_keywords", None)
+            if keywords is None:
+                keywords = [row["name"][:15], row["category"], (row.get("address") or "Vancouver")[:15]]
             if videos is None:
                 try:
                     from video_resolver import resolve_videos
@@ -1131,15 +1139,23 @@ def validate_map_readiness(entries: list[dict]) -> bool:
             print(msg); issues.append(msg); continue
 
         sm = entry.get("social_metrics", {})
-        if not sm.get("videos") or not sm.get("reviews"):
-            msg = f"{prefix} -- social_metrics missing videos/reviews"
+        if not sm.get("reviews"):
+            msg = f"{prefix} -- social_metrics missing reviews"
             print(msg); issues.append(msg); continue
 
-        print(
-            f"{prefix} -- lat={lat}, lng={lng}  "
-            f"google={rs['google_rating']}  "
-            f"agg={rs.get('aggregate_score', '?')}  [PASS]"
-        )
+        for v in sm.get("videos") or []:
+            url = (v.get("url") or "").lower()
+            if "search" in url or "search_query" in url or "/results?" in url:
+                msg = f"{prefix} -- video URL is search page (forbidden): {v.get('url')}"
+                print(msg); issues.append(msg)
+                break
+        else:
+            print(
+                f"{prefix} -- lat={lat}, lng={lng}  "
+                f"google={rs['google_rating']}  "
+                f"videos={len(sm.get('videos') or [])}  "
+                f"agg={rs.get('aggregate_score', '?')}  [PASS]"
+            )
 
     print("-" * 65)
     if issues:
