@@ -1,0 +1,677 @@
+{
+  "meta": {
+    "source": "events_scraper.py v1.0 (multi-source + fingerprint dedup)",
+    "generated_at": "2026-06-05T02:13:45.338385+00:00",
+    "region": "Greater Vancouver",
+    "network_probe_passed": true,
+    "total_entries": 8,
+    "source_summary": {
+      "destinationvancouver.com": 5,
+      "dailyhive.com": 5
+    },
+    "bs4_available": false,
+    "scrape_mode": "mock-only",
+    "dedup_algorithm": "MD5(normalised_name + date + location)[:16]",
+    "schema_note": "Entry schema mirrors master_data.json BaseEntry. Event extras: event_date, event_time, venue_name, ticket_price, long_description, source, fingerprint."
+  },
+  "entries": [
+    {
+      "name": "Vancouver International Jazz Festival",
+      "category": "活动",
+      "address": "Various Venues, Downtown Vancouver, BC V6B",
+      "lat": 49.2727,
+      "lng": -123.1209,
+      "url": "https://coastaljazz.ca/",
+      "official_website": "https://coastaljazz.ca/",
+      "image_url": "https://coastaljazz.ca/wp-content/uploads/2026/03/vjf2026-hero.jpg",
+      "description": "年度爵士盛典，Downtown 多场地免费与售票演出并举。",
+      "social_metrics": {
+        "videos": [
+          {
+            "platform": "YouTube",
+            "url": "https://www.youtube.com/results?search_query=Vancouver+International+Jazz+Festival+Vancouver+2026",
+            "summary": "YouTube: Vancouver International Jazz Festival 现场精彩实录与活动回顾合集。"
+          },
+          {
+            "platform": "TikTok",
+            "url": "https://www.tiktok.com/search?q=Vancouver+International+Jazz+Festival+Vancouver+2026",
+            "summary": "TikTok: Vancouver International Jazz Festival 打卡 vlog 与现场氛围短片。"
+          }
+        ],
+        "reviews": [
+          {
+            "platform": "Google Review",
+            "text": "One of the best free outdoor festivals in North America. The David Lam Park stage had incredible energy — world-class musicians in a beautiful setting.",
+            "source_url": "https://www.google.com/maps/search/?api=1&query=Vancouver+Jazz+Festival"
+          },
+          {
+            "platform": "小红书",
+            "text": "免费户外舞台堪称温哥华夏天最划算的活动！David Lam Park 草地躺着看顶级爵士演出，氛围太治愈了！",
+            "source_url": "https://www.xiaohongshu.com/search_result?keyword=温哥华爵士音乐节"
+          }
+        ],
+        "keywords": [
+          "年度爵士盛典",
+          "免费户外演出",
+          "多国音乐人"
+        ],
+        "social_buzz_score": 4.8
+      },
+      "rating_system": {
+        "google_rating": 4.8,
+        "review_count": 3200,
+        "aggregate_score": 4.8
+      },
+      "event_date": "2026-06-19",
+      "event_time": "Noon – Midnight (varies by venue)",
+      "venue_name": "David Lam Park, Roundhouse, Orpheum & More",
+      "ticket_price": "Free (outdoor) – CAD $120 (headline shows)",
+      "long_description": "Vancouver's premier jazz festival returns for its 40th edition, spanning 10 days across 40+ venues. Over 1,800 musicians from 25 countries perform across free outdoor stages at David Lam Park and ticketed headline shows at the Orpheum and the Roundhouse. Genres range from traditional jazz to Afrobeat, Latin jazz, and experimental improvisation.",
+      "source": [
+        "dailyhive.com",
+        "destinationvancouver.com"
+      ],
+      "fingerprint": "64318d3d9a11d30b",
+      "rating": 4.8,
+      "videos": [
+        {
+          "platform": "YouTube",
+          "url": "https://www.youtube.com/results?search_query=Vancouver+International+Jazz+Festival+Vancouver+2026",
+          "summary": "YouTube: Vancouver International Jazz Festival 现场精彩实录与活动回顾合集。"
+        },
+        {
+          "platform": "TikTok",
+          "url": "https://www.tiktok.com/search?q=Vancouver+International+Jazz+Festival+Vancouver+2026",
+          "summary": "TikTok: Vancouver International Jazz Festival 打卡 vlog 与现场氛围短片。"
+        }
+      ],
+      "reviews": [
+        {
+          "platform": "Google Review",
+          "text": "One of the best free outdoor festivals in North America. The David Lam Park stage had incredible energy — world-class musicians in a beautiful setting.",
+          "source_url": "https://www.google.com/maps/search/?api=1&query=Vancouver+Jazz+Festival"
+        },
+        {
+          "platform": "小红书",
+          "text": "免费户外舞台堪称温哥华夏天最划算的活动！David Lam Park 草地躺着看顶级爵士演出，氛围太治愈了！",
+          "source_url": "https://www.xiaohongshu.com/search_result?keyword=温哥华爵士音乐节"
+        }
+      ]
+    },
+    {
+      "name": "Celebration of Light",
+      "category": "活动",
+      "address": "English Bay Beach, Vancouver, BC V6E 1V6",
+      "lat": 49.2871,
+      "lng": -123.1455,
+      "url": "https://hondacelebrationoflight.com/",
+      "official_website": "https://hondacelebrationoflight.com/",
+      "image_url": "https://hondacelebrationoflight.com/wp-content/uploads/2026/01/col2026-banner.jpg",
+      "description": "英吉利湾年度国际烟花大赛，三国轮番绽放夏夜。",
+      "social_metrics": {
+        "videos": [
+          {
+            "platform": "YouTube",
+            "url": "https://www.youtube.com/results?search_query=Celebration+of+Light+Vancouver+2026",
+            "summary": "YouTube: Celebration of Light 现场精彩实录与活动回顾合集。"
+          },
+          {
+            "platform": "TikTok",
+            "url": "https://www.tiktok.com/search?q=Celebration+of+Light+Vancouver+2026",
+            "summary": "TikTok: Celebration of Light 打卡 vlog 与现场氛围短片。"
+          }
+        ],
+        "reviews": [
+          {
+            "platform": "Google Review",
+            "text": "Absolutely spectacular. The music-synchronised fireworks over English Bay are breathtaking. Arrive early to claim your spot on the seawall — worth every minute of the wait.",
+            "source_url": "https://www.google.com/maps/search/?api=1&query=Celebration+of+Light+Vancouver"
+          },
+          {
+            "platform": "小红书",
+            "text": "英吉利湾三场烟花🎆简直是温哥华夏天的巅峰！配乐烟火同步太震撼了，提前两小时占位，带上毯子和零食，完美夜晚！",
+            "source_url": "https://www.xiaohongshu.com/search_result?keyword=温哥华烟花+Celebration+of+Light"
+          }
+        ],
+        "keywords": [
+          "国际烟花大赛",
+          "英吉利湾夏夜",
+          "三国烟火对决"
+        ],
+        "social_buzz_score": 4.3
+      },
+      "rating_system": {
+        "google_rating": 4.9,
+        "review_count": 8700,
+        "aggregate_score": 4.9
+      },
+      "event_date": "2026-07-25",
+      "event_time": "10:00 PM fireworks (gates open 5:00 PM)",
+      "venue_name": "English Bay Beach",
+      "ticket_price": "Free (public beach) – CAD $50 (premium viewing areas)",
+      "long_description": "The Honda Celebration of Light is Canada's largest offshore fireworks competition. Teams from three countries compete across three nights (Jul 25, Aug 1, Aug 8, 2026), each delivering a 25-minute choreographed show set to music over English Bay. Over 300,000 spectators gather along the Stanley Park seawall and Kitsilano Beach.",
+      "source": [
+        "dailyhive.com",
+        "destinationvancouver.com"
+      ],
+      "fingerprint": "cd3987fb9383fb4d",
+      "rating": 4.9,
+      "videos": [
+        {
+          "platform": "YouTube",
+          "url": "https://www.youtube.com/results?search_query=Celebration+of+Light+Vancouver+2026",
+          "summary": "YouTube: Celebration of Light 现场精彩实录与活动回顾合集。"
+        },
+        {
+          "platform": "TikTok",
+          "url": "https://www.tiktok.com/search?q=Celebration+of+Light+Vancouver+2026",
+          "summary": "TikTok: Celebration of Light 打卡 vlog 与现场氛围短片。"
+        }
+      ],
+      "reviews": [
+        {
+          "platform": "Google Review",
+          "text": "Absolutely spectacular. The music-synchronised fireworks over English Bay are breathtaking. Arrive early to claim your spot on the seawall — worth every minute of the wait.",
+          "source_url": "https://www.google.com/maps/search/?api=1&query=Celebration+of+Light+Vancouver"
+        },
+        {
+          "platform": "小红书",
+          "text": "英吉利湾三场烟花🎆简直是温哥华夏天的巅峰！配乐烟火同步太震撼了，提前两小时占位，带上毯子和零食，完美夜晚！",
+          "source_url": "https://www.xiaohongshu.com/search_result?keyword=温哥华烟花+Celebration+of+Light"
+        }
+      ]
+    },
+    {
+      "name": "Vancouver Folk Music Festival",
+      "category": "活动",
+      "address": "Jericho Beach Park, Vancouver, BC V6R 4K1",
+      "lat": 49.2743,
+      "lng": -123.1989,
+      "url": "https://thefestival.bc.ca/",
+      "official_website": "https://thefestival.bc.ca/",
+      "image_url": "https://thefestival.bc.ca/wp-content/uploads/2026/04/vfmf2026-hero.jpg",
+      "description": "Jericho 海滩三日民谣盛宴，山海背景下的世界音乐节。",
+      "social_metrics": {
+        "videos": [
+          {
+            "platform": "YouTube",
+            "url": "https://www.youtube.com/results?search_query=Vancouver+Folk+Music+Festival+Vancouver+2026",
+            "summary": "YouTube: Vancouver Folk Music Festival 现场精彩实录与活动回顾合集。"
+          },
+          {
+            "platform": "TikTok",
+            "url": "https://www.tiktok.com/search?q=Vancouver+Folk+Music+Festival+Vancouver+2026",
+            "summary": "TikTok: Vancouver Folk Music Festival 打卡 vlog 与现场氛围短片。"
+          }
+        ],
+        "reviews": [
+          {
+            "platform": "Google Review",
+            "text": "The workshop stages are what make this festival unique — watching artists from different genres collaborate spontaneously is magical. One of Vancouver's best summer traditions.",
+            "source_url": "https://www.google.com/maps/search/?api=1&query=Vancouver+Folk+Music+Festival+Jericho+Beach"
+          },
+          {
+            "platform": "小红书",
+            "text": "Jericho 海滩背对北温群山看民谣演出，这辈子没见过这么美的音乐节场景！工坊舞台的跨界合作超惊喜，强烈推荐！",
+            "source_url": "https://www.xiaohongshu.com/search_result?keyword=温哥华民谣音乐节+Folk"
+          }
+        ],
+        "keywords": [
+          "海滩民谣音乐节",
+          "世界音乐工坊",
+          "Jericho户外舞台"
+        ],
+        "social_buzz_score": 4.4
+      },
+      "rating_system": {
+        "google_rating": 4.7,
+        "review_count": 1850,
+        "aggregate_score": 4.7
+      },
+      "event_date": "2026-07-17",
+      "event_time": "Noon – 10:30 PM (Fri); 10:00 AM – 10:30 PM (Sat-Sun)",
+      "venue_name": "Jericho Beach Park",
+      "ticket_price": "CAD $65 (day) – $175 (weekend pass)",
+      "long_description": "The Vancouver Folk Music Festival is a beloved 3-day outdoor music celebration set against the stunning backdrop of Jericho Beach, with the North Shore mountains and ocean as the stage backdrop. The 2026 edition features 60+ artists across 8 stages, spanning folk, world music, roots, blues, and storytelling. The workshop stage format — where artists collaborate live — is unique to this festival.",
+      "source": [
+        "destinationvancouver.com"
+      ],
+      "fingerprint": "a8d82d47425952f1",
+      "rating": 4.7,
+      "videos": [
+        {
+          "platform": "YouTube",
+          "url": "https://www.youtube.com/results?search_query=Vancouver+Folk+Music+Festival+Vancouver+2026",
+          "summary": "YouTube: Vancouver Folk Music Festival 现场精彩实录与活动回顾合集。"
+        },
+        {
+          "platform": "TikTok",
+          "url": "https://www.tiktok.com/search?q=Vancouver+Folk+Music+Festival+Vancouver+2026",
+          "summary": "TikTok: Vancouver Folk Music Festival 打卡 vlog 与现场氛围短片。"
+        }
+      ],
+      "reviews": [
+        {
+          "platform": "Google Review",
+          "text": "The workshop stages are what make this festival unique — watching artists from different genres collaborate spontaneously is magical. One of Vancouver's best summer traditions.",
+          "source_url": "https://www.google.com/maps/search/?api=1&query=Vancouver+Folk+Music+Festival+Jericho+Beach"
+        },
+        {
+          "platform": "小红书",
+          "text": "Jericho 海滩背对北温群山看民谣演出，这辈子没见过这么美的音乐节场景！工坊舞台的跨界合作超惊喜，强烈推荐！",
+          "source_url": "https://www.xiaohongshu.com/search_result?keyword=温哥华民谣音乐节+Folk"
+        }
+      ]
+    },
+    {
+      "name": "Vancouver Pride Week 2026",
+      "category": "活动",
+      "address": "Robson Square & West End, Vancouver, BC V6Z",
+      "lat": 49.282,
+      "lng": -123.1215,
+      "url": "https://vancouverpride.ca/",
+      "official_website": "https://vancouverpride.ca/",
+      "image_url": "https://vancouverpride.ca/wp-content/uploads/2026/02/pride2026-hero.jpg",
+      "description": "温哥华年度骄傲周，游行与百场活动席卷 West End。",
+      "social_metrics": {
+        "videos": [
+          {
+            "platform": "YouTube",
+            "url": "https://www.youtube.com/results?search_query=Vancouver+Pride+Week+2026+Vancouver+2026",
+            "summary": "YouTube: Vancouver Pride Week 2026 现场精彩实录与活动回顾合集。"
+          },
+          {
+            "platform": "TikTok",
+            "url": "https://www.tiktok.com/search?q=Vancouver+Pride+Week+2026+Vancouver+2026",
+            "summary": "TikTok: Vancouver Pride Week 2026 打卡 vlog 与现场氛围短片。"
+          }
+        ],
+        "reviews": [
+          {
+            "platform": "Google Review",
+            "text": "The Pride Parade is a must-see Vancouver experience — the energy, the costumes, the community spirit along Robson and Denman is genuinely moving and joyful.",
+            "source_url": "https://www.google.com/maps/search/?api=1&query=Vancouver+Pride+Parade"
+          },
+          {
+            "platform": "小红书",
+            "text": "骄傲游行从 Robson 走到 Denman 太震撼了！彩虹装束和欢乐氛围让人感受到温哥华最包容的一面，第一次参加就爱上了！",
+            "source_url": "https://www.xiaohongshu.com/search_result?keyword=温哥华骄傲游行+Pride"
+          }
+        ],
+        "keywords": [
+          "骄傲游行",
+          "West End彩虹周",
+          "包容多元盛典"
+        ],
+        "social_buzz_score": 4.0
+      },
+      "rating_system": {
+        "google_rating": 4.8,
+        "review_count": 5400,
+        "aggregate_score": 4.8
+      },
+      "event_date": "2026-07-31",
+      "event_time": "Events throughout the week; Parade: Aug 2, 12:00 PM",
+      "venue_name": "Robson Square, Davie Village & English Bay",
+      "ticket_price": "Free (most events) – CAD $30 (ticketed parties)",
+      "long_description": "Vancouver Pride Week 2026 (Jul 31 – Aug 2) is one of Canada's largest LGBTQ+ celebrations. The week includes more than 100 events: art shows, film screenings, community gatherings, the Sunset Beach Party, and the iconic Pride Parade on Sunday, Aug 2 — attracting 650,000+ spectators along Robson and Denman Streets. The festival celebrates diversity, inclusion, and community across the West End.",
+      "source": [
+        "destinationvancouver.com"
+      ],
+      "fingerprint": "904d7467c5dfa21e",
+      "rating": 4.8,
+      "videos": [
+        {
+          "platform": "YouTube",
+          "url": "https://www.youtube.com/results?search_query=Vancouver+Pride+Week+2026+Vancouver+2026",
+          "summary": "YouTube: Vancouver Pride Week 2026 现场精彩实录与活动回顾合集。"
+        },
+        {
+          "platform": "TikTok",
+          "url": "https://www.tiktok.com/search?q=Vancouver+Pride+Week+2026+Vancouver+2026",
+          "summary": "TikTok: Vancouver Pride Week 2026 打卡 vlog 与现场氛围短片。"
+        }
+      ],
+      "reviews": [
+        {
+          "platform": "Google Review",
+          "text": "The Pride Parade is a must-see Vancouver experience — the energy, the costumes, the community spirit along Robson and Denman is genuinely moving and joyful.",
+          "source_url": "https://www.google.com/maps/search/?api=1&query=Vancouver+Pride+Parade"
+        },
+        {
+          "platform": "小红书",
+          "text": "骄傲游行从 Robson 走到 Denman 太震撼了！彩虹装束和欢乐氛围让人感受到温哥华最包容的一面，第一次参加就爱上了！",
+          "source_url": "https://www.xiaohongshu.com/search_result?keyword=温哥华骄傲游行+Pride"
+        }
+      ]
+    },
+    {
+      "name": "Khatsahlano Street Party 2026",
+      "category": "活动",
+      "address": "West 4th Ave, Kitsilano, Vancouver, BC V6K",
+      "lat": 49.267,
+      "lng": -123.1719,
+      "url": "https://khatsahlano.com/",
+      "official_website": "https://khatsahlano.com/",
+      "image_url": "https://khatsahlano.com/wp-content/uploads/2026/03/kits2026-hero.jpg",
+      "description": "Kitsilano 最大免费街头音乐节，20 个舞台全日无休。",
+      "social_metrics": {
+        "videos": [
+          {
+            "platform": "YouTube",
+            "url": "https://www.youtube.com/results?search_query=Khatsahlano+Street+Party+2026+Vancouver+2026",
+            "summary": "YouTube: Khatsahlano Street Party 2026 现场精彩实录与活动回顾合集。"
+          },
+          {
+            "platform": "TikTok",
+            "url": "https://www.tiktok.com/search?q=Khatsahlano+Street+Party+2026+Vancouver+2026",
+            "summary": "TikTok: Khatsahlano Street Party 2026 打卡 vlog 与现场氛围短片。"
+          }
+        ],
+        "reviews": [
+          {
+            "platform": "Google Review",
+            "text": "Best free festival in Vancouver. 20 stages of non-stop music, amazing food trucks and local vendors. Kitsilano comes alive in the best possible way every July.",
+            "source_url": "https://www.google.com/maps/search/?api=1&query=Khatsahlano+Street+Party+Vancouver"
+          },
+          {
+            "platform": "小红书",
+            "text": "Kits 街头音乐节太好逛了！20 个舞台全天轮流演出，本地文创摊位和美食车随便逛，最重要的是完全免费！温哥华夏天必去！",
+            "source_url": "https://www.xiaohongshu.com/search_result?keyword=Khatsahlano+Kitsilano+音乐节"
+          }
+        ],
+        "keywords": [
+          "免费街头音乐节",
+          "Kitsilano全日派对",
+          "百个本地乐队"
+        ],
+        "social_buzz_score": 4.9
+      },
+      "rating_system": {
+        "google_rating": 4.6,
+        "review_count": 2100,
+        "aggregate_score": 4.6
+      },
+      "event_date": "2026-07-11",
+      "event_time": "11:00 AM – 9:00 PM",
+      "venue_name": "West 4th Ave (Burrard to MacDonald)",
+      "ticket_price": "Free",
+      "long_description": "Khatsahlano is Vancouver's largest free all-ages street festival, stretching 10 city blocks along West 4th Ave in Kitsilano. The 2026 edition features 20 stages with 100+ live music acts, plus 100+ artisan vendors, local food trucks, and family activities. Named after Chief Khahtsahlano of the Squamish Nation, the festival attracts over 100,000 visitors each year.",
+      "source": [
+        "destinationvancouver.com"
+      ],
+      "fingerprint": "b33c11118f982b9c",
+      "rating": 4.6,
+      "videos": [
+        {
+          "platform": "YouTube",
+          "url": "https://www.youtube.com/results?search_query=Khatsahlano+Street+Party+2026+Vancouver+2026",
+          "summary": "YouTube: Khatsahlano Street Party 2026 现场精彩实录与活动回顾合集。"
+        },
+        {
+          "platform": "TikTok",
+          "url": "https://www.tiktok.com/search?q=Khatsahlano+Street+Party+2026+Vancouver+2026",
+          "summary": "TikTok: Khatsahlano Street Party 2026 打卡 vlog 与现场氛围短片。"
+        }
+      ],
+      "reviews": [
+        {
+          "platform": "Google Review",
+          "text": "Best free festival in Vancouver. 20 stages of non-stop music, amazing food trucks and local vendors. Kitsilano comes alive in the best possible way every July.",
+          "source_url": "https://www.google.com/maps/search/?api=1&query=Khatsahlano+Street+Party+Vancouver"
+        },
+        {
+          "platform": "小红书",
+          "text": "Kits 街头音乐节太好逛了！20 个舞台全天轮流演出，本地文创摊位和美食车随便逛，最重要的是完全免费！温哥华夏天必去！",
+          "source_url": "https://www.xiaohongshu.com/search_result?keyword=Khatsahlano+Kitsilano+音乐节"
+        }
+      ]
+    },
+    {
+      "name": "Richmond Night Market 2026",
+      "category": "活动",
+      "address": "8351 River Rd, Richmond, BC V6X 1Y4",
+      "lat": 49.1904,
+      "lng": -123.1404,
+      "url": "https://richmondnightmarket.com/",
+      "official_website": "https://richmondnightmarket.com/",
+      "image_url": "https://richmondnightmarket.com/wp-content/uploads/2026/02/rnm2026-hero.jpg",
+      "description": "北美最大亚洲夜市，500+ 摊位周末营业至深夜。",
+      "social_metrics": {
+        "videos": [
+          {
+            "platform": "YouTube",
+            "url": "https://www.youtube.com/results?search_query=Richmond+Night+Market+2026+Vancouver+2026",
+            "summary": "YouTube: Richmond Night Market 2026 现场精彩实录与活动回顾合集。"
+          },
+          {
+            "platform": "TikTok",
+            "url": "https://www.tiktok.com/search?q=Richmond+Night+Market+2026+Vancouver+2026",
+            "summary": "TikTok: Richmond Night Market 2026 打卡 vlog 与现场氛围短片。"
+          }
+        ],
+        "reviews": [
+          {
+            "platform": "Google Review",
+            "text": "The Richmond Night Market is a unique Vancouver experience — hundreds of Asian food stalls, carnival games, and live K-pop performances. Go hungry and bring cash.",
+            "source_url": "https://www.google.com/maps/search/?api=1&query=Richmond+Night+Market"
+          },
+          {
+            "platform": "小红书",
+            "text": "列治文夜市真的是必去！臭豆腐、韩式玉米热狗、港式鱼蛋一次满足，摊位超多逛不完，周五晚上人少一点比较舒服！",
+            "source_url": "https://www.xiaohongshu.com/search_result?keyword=列治文夜市+Richmond+Night+Market"
+          }
+        ],
+        "keywords": [
+          "亚洲夜市文化",
+          "500摊位街头小吃",
+          "周末深夜场"
+        ],
+        "social_buzz_score": 3.9
+      },
+      "rating_system": {
+        "google_rating": 4.3,
+        "review_count": 6800,
+        "aggregate_score": 4.3
+      },
+      "event_date": "2026-05-02",
+      "event_time": "Fri 7–11 PM | Sat-Sun 7 PM – Midnight",
+      "venue_name": "Richmond Night Market",
+      "ticket_price": "Free entry (food at vendor prices)",
+      "long_description": "North America's largest night market runs every Friday through Sunday from May to October, featuring 500+ vendor stalls with Asian street food, merchandise, carnival games, and live performances. The 2026 season runs May 2 – Oct 12. Highlights: bubble tea challenges, stinky tofu, Korean corn dogs, J-pop dance shows, and an annual Wonton Challenge contest. Free entry; food averaging CAD $4–12 per item.",
+      "source": [
+        "dailyhive.com"
+      ],
+      "fingerprint": "125a29c30f419fb5",
+      "rating": 4.3,
+      "videos": [
+        {
+          "platform": "YouTube",
+          "url": "https://www.youtube.com/results?search_query=Richmond+Night+Market+2026+Vancouver+2026",
+          "summary": "YouTube: Richmond Night Market 2026 现场精彩实录与活动回顾合集。"
+        },
+        {
+          "platform": "TikTok",
+          "url": "https://www.tiktok.com/search?q=Richmond+Night+Market+2026+Vancouver+2026",
+          "summary": "TikTok: Richmond Night Market 2026 打卡 vlog 与现场氛围短片。"
+        }
+      ],
+      "reviews": [
+        {
+          "platform": "Google Review",
+          "text": "The Richmond Night Market is a unique Vancouver experience — hundreds of Asian food stalls, carnival games, and live K-pop performances. Go hungry and bring cash.",
+          "source_url": "https://www.google.com/maps/search/?api=1&query=Richmond+Night+Market"
+        },
+        {
+          "platform": "小红书",
+          "text": "列治文夜市真的是必去！臭豆腐、韩式玉米热狗、港式鱼蛋一次满足，摊位超多逛不完，周五晚上人少一点比较舒服！",
+          "source_url": "https://www.xiaohongshu.com/search_result?keyword=列治文夜市+Richmond+Night+Market"
+        }
+      ]
+    },
+    {
+      "name": "Car Free Day Vancouver — Main Street",
+      "category": "活动",
+      "address": "Main St, Vancouver, BC V5T (16th to 30th Ave)",
+      "lat": 49.2508,
+      "lng": -123.1012,
+      "url": "https://carfreevancouver.org/",
+      "official_website": "https://carfreevancouver.org/",
+      "image_url": "https://carfreevancouver.org/wp-content/uploads/2026/01/carfree2026-main.jpg",
+      "description": "Main Street 封路派对，本地乐队摊贩与街头艺术全天呈现。",
+      "social_metrics": {
+        "videos": [
+          {
+            "platform": "YouTube",
+            "url": "https://www.youtube.com/results?search_query=Car+Free+Day+Vancouver+%E2%80%94+Main+Street+Vancouver+2026",
+            "summary": "YouTube: Car Free Day Vancouver — Main Street 现场精彩实录与活动回顾合集。"
+          },
+          {
+            "platform": "TikTok",
+            "url": "https://www.tiktok.com/search?q=Car+Free+Day+Vancouver+%E2%80%94+Main+Street+Vancouver+2026",
+            "summary": "TikTok: Car Free Day Vancouver — Main Street 打卡 vlog 与现场氛围短片。"
+          }
+        ],
+        "reviews": [
+          {
+            "platform": "Google Review",
+            "text": "Car Free Day on Main Street is a celebration of everything that makes this neighbourhood great — local shops, art, live music, and community. A perfect Vancouver summer Sunday.",
+            "source_url": "https://www.google.com/maps/search/?api=1&query=Car+Free+Day+Main+Street+Vancouver"
+          },
+          {
+            "platform": "小红书",
+            "text": "Main Street 封路节超好逛！本地独立品牌摊位和街头美食让人根本走不动，还有好几个现场音乐舞台，完全免费！",
+            "source_url": "https://www.xiaohongshu.com/search_result?keyword=Car+Free+Day+Vancouver+Main+Street"
+          }
+        ],
+        "keywords": [
+          "Main Street封路嘉年华",
+          "社区文化活动",
+          "可持续城市庆典"
+        ],
+        "social_buzz_score": 3.9
+      },
+      "rating_system": {
+        "google_rating": 4.5,
+        "review_count": 980,
+        "aggregate_score": 4.5
+      },
+      "event_date": "2026-06-21",
+      "event_time": "11:00 AM – 7:00 PM",
+      "venue_name": "Main Street (16th to 30th Ave)",
+      "ticket_price": "Free",
+      "long_description": "Car Free Day transforms Main Street into a pedestrian festival zone for one day, running from 16th to 30th Ave. The 2026 edition features 6 live music stages, 70+ local artisan and food vendors, face painting, cycling demos, and interactive art installations. The event celebrates sustainable urban living and neighbourhood community spirit. Part of a city-wide Car Free Day series on the same weekend (Commercial Drive, Kitsilano, Main St).",
+      "source": [
+        "dailyhive.com"
+      ],
+      "fingerprint": "1ee5c9489e2b84b3",
+      "rating": 4.5,
+      "videos": [
+        {
+          "platform": "YouTube",
+          "url": "https://www.youtube.com/results?search_query=Car+Free+Day+Vancouver+%E2%80%94+Main+Street+Vancouver+2026",
+          "summary": "YouTube: Car Free Day Vancouver — Main Street 现场精彩实录与活动回顾合集。"
+        },
+        {
+          "platform": "TikTok",
+          "url": "https://www.tiktok.com/search?q=Car+Free+Day+Vancouver+%E2%80%94+Main+Street+Vancouver+2026",
+          "summary": "TikTok: Car Free Day Vancouver — Main Street 打卡 vlog 与现场氛围短片。"
+        }
+      ],
+      "reviews": [
+        {
+          "platform": "Google Review",
+          "text": "Car Free Day on Main Street is a celebration of everything that makes this neighbourhood great — local shops, art, live music, and community. A perfect Vancouver summer Sunday.",
+          "source_url": "https://www.google.com/maps/search/?api=1&query=Car+Free+Day+Main+Street+Vancouver"
+        },
+        {
+          "platform": "小红书",
+          "text": "Main Street 封路节超好逛！本地独立品牌摊位和街头美食让人根本走不动，还有好几个现场音乐舞台，完全免费！",
+          "source_url": "https://www.xiaohongshu.com/search_result?keyword=Car+Free+Day+Vancouver+Main+Street"
+        }
+      ]
+    },
+    {
+      "name": "Pacific National Exhibition (PNE) 2026",
+      "category": "活动",
+      "address": "2901 E Hastings St, Vancouver, BC V5K 5J1",
+      "lat": 49.2831,
+      "lng": -123.0351,
+      "url": "https://www.pne.ca/",
+      "official_website": "https://www.pne.ca/",
+      "image_url": "https://www.pne.ca/wp-content/uploads/2026/04/pne2026-hero.jpg",
+      "description": "PNE 百年嘉年华，游乐设施演唱会与农业展览三合一。",
+      "social_metrics": {
+        "videos": [
+          {
+            "platform": "YouTube",
+            "url": "https://www.youtube.com/results?search_query=Pacific+National+Exhibition+%28PNE%29+2026+Vancouver+2026",
+            "summary": "YouTube: Pacific National Exhibition (PNE) 2026 现场精彩实录与活动回顾合集。"
+          },
+          {
+            "platform": "TikTok",
+            "url": "https://www.tiktok.com/search?q=Pacific+National+Exhibition+%28PNE%29+2026+Vancouver+2026",
+            "summary": "TikTok: Pacific National Exhibition (PNE) 2026 打卡 vlog 与现场氛围短片。"
+          }
+        ],
+        "reviews": [
+          {
+            "platform": "Google Review",
+            "text": "The PNE is a Vancouver institution. Free concerts every night, classic fair food (the mini donuts are legendary), and rides for all ages. A summer bucket list must-do.",
+            "source_url": "https://www.google.com/maps/search/?api=1&query=PNE+Pacific+National+Exhibition+Vancouver"
+          },
+          {
+            "platform": "小红书",
+            "text": "PNE 嘉年华是温哥华每年必去！小甜甜圈队伍可以排但超值，过山车经典不过时，晚上免费演唱会水准超高，带娃全家出游完美！",
+            "source_url": "https://www.xiaohongshu.com/search_result?keyword=PNE+温哥华+嘉年华"
+          }
+        ],
+        "keywords": [
+          "百年嘉年华",
+          "游乐园演唱会",
+          "全家年度盛事"
+        ],
+        "social_buzz_score": 3.9
+      },
+      "rating_system": {
+        "google_rating": 4.4,
+        "review_count": 11200,
+        "aggregate_score": 4.4
+      },
+      "event_date": "2026-08-22",
+      "event_time": "Daily 11:00 AM – 11:00 PM (weekends to Midnight)",
+      "venue_name": "Hastings Park / Pacific National Exhibition",
+      "ticket_price": "CAD $20 (gate admission) + ride passes from $49",
+      "long_description": "The Pacific National Exhibition (PNE) is Vancouver's iconic annual fair, running Aug 22 – Sep 7, 2026 (Labour Day weekend close). The fair features over 70 ride attractions including the historic Wooden Roller Coaster, nightly free concerts on the Rogers stage (past headliners: Shania Twain, The Offspring), agricultural shows, SuperDogs performances, casino gaming, and 350+ food vendors. One of Canada's largest annual events, drawing 750,000+ visitors.",
+      "source": [
+        "dailyhive.com"
+      ],
+      "fingerprint": "5fa3f4e6b0fcd05b",
+      "rating": 4.4,
+      "videos": [
+        {
+          "platform": "YouTube",
+          "url": "https://www.youtube.com/results?search_query=Pacific+National+Exhibition+%28PNE%29+2026+Vancouver+2026",
+          "summary": "YouTube: Pacific National Exhibition (PNE) 2026 现场精彩实录与活动回顾合集。"
+        },
+        {
+          "platform": "TikTok",
+          "url": "https://www.tiktok.com/search?q=Pacific+National+Exhibition+%28PNE%29+2026+Vancouver+2026",
+          "summary": "TikTok: Pacific National Exhibition (PNE) 2026 打卡 vlog 与现场氛围短片。"
+        }
+      ],
+      "reviews": [
+        {
+          "platform": "Google Review",
+          "text": "The PNE is a Vancouver institution. Free concerts every night, classic fair food (the mini donuts are legendary), and rides for all ages. A summer bucket list must-do.",
+          "source_url": "https://www.google.com/maps/search/?api=1&query=PNE+Pacific+National+Exhibition+Vancouver"
+        },
+        {
+          "platform": "小红书",
+          "text": "PNE 嘉年华是温哥华每年必去！小甜甜圈队伍可以排但超值，过山车经典不过时，晚上免费演唱会水准超高，带娃全家出游完美！",
+          "source_url": "https://www.xiaohongshu.com/search_result?keyword=PNE+温哥华+嘉年华"
+        }
+      ]
+    }
+  ]
+}

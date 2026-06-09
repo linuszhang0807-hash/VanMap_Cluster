@@ -1,0 +1,111 @@
+# VanMap Cluster — 项目规则（持久上下文，勿在对话中重复粘贴）
+
+## 项目概览
+
+大温地区餐厅/酒吧/娱乐/景点/徒步/活动情报平台。三模块分工：
+
+```
+master_hermes/     # 主控调度（Hermes Master）
+slave_scraper/     # 数据采集工厂
+slave_coder/       # 前端展示（Leaflet + 侧边栏）
+```
+
+---
+
+## 多代理协作与职责边界
+
+### Master Hermes（`master_hermes/`）
+
+- **职责**：接收人类高层指令 → CoT 推理 → 拆解任务 → 写入工单。
+- **唯一输出**：`master_hermes/order_box/task.json`（Pydantic `MapTaskContract` 格式）。
+- **禁止**：直接改 Scraper 或前端代码；不采集数据、不渲染 UI。
+- **工单字段**：`command` / `project_name` / `center_location`（lat,lng）/ `status`。
+- **当前指令映射**：含「中餐」「韩餐」「地图」→ `CREATE_MAP_FRAMEWORK`，中心点锁定温哥华 Downtown `49.2827, -123.1207`。
+
+### Slave Scraper（`slave_scraper/`）
+
+- **职责**：采集、清洗、标准化、校验，输出 JSON。
+- **脚本**：
+  - `vancouver_scraper.py` → `shared_data/master_data.json`（5 类目）
+  - `events_scraper.py` → `shared_data/events_data.json`（活动，指纹去重）
+- **禁止**：改前端 UI；不处理工单派发逻辑。
+- **必须**：输出 schema 遵循 `BaseEntry`；Pydantic 校验 + 地图就绪校验 + 描述去重。
+- **模式**：当前 MOCK；生产替换 API 时保持 schema 不变。
+
+### Slave Coder（`slave_coder/`）
+
+- **职责**：数据可视化、筛选、搜索、弹窗、Lightbox、官网跳转。
+- **入口**：`src/index_home.html`（首页）、`src/index.html`（地图页）。
+- **禁止**：在 Scraper 中硬编码业务数据；不写入 `master_hermes/order_box/`。
+- **必须**：从 `src/shared_data/` 相对路径加载 JSON；HTTP 服务必须从 `src/` 启动。
+
+### 跨模块数据流（硬性规则）
+
+```
+slave_scraper → 写入 data/*.json（权威源）
+        ↓ scripts/sync_data（或 Scraper --sync）
+slave_coder/src/shared_data/*.json   ← 浏览器唯一读取路径 ✅
+```
+
+Scraper 运行后**必须**同步到 `slave_coder/src/shared_data/`。
+`restaurants.json` 已废弃；主输出以 `data/master_data.json` 为准。
+
+### Cursor AI 协作原则
+
+- 按模块边界改代码：Scraper 任务不动 `index.html`；前端任务不动 `vancouver_scraper.py`。
+- 改 schema 时**同时**更新 Scraper 模型 + 前端 `normalize*Entry()` + 双方 README。
+- 不扩 scope：只改任务相关文件；不重构无关代码。
+- 不主动 git commit / push，除非用户明确要求。
+- 详细字段说明查各模块 README，不在对话中复述。
+
+---
+
+## 编码规范
+
+### Python（Scraper / Master）
+
+- `from __future__ import annotations`；类型注解完整。
+- 数据模型用 **Pydantic v2**（`BaseModel`, `Field`, `computed_field`）。
+- Scraper 继承 `BaseScraper (ABC)`；共享能力放基类（`fetch_social_metrics`, `fetch_photos`, `RatingSystem`）。
+- 文件头 docstring 注明版本、输出路径、架构要点。
+- 区块注释：`# === SECTION N — Title ===`。
+- 输出 JSON：`json.dump(..., indent=2, ensure_ascii=False)`。
+- 可选依赖（如 bs4）用 try/import + 降级 Mock，不硬崩。
+- 校验失败打印明确错误，不静默吞掉。
+
+### 前端（`slave_coder/src/`）
+
+- 单文件 HTML + 内联 CSS/JS（Ins Creamy White 风格，Leaflet 1.9.4）。
+- 数据入口：`normalizeRestaurantEntry()` + `normalizeMasterEntry()` → 合并为 `allData`。
+- 下游 `buildPopup` / `buildCard` / `buildSocialLinks` 共用，禁止按类目复制模板。
+- 弹窗官网跳转用 `div + onclick + window.open()`（Leaflet 会拦截 `<a>`）。
+- 照片降级：`getPhotos()` → SVG 占位 + `onerror` 回退。
+- 修改后提醒硬刷新 `Ctrl+Shift+R`。
+
+### 数据 Schema（全模块统一）
+
+通用 `BaseEntry`：`name` / `category` / `address` / `lat` / `lng` / `url` / `official_website` / `image_url` / `description` / `photos[]` / `social_metrics` / `rating_system` / `videos` / `reviews`。
+`events_data.json` 与 `master_data.json` schema 兼容，便于前端复用组件。
+类目扩展字段见 `slave_scraper/README.md`，不在此展开。
+
+### 通用原则
+
+- 最小 diff：聚焦根因，不加无关抽象/错误处理/测试（除非用户要求）。
+- 匹配现有命名、缩进、注释风格。
+- 注释只解释非显而易见的业务逻辑。
+- Windows 路径示例用 PowerShell `Copy-Item`；bash 用 `cp`。
+
+---
+
+## 快速命令
+
+```bash
+# 采集
+cd slave_scraper && python vancouver_scraper.py --sync && python events_scraper.py --sync
+
+# 同步（--sync 省略时手动执行）
+powershell -File scripts/sync_data.ps1
+
+# 启动前端
+cd slave_coder/src && python -m http.server 8080
+```

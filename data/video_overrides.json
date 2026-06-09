@@ -1,0 +1,33 @@
+{
+  "entries": {
+    "Kirin Seafood Restaurant": {
+      "YouTube": {
+        "url": "https://www.youtube.com/watch?v=J---aiyznGQ",
+        "summary": "Vancouver Chinese restaurant feature",
+        "video_id": "J---aiyznGQ",
+        "source": "manual_override"
+      },
+      "TikTok": {
+        "url": "https://www.tiktok.com/@foodievancouver/video/7234567890123456789",
+        "summary": "Kirin Vancouver dim sum",
+        "source": "manual_override"
+      }
+    },
+    "Stanley Park": {
+      "YouTube": {
+        "url": "https://www.youtube.com/watch?v=6v2L716LIbw",
+        "summary": "Stanley Park Vancouver tour",
+        "video_id": "6v2L716LIbw",
+        "source": "manual_override"
+      }
+    },
+    "Grouse Grind": {
+      "YouTube": {
+        "url": "https://www.youtube.com/watch?v=0p9XVL9JLLg",
+        "summary": "Grouse Grind hike Vancouver",
+        "video_id": "0p9XVL9JLLg",
+        "source": "manual_override"
+      }
+    }
+  }
+}
