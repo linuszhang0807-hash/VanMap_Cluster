@@ -1,7 +1,7 @@
 {
   "meta": {
     "source": "events_scraper.py v1.0 (multi-source + fingerprint dedup)",
-    "generated_at": "2026-06-09T22:37:25.271553+00:00",
+    "generated_at": "2026-06-15T20:35:03.251240+00:00",
     "region": "Greater Vancouver",
     "network_probe_passed": true,
     "total_entries": 8,
@@ -27,13 +27,7 @@
       "image_url": "https://coastaljazz.ca/wp-content/uploads/2026/03/vjf2026-hero.jpg",
       "description": "年度爵士盛典，Downtown 多场地免费与售票演出并举。",
       "social_metrics": {
-        "videos": [
-          {
-            "platform": "YouTube",
-            "url": "https://www.youtube.com/watch?v=Hho_g9wtA8M",
-            "summary": "Vancouver Jazz Festival highlights"
-          }
-        ],
+        "videos": [],
         "reviews": [
           {
             "platform": "Google Review",
@@ -69,13 +63,7 @@
       ],
       "fingerprint": "64318d3d9a11d30b",
       "rating": 4.8,
-      "videos": [
-        {
-          "platform": "YouTube",
-          "url": "https://www.youtube.com/watch?v=Hho_g9wtA8M",
-          "summary": "Vancouver Jazz Festival highlights"
-        }
-      ],
+      "videos": [],
       "reviews": [
         {
           "platform": "Google Review",
