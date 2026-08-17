@@ -1,16 +1,16 @@
 {
   "meta": {
     "source": "events_scraper.py v1.0 (multi-source + fingerprint dedup)",
-    "generated_at": "2026-08-10T09:07:42.942438+00:00",
+    "generated_at": "2026-08-17T08:32:02.296922+00:00",
     "region": "Greater Vancouver",
-    "network_probe_passed": false,
+    "network_probe_passed": true,
     "total_entries": 8,
     "source_summary": {
       "destinationvancouver.com": 5,
       "dailyhive.com": 5
     },
     "bs4_available": true,
-    "scrape_mode": "mock",
+    "scrape_mode": "live",
     "schema_version": "1.1",
     "dedup_algorithm": "MD5(normalised_name + date + location)[:16]",
     "schema_note": "Entry schema mirrors master_data.json BaseEntry. Event extras: event_date, event_time, venue_name, ticket_price, long_description, source, fingerprint."
