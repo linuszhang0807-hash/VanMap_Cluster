@@ -1,7 +1,7 @@
 {
   "meta": {
     "source": "events_scraper.py v1.0 (multi-source + fingerprint dedup)",
-    "generated_at": "2026-11-02T17:34:36.302955+00:00",
+    "generated_at": "2026-11-09T17:59:05.701924+00:00",
     "region": "Greater Vancouver",
     "network_probe_passed": true,
     "total_entries": 8,
